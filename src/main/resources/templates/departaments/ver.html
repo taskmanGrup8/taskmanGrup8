@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+	
+		<a th:href="@{/departaments/listar}">Volver</a>
+		<ul>
+			
+			<li th:text="${departament.id}"></li>
+			<li th:text="${departament.nombre}"></li>
+			<li th:text="${departament.codigo}"></li>			
+			
+		</ul>
+
+	
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${titol}"></title>
+
+</head>
+<body>
+
+	<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}"></div>
+
+	<div th:if="${filtrado}">
+		<a th:href="@{/departaments/listar}" th:text="'Eliminar filtro'"></a>
+
+	</div>
+
+	<div th:if="${not filtrado}">
+
+		<form th:action="@{/departaments/listar}" method="get">
+			<label>Buscar por código o por nombre</label>
+			<input type="text" id=searchId name="keyword"/>
+			<button type="submit">Buscar</button>
+		</form>
+
+	</div>
+	
+	
+
+
+	<h4>
+		<a th:href="@{/departaments/crear}">Crear Departamento</a>
+	</h4>
+
+
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Codigo</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="departament: ${departaments}">
+				<td><a th:href="@{/departaments/ver/}+ ${departament.id}"
+					th:text="${departament.id}"></a></td>
+				<td th:text="${departament.nombre}"></td>
+				<td th:text="${departament.codigo}"></td>
+				<td><a
+					th:href="@{/departaments/actualizar/}+ ${departament.id}"
+					th:text='Editar'></a></td>
+				<td><a th:href="@{/departaments/eliminar/}+ ${departament.id}"
+					th:text='Eliminar'
+					onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+
+			</tr>
+
+		</tbody>
+
+	</table>
+
+
+</body>
+</html>
