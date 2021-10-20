@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titol}"></title>
-    <!-- Bootstrap CSS -->
-   <link
-	th:href="@{/css/bootstrap.min.css}"	rel="stylesheet"/>
-    <!-- Local CSS -->
-    <link href="css/crear-departament.css" rel="stylesheet" />
+<head th:replace="generic/head :: header">
 </head>
 
 <body class="container mt-5 pt-5">
     <div class="pb-4">
         <h2 th:text="${titol}"></h2>
     </div>
-
     <div class="row">
         <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
             <div class="mb-3 col-1">
