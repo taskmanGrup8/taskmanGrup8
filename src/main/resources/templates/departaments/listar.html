@@ -1,62 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<body>
+<html lang="cat" xmlns:th="http://www.thymeLeaf.org">
+
+<head th:replace="generic/head :: header"></head>
+
+<body class="container mt-5 pt-5">
 
 	<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}"></div>
 
-	<div th:if="${filtrado}">
-		<a th:href="@{/departaments/listar}" th:text="'Eliminar filtro'"></a>
+	<div class="pb-4">
+		<h2 class="float-start">Llistat dels departaments</h2>
 
 	</div>
 
-	<div th:if="${not filtrado}">
-
-		<form th:action="@{/departaments/listar}" method="get">
-			<label>Buscar por código o por nombre</label>
-			<input type="text" id=searchId name="keyword"/>
-			<button type="submit">Buscar</button>
-		</form>
-
+	<div th:if="${filtrado}" class="row float-end">
+		<div class="col-12">
+			<a class="btn btn-primary" th:href="@{/departaments/listar}" th:text="'Eliminar filtre'"></a>
+		</div>
 	</div>
-	
-	
 
+	<div class="pt-5 pb-3">
+		<a class="btn btn-primary" th:href="@{/departaments/crear}">Crear
+			departament</a>
+		<div class="row float-end" th:if="${not filtrado}"> <!-- float-end está generando los problemas UX -->
+			<div class="col-12">
+				<form class="d-flex" th:action="@{/departaments/listar}" method="get">
+					<input class="form-control me-2" type="text" placeholder="Cercar departament" aria-label="Search"
+						name="keyword" id=>
+					<button class="btn btn-primary" type="submit">Cercar</button>
+				</form>
+			</div>
+		</div>
+	</div>
 
-	<h4>
-		<a th:href="@{/departaments/crear}">Crear Departamento</a>
-	</h4>
-
-
-	<table>
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Nombre</th>
-				<th>Codigo</th>
-				<th>Editar</th>
-				<th>Eliminar</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="departament: ${departaments}">
-				<td><a th:href="@{/departaments/ver/}+ ${departament.id}"
-					th:text="${departament.id}"></a></td>
-				<td th:text="${departament.nombre}"></td>
-				<td th:text="${departament.codigo}"></td>
-				<td><a
-					th:href="@{/departaments/actualizar/}+ ${departament.id}"
-					th:text='Editar'></a></td>
-				<td><a th:href="@{/departaments/eliminar/}+ ${departament.id}"
-					th:text='Eliminar'
-					onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
-
-			</tr>
-
-		</tbody>
-
-	</table>
-
+	<div class="row">
+		<div class="col-12">
+			<table class="mt-3 table table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Alias</th>
+						<th scope="col">Nom</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="departament: ${departaments}">
+						<td><a class="btn btn-outline-primary btn-sm" th:href="@{/departaments/ver/}+ ${departament.id}"
+								th:text="${departament.id}"></a></td>
+						<td th:text="${departament.codigo}"></td>
+						<td th:text="${departament.nombre}"></td>
+						<td><a th:href="@{/departaments/actualizar/}+ ${departament.id}"
+								class="pe-3 fas fa-edit text-primary"></a></td>
+						<td><a class="fas fa-trash text-danger" th:href="@{/departaments/eliminar/}+ ${departament.id}"
+								 onclick="return confirm('Estàs segur que vols eliminar?');"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 </body>
+
 </html>
