@@ -4,18 +4,34 @@
 <head th:replace="generic/head :: header">
 </head>
 
-<body>
+<body class="container mt-5 pt-5">
+	<div class="pb-4">
+		<h2 th:text="${titol}"></h2>
+	</div>
 
-	
-		<a th:href="@{/departaments/listar}">Volver</a>
-		<ul>
-			
-			<li th:text="${departament.id}"></li>
-			<li th:text="${departament.nombre}"></li>
-			<li th:text="${departament.codigo}"></li>			
-			
-		</ul>
+	<div class="row">
+		<form th:action="@{/departaments/result}" th:object="${departament}" method="post">
+			<fieldset disabled>
+				<!-- ID -->
+				<div class="mb-3 col-1">
+					<label for="id" class="form-label">ID</label>
+					<input type="text" class="form-control" id="id" th:field="*{id}" />
+				</div>
+				<!-- Alias -->
+				<div class="mb-3 col-1">
+					<label for="nom-alias" class="form-label">Alias</label>
+					<input type="text" class="form-control" id="nom-alias" th:field="*{codigo}" />
+				</div>
+				<!-- Nom del departament -->
+				<div class="mb-3 col-4">
+					<label for="nom-departament" class="form-label">Nom del departament</label>
+					<input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
+				</div>
+			</fieldset>
+			<input type="submit" class="btn btn-primary" th:value="${titol}" /> <!-- Botó per anar enrere -->
+		</form>
+	</div>
 
-	
 </body>
+
 </html>
