@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="cat" xmlns:th="http://www.thymeLeaf.org">
+
+<head th:replace="generic/head :: header">
+
+</head>
+
+<body class="container mt-5 pt-5">
+	<div class="alert alert-danger" th:if="${error!=null}"
+		th:text="${error}"></div>
+
+	<div class="alert alert-success" th:if="${success!=null}"
+		th:text="${success}"></div>
+
+	<!--  Filtres -->
+	
+	
+	<div>
+		<form class="d-flex" th:action="@{/usuaris/filtrar}"
+			th:object="${filtreUsuari}" method="post">
+			
+			<div>
+				<fieldset>
+					<legend>Escull Actiu o històric</legend>
+					<label>
+					
+						<input type="radio" th:field="*{historic}" th:value=0 />Actiu
+					</label>
+					<label>
+					
+						<input type="radio" th:field="*{historic}" th:value=1 />Històric
+					</label>
+				
+				</fieldset>			
+			
+			</div>
+			
+			<div>
+				<fieldset>
+					<legend>Escull Rol</legend>
+					<label>
+					
+						<input type="radio" th:field="*{rol}" th:value=0 />Indiferent
+					</label>
+					<label>
+					
+						<input type="radio" th:field="*{rol}" th:value=2 />Usuari
+					</label>
+					<label>
+					
+						<input type="radio" th:field="*{rol}" th:value=1 />Administrador
+					</label>
+				
+				</fieldset>			
+			
+			</div>
+			
+			<div>
+				<label for="nom" class="form-label">Nom</label> <input
+					class="form-control me-2" type="text"
+					placeholder="Cercar nom" aria-label="Search" id="nom"  th:field="*{nom}">
+			</div>
+
+			<div>
+				<label for="cognoms" class="form-label">Cognoms</label> <input
+					class="form-control me-2" type="text"
+					placeholder="Cercar cognoms" aria-label="Search" id="cognoms"  th:field="*{cognoms}">
+			</div>
+			<div>
+				<label for="dni" class="form-label">DNI</label> <input
+					class="form-control me-2" type="text"
+					placeholder="Cercar dni" aria-label="Search" id="dni"  th:field="*{dni}">
+			</div>
+			
+			<div>
+				<button class="btn btn-primary" type="submit">Cercar</button>
+			</div>
+		</form>
+	</div>
+
+	<div class="pb-4">
+		<h2 class="float-start">Llistat dels usuaris</h2>
+
+	</div>
+
+	<div class="pt-5 pb-3">
+		<a class="btn btn-primary" th:href="@{/usuaris/crear}">Crear
+			usuari</a>
+	</div>
+
+	<div class="row">
+		<div class="col-12">
+			<table class="mt-3 table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nom</th>
+						<th scope="col">Cognoms</th>
+						<th scope="col">DNI</th>
+						<th scope="col">Correu electrònic</th>
+						<th scope="col">Telèfon</th>
+						<th scope="col">Rol</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Eliminar</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="usuari: ${usuaris}">
+						<td><a class="btn btn-primary btn-xs"
+							th:href="@{/usuaris/ver/}+ ${usuari.id}" th:text="${usuari.id}"></a></td>
+						<td th:text="${usuari.nombre}"></td>
+						<td th:text="${usuari.apellidos}"></td>
+						<td th:text="${usuari.dni}"></td>
+						<td th:text="${usuari.email}"></td>
+						<td th:text="${usuari.telefono}"></td>
+						<td th:text="${usuari.rol.nombre}"></td>
+						<td><a th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i
+								class="fas fa-edit text-primary"></i></a></td>
+						<td><a th:href="@{/usuaris/eliminar/}+ ${usuari.id}"
+							onclick="return confirm('Estàs segur que vols eliminar?');"><i
+								class="fas fa-trash text-danger"></i></a></td>
+
+					</tr>
+				</tbody>
+			</table>
+			<nav th:replace="generic/paginator-nav :: paginador"></nav>
+		</div>
+	</div>
+
+	<footer th:replace="generic/head :: footer"></footer>
+
+</body>
+
+</html>
+</html>

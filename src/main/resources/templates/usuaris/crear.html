@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="cat" xmlns:th="http://www.thymeLeaf.org">
+
+<head th:replace="generic/head :: header">
+   
+</head>
+
+<body class="container mt-5 pt-5">
+
+ 	<div class="alert alert-danger" th:if="${error!=null}"
+    th:text="${error}"></div>
+    <div class="pb-4">
+        <h2 th:text="${titol}"></h2>
+    </div>
+    
+    
+
+    <h5>Omple el formulari que trobaràs a continuació per donar d'alta a un nou usuari</h5>
+        <div class="pt-4">
+            <form class="g-3 mr-5" th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post">
+
+                <div class="row pt-3">
+                <div class="col-md-3">
+                    <label for="nom" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="nom" th:field="*{nombre}">
+                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="my-2 alert alert-danger"></div>
+                </div>
+                
+                
+                <div class="col-md-3">
+                    <label for="cognoms" class="form-label">Cognoms</label>
+                    <input type="text" class="form-control" id="cognoms" th:field="*{apellidos}">
+                    <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="my-2 alert alert-danger"></div>
+                </div>
+               
+                
+                 <div class="col-md-3">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="dni" th:field="*{dni}">
+                    <div th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="my-2 alert alert-danger"></div>
+                </div>
+              
+            </div>
+
+            <div class="row pt-4">
+                <div class="col-md-3">
+                    <label for="correu" class="form-label">Correu eletrònic</label>
+                    <input type="text" class="form-control" id="correu" th:field="*{email}">
+                     <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger"></div>
+                </div>
+               
+                <div class="col-md-3">
+                    <label for="telefon" class="form-label">Telèfon</label>
+                    <input type="text" class="form-control" id="telefon" th:field="*{telefono}">
+                     <div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="my-2 alert alert-danger"></div>
+                </div>
+               
+            </div>
+
+            <div class="row pt-3">
+                <div class="col-md-3">
+                    <label for="rol" class="form-label">Rol</label>
+                    <select id="rol" class="form-select" th:field="*{rol}" required>
+                        <option value="">Selecciona un rol</option>
+                        <option th:each="rol: ${listaRoles}" th:text="${rol.nombre}"
+							th:value="${rol.id}"></option>
+                        
+                    </select>
+                    <div th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}" class="alert alert-danger"></div>
+                </div>
+                
+               
+                 <div class="col-md-4">
+                    <label for="departaments" class="form-label">Departaments</label>
+                    <select id="departaments" multiple="multiple" class="form-select" th:field="*{departaments}" >
+                        
+                        <option th:each="departament: ${listaDepartamentos}" th:text="${departament.nombre}"
+							th:value="${departament.id}"></option>
+                        
+                    </select>
+                </div>
+            </div>
+
+                <div class="pt-4">
+                    <input type="submit" class="btn btn-primary" th:value="${titolBoto}"/>
+                </div>
+            </form>
+        </div>
+</body>
+
+</html>
