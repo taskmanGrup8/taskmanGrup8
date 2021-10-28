@@ -51,17 +51,19 @@
 								th:href="@{/departaments/ver/}+ ${departament.id}" th:text="${departament.id}"></a></td>
 						<td class="text-center" th:text="${departament.codigo}"></td>
 						<td th:text="${departament.nombre}"></td>
-						<td class="text-center"><a th:href="@{/departaments/actualizar/}+ ${departament.id}"
-								class="pe-3 fas fa-edit text-primary"></a></td>
-						<td class="text-center"><a class="fas fa-trash text-danger"
-								th:href="@{/departaments/eliminar/}+ ${departament.id}"
-								onclick="return confirm('EstÃ s segur que vols eliminar?');"></a></td>
+						<td class="text-center"><a	th:href="@{/departaments/actualizar/}+ ${departament.id}"
+							><i class="fas fa-edit text-primary"></i></a></td>
+						<td class="text-center"><a 
+							th:href="@{/departaments/eliminar/}+ ${departament.id}"
+							onclick="return confirm('Estàs segur que vols eliminar?');"><i class="fas fa-trash text-danger"></i></a></td>
+					
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+	<footer th:replace="generic/head :: footer"></footer>
 
 </body>
 
-</html>
+</html></html>
