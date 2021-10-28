@@ -1,13 +1,19 @@
 package com.grup8.taskman.app.domain.departaments;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.grup8.taskman.app.domain.usuaris.Usuari;
 
 @Entity
 @Table(name="departaments")
@@ -30,12 +36,15 @@ public class Departament implements Serializable {
 	
 	
 	@Column(name="nombre", unique=true, length=20, nullable=false, updatable=true )
-	private String nombre;
+	private String nombre;	
 	
-	
-	
-	public Departament() {
+	@ManyToMany(mappedBy="departaments", fetch=FetchType.LAZY)
+	private List<Usuari> usuaris;
 		
+	
+	public Departament() {		
+		
+		usuaris=new ArrayList<>();
 	}
 	public Long getId() {
 		return id;
@@ -54,7 +63,26 @@ public class Departament implements Serializable {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}	
+	
+	public List<Usuari> getUsuaris() {
+		return usuaris;
 	}
+	public void setUsuaris(List<Usuari> usuaris) {
+		this.usuaris = usuaris;
+	}
+	
+	public void addUsuari(Usuari usuari) {
+		
+		usuaris.add(usuari);
+	}
+	
+	public void removeUsuari(Usuari usuari) {
+		
+		usuaris.remove(usuari);
+	}	
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		
