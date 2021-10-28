@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
 
-<head th:fragment="header">
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title th:text="${titol}"></title>
-   <!-- Bootstrap CSS -->
-   <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-   <link th:href="@{/plugins/font-awesome-5/css/all.min.css}" rel="stylesheet">
-   <!-- local CSS -->
-   <link rel="stylesheet" media="(max-width: 800px)" th:href="@{/css/queries.css}" /> 
-</head>
+	<head th:fragment="header">
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title th:text="${titol}"></title>
+		<!-- Bootstrap CSS -->
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/plugins/font-awesome-5/css/fontawesome.min.css}" rel="stylesheet"/>
+	</head>
+	
+		<footer th:fragment="footer">
+		
+			<script th:src="@{/plugins/font-awesome-5/js/all.min.js}"></script>
+		</footer>
+		
+		
+	
+	<body>
 
-<body>
-</body>
-
+	
+	</body>
 </html>
