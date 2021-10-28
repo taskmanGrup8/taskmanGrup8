@@ -113,7 +113,7 @@ public class DepartamentController {
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
 
-		try {
+		
 		if (id > 0) {
 
 			Departament departament = departamentService.findById(id);
@@ -121,10 +121,7 @@ public class DepartamentController {
 						
 
 		}
-		}catch(Exception e) {
-			
-			System.out.println("Aquí está la excepción");
-		}
+		
 		return "redirect:/departaments/listar";
 	}
 	
