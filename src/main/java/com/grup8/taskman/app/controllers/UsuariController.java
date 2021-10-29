@@ -142,6 +142,20 @@ public class UsuariController {
 		
 		return "redirect:listar";
 	}
+	
+	@GetMapping("/ver/{id}")
+	public String ver(@PathVariable Long id, Model model) {
+		
+		Usuari usuari=usuariService.findById(id);		
+		if(usuari==null) return "redirect:listar";
+		List<Departament> departaments= usuari.getDepartaments();		
+		model.addAttribute("departaments", departaments);
+		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
+		model.addAttribute("boton","Ver Listado departamentos");
+		model.addAttribute("usuari",usuari);
+		
+		return "usuaris/ver";
+	}
 
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes flash) {

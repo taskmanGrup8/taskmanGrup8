@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.grup8.taskman.app.domain.departaments.Departament;
+import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.departament.IDepartamentService;
 import com.grup8.taskman.app.util.Utilidades;
 import com.grup8.taskman.app.validators.DepartamentValidator;
@@ -44,8 +45,12 @@ public class DepartamentController {
 	public String ver(@PathVariable Long id, Model model) {
 		
 		Departament departament=departamentService.findById(id);
+		if(departament==null)return "redirect:listar";
+		List<Usuari> usuaris=departament.getUsuaris();		
 		model.addAttribute("departament", departament);
 		model.addAttribute("titol", "Detalle departamento " + departament.getNombre());
+		model.addAttribute("boton","Ver Listado usuarios");
+		model.addAttribute("usuaris",usuaris);
 		
 		return "departaments/ver";
 	}
