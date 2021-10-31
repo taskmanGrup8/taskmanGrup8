@@ -3,10 +3,11 @@ package com.grup8.taskman.app.repository.departament;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+
 import com.grup8.taskman.app.domain.departaments.Departament;
 
-public interface IDepartamentDao extends JpaRepository<Departament, Long> {
+public interface IDepartamentDao extends CrudRepository<Departament, Long> {
 	
 	public Optional<Departament> findByCodigo(String codigo);
 	public Optional<Departament> findByNombre(String nombre);
