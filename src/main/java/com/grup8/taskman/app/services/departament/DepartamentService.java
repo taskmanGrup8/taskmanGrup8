@@ -19,7 +19,7 @@ public class DepartamentService implements IDepartamentService {
 	@Transactional
 	public void save(Departament departament) {
 		
-		seccioDao.saveAndFlush(departament);
+		seccioDao.save(departament);
 
 	}
 
