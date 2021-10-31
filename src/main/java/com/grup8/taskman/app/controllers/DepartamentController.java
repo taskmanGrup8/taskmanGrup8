@@ -41,6 +41,9 @@ public class DepartamentController {
 		binder.addValidators(departamentValidator);
 	}
 	
+	private String titolBoto;
+	private String titol;
+	
 	@GetMapping("/ver/{id}")
 	public String ver(@PathVariable Long id, Model model) {
 		
@@ -58,9 +61,12 @@ public class DepartamentController {
 	@GetMapping("/crear")
 	public String crear(Model model) {
 		
-		model.addAttribute("titol", "Crear Departament");
+		titol="Crear Departament";
+		titolBoto="Crear Departament";
+		
+		model.addAttribute("titol", titol);
 		model.addAttribute("departament", new Departament());
-		model.addAttribute("titolBoto", "Crear Departament");
+		model.addAttribute("titolBoto", titolBoto);
 		
 		return "departaments/crear";
 	}
@@ -68,11 +74,11 @@ public class DepartamentController {
 	@PostMapping("/result")
 	public String guardar(@Valid Departament departament, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
 		
-		model.addAttribute("titol", "Crear nou departament");
-		model.addAttribute("titolBoto", "Crear Departament");
+		model.addAttribute("titol", titol);
+		model.addAttribute("titolBoto", titolBoto);
 		
 		if(result.hasErrors()) {		
-			flash.addFlashAttribute("error", "No ha sido posible guardar los datos");		
+			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");		
 			return "departaments/crear";
 		}		
 		
@@ -80,7 +86,7 @@ public class DepartamentController {
 		departamentService.save(departament);
 		
 		status.setComplete();
-		flash.addFlashAttribute("success", "Registro grabado con éxito");
+		flash.addFlashAttribute("success", "Registro guardat amb èxit");
 				
 		return "redirect:listar";
 	}
@@ -101,7 +107,7 @@ public class DepartamentController {
 			List<Departament> departamentosPorNombre=departamentService.findByNombreStartsWith(keyword);			
 			departaments=Utilidades.combinarListasSinRepeticion(departamentosPorCodigo, departamentosPorNombre);
 			filtrado=true;
-		}
+		}		
 		
 		model.addAttribute("titol", "Listado de departamentos");
 		model.addAttribute("departaments", departaments);
@@ -138,16 +144,20 @@ public class DepartamentController {
 
 			departament = departamentService.findById(id);
 			if (departament == null) {
-				flash.addFlashAttribute("error", "El ID del departamento no existe en la BBDD");
+				flash.addFlashAttribute("error", "El ID del departament no existeix a la BBDD");
 				return "redirect:/departaments/listar";
 			}
 		} else {
 
-			flash.addFlashAttribute("error", "El ID del departamento no puede ser 0");
+			flash.addFlashAttribute("error", "El ID del departament no pot ser 0");
 			return "listar";
 		}
-		model.addAttribute("titol", "Actualizar Departamento");
+		
+		titol="Actualitzar Departament";
+		titolBoto="Actualitzar Departament";
+		model.addAttribute("titol", titol);
 		model.addAttribute("departament", departament);
+		model.addAttribute("titolBoto", titolBoto);
 
 		return "departaments/crear";
 	}
