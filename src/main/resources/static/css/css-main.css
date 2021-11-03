@@ -1,0 +1,5 @@
+/* Oculta els filtres de la vista usuaris/listar */
+
+#card-filtres {
+    display: none;
+}

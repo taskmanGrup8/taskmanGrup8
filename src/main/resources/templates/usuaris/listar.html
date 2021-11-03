@@ -6,61 +6,98 @@
 
 <body class="container mt-5 pt-5">
 	<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}"></div>
-
 	<div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
 
-	<!--  Filtres -->
-	<div>
-		<form class="d-flex" th:action="@{/usuaris/filtrar}" th:object="${filtreUsuari}" method="post">
+	<!-- Botó filtres -->
+    <button type="button" id="btn-filtres" class="btn btn-primary mb-3">Filtres</button>
+    <!--  Filtres -->
+    <div class="card col-6" id="card-filtres">
+        <div class="card-body">
+            <form th:action="@{/usuaris/filtrar}" th:object="${filtreUsuari}" method="post">
+            	<!-- Estat d'usuari i rol -->
+                <div class="row">
+                	<!-- Estat d'usuari -->
+                    <div class="col-md-6">
+                        <label for="tipu-usuari" class="form-label">Escull l'estat de l'usuari</label>
+                        <!-- Actiu -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="historic" id="actiu"
+                                th:field="*{historic}" th:value=0 />
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Actiu
+                            </label>
+                        </div>
+                        <!-- Inactiu -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="historic" id="historic"
+                                th:field="*{historic}" th:value=1 />
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Inactiu
+                            </label>
+                        </div>
+                    </div>
+                     <!-- Rol -->
+                    <div class="col-md-6">
+                        <label for="tipu-usuari" class="form-label">Escull un rol</label>
+                         <!-- Indiferent -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rol" id="indiferent" th:field="*{rol}"
+                                th:value=0 />
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Indiferent
+                            </label>
+                        </div>
+                        <!-- Usuari -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rol" id="usuari" th:field="*{rol}"
+                                th:value=2 />
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Usuari
+                            </label>
+                        </div>
+                        <!-- Administrador -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rol" id="administrador" th:field="*{rol}"
+                                th:value=1 />
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Administrador
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Nom | Cognoms | DNI -->
+                <div class="row">
+                	<!-- Nom -->
+                    <div class="col-md-12 mt-2">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input class="form-control me-2" type="text" placeholder="Cercar nom" aria-label="Search"
+                            id="nom" th:field="*{nom}">
+                    </div>
+                </div>
+                <div class="row">
+                	<!-- Cognoms -->
+                    <div class="col-md-12 mt-2">
+                        <label for="cognoms" class="form-label">Cognoms</label>
+                        <input class="form-control me-2" type="text" placeholder="Cercar cognoms" aria-label="Search"
+                            id="cognoms" th:field="*{cognoms}">
+                    </div>
+                </div>
+                <div class="row">
+                	<!-- DNI -->
+                    <div class="col-md-12 mt-2">
+                        <label for="dni" class="form-label">DNI</label> <input class="form-control me-2" type="text"
+                            placeholder="Cercar DNI" aria-label="Search" id="dni" th:field="*{dni}">
+                    </div>
+                    <div>
+                    	<!-- Botó cercar usuari -->
+                        <button class="btn btn-primary mt-3" type="submit">Cercar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-			<div>
-				<fieldset>
-					<legend>Escull Actiu o històric</legend>
-					<label>
-						<input type="radio" th:field="*{historic}" th:value=0 />Actiu
-					</label>
-					<label>
-						<input type="radio" th:field="*{historic}" th:value=1 />Històric
-					</label>
-
-				</fieldset>
-			</div>
-
-			<div>
-				<fieldset>
-					<legend>Escull Rol</legend>
-					<label>
-						<input type="radio" th:field="*{rol}" th:value=0 />Indiferent
-					</label>
-					<label>
-						<input type="radio" th:field="*{rol}" th:value=2 />Usuari
-					</label>
-					<label>
-						<input type="radio" th:field="*{rol}" th:value=1 />Administrador
-					</label>
-				</fieldset>
-			</div>
-
-			<div>
-				<label for="nom" class="form-label">Nom</label> <input class="form-control me-2" type="text"
-					placeholder="Cercar nom" aria-label="Search" id="nom" th:field="*{nom}">
-			</div>
-			<div>
-				<label for="cognoms" class="form-label">Cognoms</label> <input class="form-control me-2" type="text"
-					placeholder="Cercar cognoms" aria-label="Search" id="cognoms" th:field="*{cognoms}">
-			</div>
-			<div>
-				<label for="dni" class="form-label">DNI</label> <input class="form-control me-2" type="text"
-					placeholder="Cercar dni" aria-label="Search" id="dni" th:field="*{dni}">
-			</div>
-
-			<div>
-				<button class="btn btn-primary" type="submit">Cercar</button>
-			</div>
-		</form>
-	</div>
-
-	<div class="pb-4">
+	<div class="pb-4 mt-3">
 		<h2 class="float-start">Llistat dels usuaris</h2>
 
 	</div>
@@ -115,7 +152,5 @@
 	<footer th:replace="generic/head :: footer"></footer>
 
 </body>
-
-</html>
 
 </html>
