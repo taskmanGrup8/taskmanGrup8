@@ -10,12 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="empreses")
 public class Empresa implements Serializable {
 	
+		
 	/**
 	 * 
 	 */
@@ -28,13 +28,9 @@ public class Empresa implements Serializable {
 	@NotBlank
 	@Column(name="nombre", nullable=false)
 	private String nombre;	
-	
-	
-	
-	
+			
 	@NotBlank
-	@Pattern(regexp="([0-9]{8}[A-Z]{1})|([A-Z]{1}[0-9]{8})")
-	//@Size(min=9, max=9)
+	@Pattern(regexp="([0-9]{8}[A-Z]{1})|([A-Z]{1}[0-9]{8})")	
 	@Column(name="cif", unique=true, nullable=false)
 	private String cif;
 	
@@ -43,7 +39,7 @@ public class Empresa implements Serializable {
 	private String direccion;
 	
 	@Column(name="logo")
-	private String logo;
+	private String logo="";
 	
 	
 	public Empresa() {
