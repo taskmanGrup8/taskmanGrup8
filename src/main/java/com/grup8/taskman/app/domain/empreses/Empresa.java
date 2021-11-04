@@ -54,9 +54,12 @@ public class Empresa implements Serializable {
 	private String cpostal;
 	
 	@Pattern(regexp="[0-9]{9}")	
+	@Column(name="telefono", nullable=false)
 	private String telefono;
 	
+	@NotBlank
 	@Email
+	@Column(name="email", nullable=false)
 	private String email;
 	
 	@Column(name="logo")
