@@ -22,10 +22,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.grup8.taskman.app.domain.departaments.Departament;
+import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.usuaris.FiltreUsuaris;
 import com.grup8.taskman.app.domain.usuaris.Rol;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.departament.IDepartamentService;
+import com.grup8.taskman.app.services.empresa.IEmpresaService;
 import com.grup8.taskman.app.services.rol.IRolService;
 import com.grup8.taskman.app.services.usuari.IUsuariService;
 import com.grup8.taskman.app.util.PageRender;
@@ -43,19 +45,26 @@ public class UsuariController {
 
 	@Autowired
 	IUsuariService usuariService;
+	
+	@Autowired
+	IEmpresaService empresaService;
 
 	private FiltreUsuaris filtreUsuari = new FiltreUsuaris();
 	private String titolBoto;
 	private String titol;
+	Empresa empresa;
 
 	@GetMapping("/crear")
 	public String crear(Model model) {
+		
+		if(empresa==null)return "redirect:/";
 
 		titol = "Crear nou usuari";
 		titolBoto = "crear Usuari";
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", new Usuari());
 		model.addAttribute("titolBoto", titolBoto);
+		model.addAttribute("empresa", empresa);
 
 		return "usuaris/crear";
 	}
@@ -78,6 +87,7 @@ public class UsuariController {
 
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
+		model.addAttribute("empresa", empresa);
 		if (!comprobacionDni(usuari))
 			result.rejectValue("dni", "usuari.dniExistente");
 
@@ -99,29 +109,12 @@ public class UsuariController {
 	@GetMapping("/listar")
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page,	Model model) {
 
-		System.out.println(filtreUsuari.isFiltrat());
-	/*	filtreUsuari.setNom(nom);
-		filtreUsuari.setCognoms(cognoms);
-		filtreUsuari.setHistoric(historic);
-		filtreUsuari.setDni(dni);
-		filtreUsuari.setRol(rol);
-		System.out.println("Historic: " + filtreUsuari.getHistoric());*/
-
-		
-		
+		if(empresa==null)empresa=empresaService.findById(1);
+		if(empresa==null)return "redirect:/";	
 		Pageable pageRequest = PageRequest.of(page, 4);
 		
-	//	filtreUsuari.actualizar();
+	
 		Page<Usuari> usuaris = this.getUsuaris(pageRequest);
-
-		/*
-		 * 
-		 * boolean filtrado=true; if(keyword==null) {
-		 * 
-		 * usuaris=usuariService.findByActivo(true, pageRequest); filtrado=false;
-		 * 
-		 * }
-		 */
 
 		PageRender<Usuari> pageRender = new PageRender<Usuari>("/usuaris/listar", usuaris);
 
@@ -129,7 +122,7 @@ public class UsuariController {
 		model.addAttribute("page", pageRender);
 		model.addAttribute("filtreUsuari", filtreUsuari);
 		model.addAttribute("usuaris", usuaris);
-		
+		model.addAttribute("empresa", empresa);
 
 		return "usuaris/listar";
 	}
@@ -145,14 +138,16 @@ public class UsuariController {
 	
 	@GetMapping("/ver/{id}")
 	public String ver(@PathVariable Long id, Model model) {
-		
+		if(empresa==null)return "redirect:/";
 		Usuari usuari=usuariService.findById(id);		
-		if(usuari==null) return "redirect:listar";
+		if(usuari==null) return "redirect:listar";		
 		List<Departament> departaments= usuari.getDepartaments();		
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
 		model.addAttribute("boton","Ver Listado departamentos");
 		model.addAttribute("usuari",usuari);
+		model.addAttribute("empresa", empresa);
+		model.addAttribute("deps", usuari.getDepartaments());
 		
 		return "usuaris/ver";
 	}
@@ -160,6 +155,7 @@ public class UsuariController {
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
 
+		if(empresa==null)return "redirect:/";
 		if (id > 0) {
 
 			Usuari user = usuariService.findById(id);
@@ -186,6 +182,7 @@ public class UsuariController {
 	public String editar(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
 
 		Usuari usuari = null;
+		if(empresa==null)return "redirect:/";
 
 		if (id > 0) {
 
@@ -205,8 +202,9 @@ public class UsuariController {
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);
+		model.addAttribute("empresa", empresa);
 
-		return "usuaris/crear";
+		return "usuaris/crear2";
 	}
 
 	private boolean comprobacionDni(Usuari usuario) {
@@ -228,17 +226,6 @@ public class UsuariController {
 	Page<Usuari> getUsuaris(Pageable pageRequest) {
 		
 		Page<Usuari> usuaris=null;	
-		
-		/*boolean cambios=filtreUsuari.consultarCambios();
-		
-		
-		if(cambios) {
-			
-	//		page=0;
-			
-		}*/
-		
-		
 		
 		
 		int opcion=filtreUsuari.getFiltreUsuaris();
