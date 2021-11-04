@@ -4,10 +4,16 @@
 <head th:replace="generic/head :: header">
 </head>
 
-<body class="container mt-5 pt-5">
+<body>
+
+	<div th:replace="generic/empresa :: cabecera"></div>
+	<div class="container mt-5 pt-5">
+	<div th:replace="generic/head :: mensajes"></div>
+	
     <div class="pb-4">
         <h2 th:text="${titol}"></h2>
     </div>
+
     <div class="row">
         <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
             <div class="mb-3 col-1">
@@ -24,6 +30,7 @@
            
             <input type="submit" class="btn btn-primary" th:value="${titol}" />
         </form>
+    </div>
     </div>
 
 </body>
