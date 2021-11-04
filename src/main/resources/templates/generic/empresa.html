@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="cat">
+
+<body>
+
+	<div th:fragment="cabecera" class="bg-dark text-white">
+
+		<div class="row">
+			<div class="col-2">
+				<img class="img-thumbnail img-fluid" style="max-width: 35%;"
+					th:if="${#strings.length(empresa.logo)>0}"
+					th:src="@{'/uploads/' + ${empresa.logo}}" th:alt="${empresa.logo}" />
+			</div>
+			<div class="col-10 d-flex align-items-center">
+				<span class="fs-1 fw-bold" th:text="${empresa.nombre}"></span>
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+</html>
