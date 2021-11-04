@@ -8,8 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="empreses")
@@ -37,6 +39,25 @@ public class Empresa implements Serializable {
 	@NotBlank
 	@Column(name="direccion", nullable=false)
 	private String direccion;
+	
+	@NotBlank
+	@Column(name="localidad", nullable=false)
+	private String localidad;
+	
+	@NotBlank
+	@Column(name="provincia", nullable=false)
+	private String provincia;
+	
+	@NotBlank
+	@Size(min=5, max=5)
+	@Column(name="cpostal", nullable=false)
+	private String cpostal;
+	
+	@Pattern(regexp="[0-9]{9}")	
+	private String telefono;
+	
+	@Email
+	private String email;
 	
 	@Column(name="logo")
 	private String logo="";
@@ -86,6 +107,50 @@ public class Empresa implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCpostal() {
+		return cpostal;
+	}
+
+	public void setCpostal(String cpostal) {
+		this.cpostal = cpostal;
+	}
+	
+	
+	
+	
 	
 	
 	
