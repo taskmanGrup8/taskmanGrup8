@@ -1,12 +1,14 @@
 /* Populate tables */
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_ADMIN', 'Administrador');
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_USER', 'Usuario');
-
+INSERT INTO rols (codigo, nombre) VALUES('ROLE_SUPER', 'Super Administrador');
 
 INSERT INTO departaments (codigo, nombre) VALUES('INF', 'Informàtica');
+INSERT INTO departaments (codigo, nombre) VALUES('CON', 'Contabilitat');
+INSERT INTO departaments (codigo, nombre) VALUES('PRD', 'Producció');
 
 
-
+INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email) VALUES(true, 'Vázquel Iglesias', '72345678A', 'Paula', '1111', true, '666554411', 3, 'sergio@correo.com');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email) VALUES(true, 'Esteban Gutiérrez', '12345678A', 'Sergio', '1111', true, '666554411', 1, 'sergio@correo.com');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email) VALUES(true, 'Gómez Casas', '12345679A', 'Pablo', '2222', true, '666554422', 2, 'pablo@correo.com');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email) VALUES(true, 'López Carrasco', '22345678A', 'Aitor', '1111', true, '666554411', 1, 'aitor@correo.com');
