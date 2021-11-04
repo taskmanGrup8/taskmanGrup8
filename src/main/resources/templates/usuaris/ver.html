@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="cat" xmlns:th="http://www.thymeLeaf.org">
+
+<head th:replace="generic/head :: header">
+
+
+</head>
+
+<body>
+
+	<div th:replace="generic/empresa :: cabecera"></div>
+	<div class="container mt-5 pt-5">
+		<div class="pb-4">
+			<h2
+				th:text="'Usuari ' + ${usuari.nombre} + ' ' + ${usuari.apellidos}">]</h2>
+		</div>
+		<div class="pt-3">
+			<form class="g-3 mr-5" th:object="${usuari}"
+				method="post">
+				<fieldset disabled>
+					<!-- Nom i Cognoms -->
+					<div class="row pt-3">
+						<div class="col-md-3">
+							<label for="nom" class="form-label">Nom</label> <input
+								type="text" class="form-control" id="nom" th:field="*{nombre}"/>
+						</div>
+						<div class="col-md-3">
+							<label for="cognoms" class="form-label">Cognoms</label> <input
+								type="text" class="form-control" id="cognoms" th:field="*{apellidos}"/>
+						</div>
+					</div>
+					<!-- DNI i Telèfon -->
+					<div class="row pt-3">
+						<div class="col-md-3">
+							<label for="dni" class="form-label">DNI</label> <input
+								type="text" class="form-control" id="dni" th:field="*{dni}"/>
+						</div>
+						<div class="col-md-3">
+							<label for="telefon" class="form-label">Telèfon</label> <input
+								type="text" class="form-control" id="telefon" th:field="*{telefono}" />
+						</div>
+					</div>
+					<!-- Correu electrònic i Rol -->
+					<div class="row pt-3">
+						<div class="col-md-3">
+							<label for="correu" class="form-label">Correu eletrònic</label> <input
+								type="text" class="form-control" id="correu" th:field="*{email}" />
+						</div>
+						<div class="col-md-3">
+							<label for="rol" class="form-label">Rol</label> <input
+								type="text" class="form-control" id="rol" th:field="*{rol.nombre}" />
+						</div>
+					</div>					
+				</fieldset>
+				<div class="pt-4">
+					<input type="submit" class="btn btn-primary" th:value="${titol}" />
+				</div>
+			</form>			
+		</div>
+		
+		<div class="row pt-5 pb-3">
+			<div class="col-12">
+				<table class="mt-3 table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Alias</th>
+							<th scope="col">Nom Departament</th>							
+							<th scope="col">Editar</th>
+							<th scope="col">Eliminar</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="departament: ${deps}">
+							<td class="text-center"><a class="btn btn-primary btn-xs"
+								th:href="@{/departaments/ver/}+ ${departament.id}" th:text="${departament.id}"></a></td>
+							<td th:text="${departament.codigo}"></td>
+							<td th:text="${departament.nombre}"></td>							
+							<td class="text-center"><a th:href="@{/departaments/actualizar/}+ ${departament.id}"><i
+									class="fas fa-edit text-primary"></i></a></td>
+							<td class="text-center"><a th:href="@{/departaments/eliminar/}+ ${departament.id}"
+								onclick="return confirm('Estàs segur que vols eliminar?');"><i
+									class="fas fa-trash text-danger"></i></a></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>		
+	</div>	
+	<footer th:replace="generic/head :: footer"></footer>
+</body>
+
+</html>
