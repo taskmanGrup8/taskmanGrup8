@@ -6,13 +6,15 @@
 
 <body class="container mt-5 pt-5">
 
-	<div class="alert alert-info text-center" th:text="'Es necessari crear una empresa per continuar'"></div>
+	<div class="alert alert-info text-center"
+		th:text="'Es necessari crear una empresa per continuar'"></div>
 	<div class="pb-4">
 		<h2 th:text="${titol}"></h2>
 	</div>
 
 	<div class="row">
-		<form th:action="@{/empreses/result}" th:object="${empresa}" method="post" enctype="multipart/form-data">
+		<form th:action="@{/empreses/result}" th:object="${empresa}"
+			method="post" enctype="multipart/form-data">
 			<div class="mb-3 col-1">
 				<label for="nombre" class="form-label">Nom</label> <input
 					type="text" class="form-control" id="nombre" th:field="*{nombre}" />
@@ -35,14 +37,52 @@
 			<div th:if="${#fields.hasErrors('direccion')}"
 				th:errors="*{direccion}" class="alert alert-danger"></div>
 
+			<div class="mb-3 col-4">
+				<label for="cif" class="form-label">Localitat</label> <input
+					type="text" class="form-control" id="localidad"
+					th:field="*{localidad}" />
+			</div>
+			<div th:if="${#fields.hasErrors('localidad')}"
+				th:errors="*{localidad}" class="alert alert-danger"></div>
+
+			<div class="mb-3 col-4">
+				<label for="cif" class="form-label">Província</label> <input
+					type="text" class="form-control" id="provincia"
+					th:field="*{provincia}" />
+			</div>
+			<div th:if="${#fields.hasErrors('provincia')}"
+				th:errors="*{provincia}" class="alert alert-danger"></div>
+
+
+			<div class="mb-3 col-4">
+				<label for="cif" class="form-label">Codi Postal</label> <input
+					type="text" class="form-control" id="cpostal" th:field="*{cpostal}" />
+			</div>
+			<div th:if="${#fields.hasErrors('cpostal')}" th:errors="*{cpostal}"
+				class="alert alert-danger"></div>
+
+			<div class="mb-3 col-4">
+				<label for="cif" class="form-label">Telèfon</label> <input
+					type="text" class="form-control" id="telefono"
+					th:field="*{telefono}" />
+			</div>
+			<div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"
+				class="alert alert-danger"></div>
+
+			<div class="mb-3 col-4">
+				<label for="cif" class="form-label">Correu Electrónic</label> <input
+					type="text" class="form-control" id="email" th:field="*{email}" />
+			</div>
+			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+				class="alert alert-danger"></div>
 
 			<div class="mb-3 col-4">
 				<img class="img-thumbnail img-fluid" style="max-width: 35%;"
 					th:if="${#strings.length(empresa.logo)>0}"
 					th:src="@{'/uploads/' + ${empresa.logo}}" th:alt="${empresa.logo}" />
-				<label for="file" class="form-label">Logo</label> <input
-					type="file" class="form-control" name="file"/>
-			</div>			
+				<label for="file" class="form-label">Logo</label> <input type="file"
+					class="form-control" name="file" />
+			</div>
 
 			<input type="submit" class="btn btn-primary" th:value="${titol}" />
 		</form>
