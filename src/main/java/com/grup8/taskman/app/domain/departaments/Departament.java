@@ -11,7 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 
@@ -30,11 +32,11 @@ public class Departament implements Serializable {
 	@Column(name="id")
 	private Long id;
 	
-	
+	@NotBlank
 	@Column(name="codigo", unique=true, length=3, nullable=false, updatable=true )
 	private String codigo;
 	
-	
+	@NotBlank
 	@Column(name="nombre", unique=true, length=20, nullable=false, updatable=true )
 	private String nombre;	
 	
@@ -81,6 +83,12 @@ public class Departament implements Serializable {
 		
 		usuaris.remove(usuari);
 	}	
+	
+	@PrePersist
+	public void prePersist() {
+		
+		this.codigo=codigo.toUpperCase();
+	}
 	
 	
 	@Override
