@@ -3,3 +3,9 @@
 #card-filtres {
     display: none;
 }
+
+/* Ocultar & mostrar els llistats d'usuaris i departaments */
+
+#mostrar-taula {
+    display: none;
+}

@@ -15,44 +15,36 @@
 		</div>
 
 		<div class="row">
-			<form th:action="@{/departaments/result}" th:object="${departament}"
-				method="post">
+			<form th:action="@{/departaments/result}" th:object="${departament}" method="post">
 				<fieldset disabled>
 					<!-- ID -->
 					<div class="mb-3 col-1">
-						<label for="id" class="form-label">ID</label> <input type="text"
-							class="form-control" id="id" th:field="*{id}" />
+						<label for="id" class="form-label">ID</label> <input type="text" class="form-control" id="id"
+							th:field="*{id}" />
 					</div>
 					<!-- Alias -->
 					<div class="mb-3 col-1">
-						<label for="nom-alias" class="form-label">Alias</label> <input
-							type="text" class="form-control" id="nom-alias"
-							th:field="*{codigo}" />
+						<label for="nom-alias" class="form-label">Alias</label> <input type="text" class="form-control"
+							id="nom-alias" th:field="*{codigo}" />
 					</div>
 					<!-- Nom del departament -->
 					<div class="mb-3 col-4">
-						<label for="nom-departament" class="form-label">Nom del
-							departament</label> <input type="text" class="form-control"
-							id="nom-departament" th:field="*{nombre}" />
+						<label for="nom-departament" class="form-label">Nom del departament</label>
+						<input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
 					</div>
 				</fieldset>
-				<input type="submit" class="btn btn-primary" th:value="${boton}" />
-				<!-- Bot� per anar enrere -->
+
 			</form>
-
-
 		</div>
-
-		<div class="pb-4 py-3">
-			<h2 class="float-start">Llistat dels usuaris</h2>
-
-		</div>
-
-
-
-		<div class="row pt-5 pb-3">
+		<!-- Botó per ocultar / mostrar la lista -->
+		<input type="submit" class="btn btn-primary mt-3" id="btn-filtres" th:value="${boton}" />
+		<!-- Llistat d'usuaris assignats a aquest departament -->
+		<div class="row mt-5" id="mostrar-taula">
+			<div class="pb-4 mt-3">
+				<h2 class="float-start">Llistat dels usuaris</h2>
+			</div>
 			<div class="col-12">
-				<table class="mt-3 table">
+				<table class="mt-3 table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">#</th>
@@ -69,8 +61,8 @@
 
 					<tbody>
 						<tr th:each="usuari: ${usuaris}">
-							<td class="text-center"><a class="btn btn-primary btn-xs"
-								th:href="@{/usuaris/ver/}+ ${usuari.id}" th:text="${usuari.id}"></a></td>
+							<td class="text-center"><a class="btn btn-outline-primary btn-sm"
+									th:href="@{/usuaris/ver/}+ ${usuari.id}" th:text="${usuari.id}"></a></td>
 							<td th:text="${usuari.nombre}"></td>
 							<td th:text="${usuari.apellidos}"></td>
 							<td th:text="${usuari.dni}"></td>
@@ -78,15 +70,13 @@
 							<td th:text="${usuari.telefono}"></td>
 							<td th:text="${usuari.rol.nombre}"></td>
 							<td class="text-center"><a th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i
-									class="fas fa-edit text-primary"></i></a></td>
+										class="fas fa-edit text-primary"></i></a></td>
 							<td class="text-center"><a th:href="@{/usuaris/eliminar/}+ ${usuari.id}"
-								onclick="return confirm('Estàs segur que vols eliminar?');"><i
-									class="fas fa-trash text-danger"></i></a></td>
-
+									onclick="return confirm('Estàs segur que vols eliminar?');"><i
+										class="fas fa-trash text-danger"></i></a></td>
 						</tr>
 					</tbody>
 				</table>
-
 			</div>
 		</div>
 	</div>

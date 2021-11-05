@@ -2,19 +2,18 @@
 <html xmlns:th="http://www.thymeLeaf.org">
 
 <head th:fragment="header">
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title th:text="${titol}"></title>
-<!-- Bootstrap CSS -->
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-<link th:href="@{/plugins/font-awesome-5/css/fontawesome.min.css}"
-	rel="stylesheet" />
-<!-- Select2 Bootstrap 5 -->
-<link th:href="@{/plugins/select2/dist/css/select2.min.css}"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	th:href="@{/css/select2-bootstrap-5-theme.min.css}" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${titol}"></title>
+	<!-- Bootstrap CSS -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/font-awesome-5/css/fontawesome.min.css}" rel="stylesheet" />
+	<!-- Select2 Bootstrap 5 -->
+	<link th:href="@{/plugins/select2/dist/css/select2.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" th:href="@{/css/select2-bootstrap-5-theme.min.css}" />
+	<!-- CSS -->
+	<link th:href="@{/css/css-main.css}" rel="stylesheet" />
 </head>
 
 <footer th:fragment="footer">
@@ -29,14 +28,11 @@
 <body>
 
 	<div th:fragment="mensajes">
-		<div class="alert alert-success" th:if="${success!=null}"
-			th:text="${success}"></div>
-		<div class="alert alert-danger" th:if="${error!=null}"
-			th:text="${error}"></div>
-		<div class="alert alert-warning" th:if="${warning!=null}"
-			th:text="${warning}"></div>
-		<div class="alert alert-info" th:if="${info != null}"
-			th:text="${info}"></div>
+		<div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning!=null}" th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
 	</div>
 </body>
+
 </html>

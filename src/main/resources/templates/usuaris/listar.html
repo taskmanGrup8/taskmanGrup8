@@ -16,30 +16,25 @@
 		<button type="button" id="btn-filtres" class="btn btn-primary mb-3">Filtres</button>
 
 		<!--  Filtres -->
-
 		<div class="card col-6" id="card-filtres">
 			<div class="card-body">
-				<form th:action="@{/usuaris/filtrar}" th:object="${filtreUsuari}"
-					method="post">
+				<form th:action="@{/usuaris/filtrar}" th:object="${filtreUsuari}" method="post">
 					<!-- Estat d'usuari i rol -->
 					<div class="row">
 						<!-- Estat d'usuari -->
 						<div class="col-md-6">
-							<label for="tipu-usuari" class="form-label">Escull
-								l'estat de l'usuari</label>
+							<label for="tipu-usuari" class="form-label">Escull l'estat de l'usuari</label>
 							<!-- Actiu -->
 							<div class="form-check">
-								<input class="form-check-input" type="radio" name="historic"
-									id="actiu" th:field="*{historic}" th:value=0 /> <label
-									class="form-check-label" for="flexRadioDefault1"> Actiu
-								</label>
+								<input class="form-check-input" type="radio" name="historic" id="actiu"
+									th:field="*{historic}" th:value=0 />
+								<label class="form-check-label" for="flexRadioDefault1">Actiu</label>
 							</div>
 							<!-- Inactiu -->
 							<div class="form-check">
-								<input class="form-check-input" type="radio" name="historic"
-									id="historic" th:field="*{historic}" th:value=1 /> <label
-									class="form-check-label" for="flexRadioDefault2">
-									Històric </label>
+								<input class="form-check-input" type="radio" name="historic" id="historic"
+									th:field="*{historic}" th:value=1 />
+								<label class="form-check-label" for="flexRadioDefault2">Històric</label>
 							</div>
 						</div>
 						<!-- Rol -->
@@ -47,24 +42,21 @@
 							<label for="tipu-usuari" class="form-label">Escull un rol</label>
 							<!-- Indiferent -->
 							<div class="form-check">
-								<input class="form-check-input" type="radio" name="rol"
-									id="indiferent" th:field="*{rol}" th:value=0 /> <label
-									class="form-check-label" for="flexRadioDefault1">
-									Indiferent </label>
+								<input class="form-check-input" type="radio" name="rol" id="indiferent"
+									th:field="*{rol}" th:value=0 />
+								<label class="form-check-label" for="flexRadioDefault1">Indiferent</label>
 							</div>
 							<!-- Usuari -->
 							<div class="form-check">
-								<input class="form-check-input" type="radio" name="rol"
-									id="usuari" th:field="*{rol}" th:value=2 /> <label
-									class="form-check-label" for="flexRadioDefault2">
-									Usuari </label>
+								<input class="form-check-input" type="radio" name="rol" id="usuari" th:field="*{rol}"
+									th:value=2 />
+								<label class="form-check-label" for="flexRadioDefault2">Usuari</label>
 							</div>
 							<!-- Administrador -->
 							<div class="form-check">
-								<input class="form-check-input" type="radio" name="rol"
-									id="administrador" th:field="*{rol}" th:value=1 /> <label
-									class="form-check-label" for="flexRadioDefault2">
-									Administrador </label>
+								<input class="form-check-input" type="radio" name="rol" id="administrador"
+									th:field="*{rol}" th:value=1 />
+								<label class="form-check-label" for="flexRadioDefault2">Administrador</label>
 							</div>
 						</div>
 					</div>
@@ -72,26 +64,23 @@
 					<div class="row">
 						<!-- Nom -->
 						<div class="col-md-12 mt-2">
-							<label for="nom" class="form-label">Nom</label> <input
-								class="form-control me-2" type="text" placeholder="Cercar nom"
-								aria-label="Search" id="nom" th:field="*{nom}">
+							<label for="nom" class="form-label">Nom</label> <input class="form-control me-2" type="text"
+								placeholder="Cercar nom" aria-label="Search" id="nom" th:field="*{nom}">
 						</div>
 					</div>
 					<div class="row">
 						<!-- Cognoms -->
 						<div class="col-md-12 mt-2">
-							<label for="cognoms" class="form-label">Cognoms</label> <input
-								class="form-control me-2" type="text"
-								placeholder="Cercar cognoms" aria-label="Search" id="cognoms"
+							<label for="cognoms" class="form-label">Cognoms</label> <input class="form-control me-2"
+								type="text" placeholder="Cercar cognoms" aria-label="Search" id="cognoms"
 								th:field="*{cognoms}">
 						</div>
 					</div>
 					<div class="row">
 						<!-- DNI -->
 						<div class="col-md-12 mt-2">
-							<label for="dni" class="form-label">DNI</label> <input
-								class="form-control me-2" type="text" placeholder="Cercar DNI"
-								aria-label="Search" id="dni" th:field="*{dni}">
+							<label for="dni" class="form-label">DNI</label> <input class="form-control me-2" type="text"
+								placeholder="Cercar DNI" aria-label="Search" id="dni" th:field="*{dni}">
 						</div>
 						<div>
 							<!-- Botó cercar usuari -->
@@ -104,12 +93,10 @@
 
 		<div class="pb-4 mt-3">
 			<h2 class="float-start">Llistat dels usuaris</h2>
-
 		</div>
 
 		<div class="pt-5 pb-3">
-			<a class="btn btn-primary" th:href="@{/usuaris/crear}">Crear
-				usuari</a>
+			<a class="btn btn-primary" th:href="@{/usuaris/crear}">Crear usuari</a>
 		</div>
 
 		<div class="row">
@@ -131,23 +118,23 @@
 
 					<tbody>
 						<tr th:each="usuari: ${usuaris}">
-							<td class="text-center"><a
-								class="btn btn-outline-primary btn-sm"
-								th:href="@{/usuaris/ver/}+ ${usuari.id}" th:text="${usuari.id}"></a></td>
+							<td class="text-center"><a class="btn btn-outline-primary btn-sm"
+									th:href="@{/usuaris/ver/}+ ${usuari.id}" th:text="${usuari.id}"></a></td>
 							<td th:text="${usuari.nombre}"></td>
 							<td th:text="${usuari.apellidos}"></td>
 							<td th:text="${usuari.dni}"></td>
 							<td th:text="${usuari.email}"></td>
 							<td th:text="${usuari.telefono}"></td>
 							<td th:text="${usuari.rol.nombre}"></td>
-							<td class="text-center"><a
-								th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i
-									class="fas fa-edit text-primary"></i></a></td>
-							<td class="text-center"><a
-								th:href="@{/usuaris/eliminar/}+ ${usuari.id}"
-								onclick="return confirm('Estàs segur que vols eliminar?');"><i
-									class="fas fa-trash text-danger"></i></a></td>
-
+							<td class="text-center">
+								<a th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i
+										class="fas fa-edit text-primary"></i></a>
+							</td>
+							<td class="text-center">
+								<a th:href="@{/usuaris/eliminar/}+ ${usuari.id}"
+									onclick="return confirm('Estàs segur que vols eliminar?');"><i
+										class="fas fa-trash text-danger"></i></a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
