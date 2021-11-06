@@ -2,22 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="cat">
 
 <body>
-
 	<div th:fragment="cabecera" class="bg-dark text-white">
 
-		<div class="row">
-			<div class="col-2">
-				<img class="img-thumbnail img-fluid" style="max-width: 35%;"
-					th:if="${#strings.length(empresa.logo)>0}"
-					th:src="@{'/uploads/' + ${empresa.logo}}" th:alt="${empresa.logo}" />
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container mr-5">
+				<a class="navbar-brand fs-1" href="#">
+					<!-- Logo -->
+					<img th:if="${#strings.length(empresa.logo)>0}" th:src="@{'/uploads/' + ${empresa.logo}}"
+						th:alt="${empresa.logo}" alt="" width="50" height="44"
+						class="d-inline-block align-text-top mt-2">
+					<!-- Nom empresa -->
+					&nbsp;<strong th:text="${empresa.nombre}"></strong>
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<!-- Menú -->
+				<div class="collapse navbar-collapse justify-content-end fs-5" id="navbarSupportedContent">
+					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/taskman/super/perfil}">Home
+								&nbsp;&nbsp;| </a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDepartaments" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Departaments
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" th:href="@{/departaments/crear}">Crear departaments</a>
+								</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" th:href="@{/departaments/listar}">Llistar departaments</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsuaris" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Usuaris
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" th:href="@{/usuaris/crear}">Crear Usuaris</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" th:href="@{/usuaris/listar}">Llistar Usuaris</a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEmpresa" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Empresa
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" th:href="@{/empreses/actualizar}">Modificar empresa</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div class="col-10 d-flex align-items-center">
-				<span class="fs-1 fw-bold" th:text="${empresa.nombre}"></span>
-			</div>
-		</div>
-
+		</nav>
 	</div>
 
-
 </body>
+
 </html>

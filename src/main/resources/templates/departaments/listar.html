@@ -19,22 +19,16 @@
 					departament</a>
 			</div>
 			<!-- Cercar departament-->
-			<div
-				class="boto-cercar-departament col-md-4 col-lg-4 col-sm-12 float-end pt-3"
-				th:if="${not filtrado}">
-				<form class="d-flex" th:action="@{/departaments/listar}"
-					method="get">
-					<input class="form-control" type="text"
-						placeholder="Cercar departament" aria-label="Search"
+			<div class="boto-cercar-departament col-md-4 col-lg-4 col-sm-12 float-end pt-3" th:if="${not filtrado}">
+				<form class="d-flex" th:action="@{/departaments/listar}" method="get">
+					<input class="form-control" type="text" placeholder="Cercar departament" aria-label="Search"
 						name="keyword" id=>
 					<button class="btn btn-primary" type="submit">Cercar</button>
 				</form>
 			</div>
 			<!-- Departament cercat -->
-			<div th:if="${filtrado}"
-				class="boto-eliminar-filtre col-md-4 col-lg-4 col-sm-12 text-end pt-3">
-				<a class="btn btn-primary" th:href="@{/departaments/listar}"
-					th:text="'Eliminar filtre'"></a>
+			<div th:if="${filtrado}" class="boto-eliminar-filtre col-md-4 col-lg-4 col-sm-12 text-end pt-3">
+				<a class="btn btn-primary" th:href="@{/departaments/listar}" th:text="'Eliminar filtre'"></a>
 			</div>
 		</div>
 
@@ -55,19 +49,16 @@
 					<tbody>
 						<!-- Departaments llistats -->
 						<tr th:each="departament: ${departaments}">
-							<td class="text-center"><a
-								class="btn btn-outline-primary btn-sm"
-								th:href="@{/departaments/ver/}+ ${departament.id}"
-								th:text="${departament.id}"></a></td>
+							<td class="text-center"><a class="btn btn-outline-primary btn-sm"
+									th:href="@{/departaments/ver/}+ ${departament.id}" th:text="${departament.id}"></a>
+							</td>
 							<td class="text-center" th:text="${departament.codigo}"></td>
 							<td th:text="${departament.nombre}"></td>
-							<td class="text-center"><a
-								th:href="@{/departaments/actualizar/}+ ${departament.id}"><i
-									class="fas fa-edit text-primary"></i></a></td>
-							<td class="text-center"><a
-								th:href="@{/departaments/eliminar/}+ ${departament.id}"
-								onclick="return confirm('Est�s segur que vols eliminar?');"><i
-									class="fas fa-trash text-danger"></i></a></td>
+							<td class="text-center"><a th:href="@{/departaments/actualizar/}+ ${departament.id}"><i
+										class="fas fa-edit text-primary"></i></a></td>
+							<td class="text-center"><a th:href="@{/departaments/eliminar/}+ ${departament.id}"
+									onclick="return confirm('Est�s segur que vols eliminar?');"><i
+										class="fas fa-trash text-danger"></i></a></td>
 
 						</tr>
 					</tbody>
