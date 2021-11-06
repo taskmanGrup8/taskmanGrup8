@@ -9,3 +9,14 @@
 #mostrar-taula {
     display: none;
 }
+
+/* Estil definits per a las cards del menú principal */
+
+.style-card {
+    border: none;
+}
+
+.style-card p {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

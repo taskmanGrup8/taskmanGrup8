@@ -9,20 +9,50 @@
 	<div th:replace="generic/empresa :: cabecera"></div>
 	<div th:replace="generic/head :: mensajes"></div>
 	<div class="container mt-5 pt-5">
-		<div class="row">
-			<div class="col-2 px-2">
-				<a class="btn btn-primary" th:href="@{/departaments/listar}">Gestió
-					de departaments</a>
+		<div class="row justify-content-center mt-5">
+			<div class="col-md-4 col-xl-4 mb-4 mb-4">
+				<div class="card style-card">
+					<a th:href="@{/departaments/listar}">
+						<img src="https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+							class="card-img-top" alt="...">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title fs-4">Gestiona els departaments</h5>
+						<p class="card-text">Accedeix a aquest apartat per veure el llistat dels departaments,
+							modificar-los, i crear-ne de nous.</p>
+					</div>
+				</div>
 			</div>
-			<div class="col-2 px-2">
-				<a class="btn btn-primary" th:href="@{/usuaris/listar}">Gestió
-					d'usuaris</a>
+			<div class="col-md-4 col-xl-4 mb-4 mb-4">
+				<div class="card style-card">
+					<a th:href="@{/usuaris/listar}">
+						<img src="https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+							class="card-img-top" alt="...">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title fs-4">Gestiona els usuaris</h5>
+						<p class="card-text">Accedeix a aquest apartat per veure el llistat dels usuaris, modificar-los,
+							i
+							crear-ne de nous.</p>
+					</div>
+				</div>
 			</div>
-			<div class="col-2 px-2">
-				<a class="btn btn-primary" th:href="@{/empreses/actualizar}">Actualitzar dades Empresa</a>
+
+			<div class="col-md-4 col-xl-4 mb-4 mb-4">
+				<div class="card style-card">
+					<a th:href="@{/empreses/actualizar}">
+						<img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+							class="card-img-top" alt="...">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title fs-4">Modifica les dades d'empresa</h5>
+						<p class="card-text">Des d'aquí podràs modificar les dades i personalitzar la teva empresa.</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+
 	<footer th:replace="generic/head :: footer"></footer>
 </body>
 
