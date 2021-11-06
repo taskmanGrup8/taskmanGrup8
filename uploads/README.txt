@@ -1,0 +1,1 @@
+Aquí van els arxius que es pugin a l'aplicacio.
