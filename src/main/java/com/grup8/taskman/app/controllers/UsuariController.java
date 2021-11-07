@@ -111,7 +111,7 @@ public class UsuariController {
 
 		if(empresa==null)empresa=empresaService.findById(1);
 		if(empresa==null)return "redirect:/";	
-		Pageable pageRequest = PageRequest.of(page, 4);
+		Pageable pageRequest = PageRequest.of(page, 8);
 		
 	
 		Page<Usuari> usuaris = this.getUsuaris(pageRequest);

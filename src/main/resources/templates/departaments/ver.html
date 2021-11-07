@@ -18,17 +18,17 @@
 			<form th:action="@{/departaments/result}" th:object="${departament}" method="post">
 				<fieldset disabled>
 					<!-- ID -->
-					<div class="mb-3 col-1">
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
 						<label for="id" class="form-label">ID</label> <input type="text" class="form-control" id="id"
 							th:field="*{id}" />
 					</div>
 					<!-- Alias -->
-					<div class="mb-3 col-1">
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
 						<label for="nom-alias" class="form-label">Alias</label> <input type="text" class="form-control"
 							id="nom-alias" th:field="*{codigo}" />
 					</div>
 					<!-- Nom del departament -->
-					<div class="mb-3 col-4">
+					<div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
 						<label for="nom-departament" class="form-label">Nom del departament</label>
 						<input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
 					</div>
@@ -47,15 +47,15 @@
 				<table class="mt-3 table table-striped">
 					<thead>
 						<tr>
-							<th scope="col">#</th>
+							<th class="text-center" scope="col">#</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Cognoms</th>
 							<th scope="col">DNI</th>
 							<th scope="col">Correu electrònic</th>
 							<th scope="col">Telèfon</th>
 							<th scope="col">Rol</th>
-							<th scope="col">Editar</th>
-							<th scope="col">Eliminar</th>
+							<th class="text-center" scope="col">Editar</th>
+							<th class="text-center" scope="col">Eliminar</th>
 						</tr>
 					</thead>
 

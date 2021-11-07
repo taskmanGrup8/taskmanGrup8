@@ -2,7 +2,9 @@
 *  més d'un departament a la vista usuaris/crear */
 
 $(document).ready(function () {
-  $('.departaments-multiple').select2();
+  $('.departaments-multiple').select2({
+    placeholder: "Selecciona un o més departaments"
+  });
 });
 
 /* Funció per ocultar i mostrar els filtres de la taula

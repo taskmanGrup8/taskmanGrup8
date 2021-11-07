@@ -15,16 +15,18 @@
 
         <div class="row">
             <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
-                <div class="mb-3 col-1">
+                <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
                     <label for="nom-alias" class="form-label">Alias</label>
                     <input type="text" class="form-control" id="nom-alias" th:field="*{codigo}" />
                 </div>
-                <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="alert alert-danger"></div>
-                <div class="mb-3 col-4">
+                <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="alert alert-danger col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2"></div>
+                
+                <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <label for="nom-departament" class="form-label">Nom del departament</label>
                     <input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
+                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2"></div>
                 </div>
-                <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger"></div>
+
                 <input type="submit" class="btn btn-primary" th:value="${titol}" />
             </form>
         </div>

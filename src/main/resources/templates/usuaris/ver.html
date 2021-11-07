@@ -18,33 +18,33 @@
 				<fieldset disabled>
 					<!-- Nom i Cognoms -->
 					<div class="row pt-3">
-						<div class="col-md-3">
+						<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 							<label for="nom" class="form-label">Nom</label> <input type="text" class="form-control"
 								id="nom" th:field="*{nombre}" />
 						</div>
-						<div class="col-md-3">
+						<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 							<label for="cognoms" class="form-label">Cognoms</label> <input type="text"
 								class="form-control" id="cognoms" th:field="*{apellidos}" />
 						</div>
 					</div>
 					<!-- DNI i Telèfon -->
 					<div class="row pt-3">
-						<div class="col-md-3">
+						<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 							<label for="dni" class="form-label">DNI</label> <input type="text" class="form-control"
 								id="dni" th:field="*{dni}" />
 						</div>
-						<div class="col-md-3">
+						<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 							<label for="telefon" class="form-label">Telèfon</label> <input type="text"
 								class="form-control" id="telefon" th:field="*{telefono}" />
 						</div>
 					</div>
 					<!-- Correu electrònic i Rol -->
 					<div class="row pt-3">
-						<div class="col-md-3">
+						<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 							<label for="correu" class="form-label">Correu eletrònic</label> <input type="text"
 								class="form-control" id="correu" th:field="*{email}" />
 						</div>
-						<div class="col-md-3">
+						<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 							<label for="rol" class="form-label">Rol</label> <input type="text" class="form-control"
 								id="rol" th:field="*{rol.nombre}" />
 						</div>
@@ -54,7 +54,7 @@
 		</div>
 
 		<!-- Botó per ocultar / mostrar la lista -->
-		<input type="submit" class="btn btn-primary mt-4" id="btn-filtres" th:value="${boton}" />
+		<input type="submit" class="btn btn-primary mt-4 mb-2" id="btn-filtres" th:value="${boton}" />
 		<!-- Llistat d'usuaris assignats a aquest departament -->
 		<div class="row mt-5" id="mostrar-taula">
 			<div class="pb-4 mt-3">

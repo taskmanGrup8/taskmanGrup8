@@ -1,11 +1,11 @@
-/* media-query del botó Eliminar filtre */
+/* Vista: Llistar departament ; Acció: Eliminar filtre */
 @media (max-width: 766px) {
     div .boto-eliminar-filtre {
         text-align: left !important;
     }
 }
 
-/* media-query del Cercar departament */
+/* Vista: Llistar departament ; Acció: Cercar departament */
 @media (max-width: 766px) {
     div .boto-cercar-departament {
         width: 75%;
