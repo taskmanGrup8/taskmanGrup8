@@ -9,8 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="rols")
+/**
+ * Classe que mapejem als camps de la taula rols. Està implementada amb JPA. Servirá per controlar el rol de cada
+ * usuari que determinarà quines accions pot realitzar a l'aplicació
+ * @author Sergio Estebam Gutiérrez
+ * @version 1.0.0
+ *
+ */
+
+@Entity // Indiquem que volem mapejar la classe a la base de dades
+@Table(name="rols") // Associem la classe amb la taula empreses de la base de dades
 public class Rol implements Serializable {
 	
 	/**
@@ -18,22 +26,33 @@ public class Rol implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	// ATRIBUTS
+	
+	
+	// Attribut que s'autogenerarà i que marquem con id a la base de dades
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
 	
+	// Indiquem que codigo no pot ser null a la base de dades, és únic, no es pot actualitzar i té un tamany màxim de 20 dígits.
 	@Column(name="codigo", unique=true, length=10, nullable=false, updatable=false )
 	private String codigo;
 	
+	// Indiquem que nombre no pot ser null a la base de dades, és únic, no es pot actualitzar i té un tamany màxim de 20 dígits.		
 	@Column(name="nombre", unique=true, length=20, nullable=false, updatable=false )
 	private String nombre;
 	
 	
+	// CONSTRUCTOR
 	
 	public Rol() {
 		
 	}
+	
+	
+	// SETTERS I GETTERS
+	
 	public Long getId() {
 		return id;
 	}
@@ -51,8 +70,6 @@ public class Rol implements Serializable {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	
-	
+	}	
 
 }
