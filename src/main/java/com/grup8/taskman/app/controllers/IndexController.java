@@ -4,6 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controlador que redireccionarà cap al perfil de cada usuari un cop fet login. De moment nomès tenim
+ * superadministrador.
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ *
+ */
 
 @Controller
 @RequestMapping("/taskman")
