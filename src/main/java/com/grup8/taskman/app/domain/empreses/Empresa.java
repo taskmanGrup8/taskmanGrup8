@@ -11,10 +11,17 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="empreses")
+/**
+ * Classe que mapejem als camps de la taula empreses i que anotarem amb les validacions que han de tenir als 
+ * formularis. Està implementada amb JPA i anotada amb javax.Validation
+ * @author Sergio Estebam Gutiérrez
+ * @version 1.0.0
+ *
+ */
+
+@Entity // Indiquem que volem mapejar la classe a la base de dades
+@Table(name="empreses") // Associem la classe amb la taula empreses de la base de dades
 public class Empresa implements Serializable {
 	
 		
@@ -23,53 +30,79 @@ public class Empresa implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	// ATRIBUTS
+	
+	
+	// Attribut que s'autogenerarà i que marquem con id a la base de dades
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
+	// Indiquem que nombre no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null 
+	// ni espais en blanc.
 	@NotBlank
 	@Column(name="nombre", nullable=false)
 	private String nombre;	
-			
+	
+	// Indiquem que el camp cif dels formularis ha de tenir el patró indicat. No pot ser ni null ni espais en blanc.
+	// A la base de dades serà unique i no podrà ser null
 	@NotBlank
 	@Pattern(regexp="([0-9]{8}[A-Z]{1})|([A-Z]{1}[0-9]{8})")	
-	@Column(name="cif", unique=true, nullable=false)
+	@Column(name="cif", unique=true, length=9, nullable=false)
 	private String cif;
 	
+	// Indiquem que direccion no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null 
+	// ni espais en blanc.
 	@NotBlank
 	@Column(name="direccion", nullable=false)
 	private String direccion;
 	
+	// Indiquem que localidad no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null 
+	// ni espais en blanc.
 	@NotBlank
 	@Column(name="localidad", nullable=false)
 	private String localidad;
 	
+	// Indiquem que provincia no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null 
+	// ni espais en blanc.
 	@NotBlank
 	@Column(name="provincia", nullable=false)
 	private String provincia;
 	
-	@NotBlank
-	@Size(min=5, max=5)
-	@Column(name="cpostal", nullable=false)
+	// Indiquem que direccion no pot ser null a la base de dades i té 5 dígits. també indiquem que la validació no pot ser ni null 
+	// ni espais en blanc i a més ha de tenir 5 caracters que han de ser números.
+	@NotBlank	
+	@Pattern(regexp="([0-9]{5})")
+	@Column(name="cpostal", length=5, nullable=false)
 	private String cpostal;
 	
+	// Indiquem que telefono no pot ser null a la base de dades i té 9 dígits. També indiquem que la validació no pot ser ni null
+	// ni espais en blanc i a més ha de tenir 9 caracters que han de ser números
+	@NotBlank
 	@Pattern(regexp="[0-9]{9}")	
-	@Column(name="telefono", nullable=false)
+	@Column(name="telefono", length=9, nullable=false)
 	private String telefono;
 	
+	// Indiquem que email no pot ser null a la base de dades. També indiquem que la validació no pot ser ni null
+	// ni espais en blanc i a més ha de tenir format de correu electrònic.
 	@NotBlank
 	@Email
 	@Column(name="email", nullable=false)
 	private String email;
 	
+	// Camp on guardarem el nom de l'arxiu del logo
 	@Column(name="logo")
 	private String logo="";
 	
 	
+	// CONSTRUCTOR
+	
+	
 	public Empresa() {
-		super();
-		
+				
 	}
+	
+	// SETTERS I GETTERS
 
 	public String getNombre() {
 		return nombre;
@@ -150,13 +183,5 @@ public class Empresa implements Serializable {
 	public void setCpostal(String cpostal) {
 		this.cpostal = cpostal;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
