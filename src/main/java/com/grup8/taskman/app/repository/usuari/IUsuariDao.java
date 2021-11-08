@@ -6,13 +6,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-
 import com.grup8.taskman.app.domain.usuaris.Usuari;
+
+/**
+ * Intefície que extend de PagingAndSortingRepository. PagingAndSortingRepository ja té implementades diverses funcionalitats,
+ * entre elles l'opció de retorna Page en hores de List i manegar Pageable.
+ * A aquesta inteficie afegim altres funcionalitat que volem que tingui
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ */
 
 public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 
 	
 	// ACTIVOS CON ROL
+	
+	// Les consultes amb rol tenen que anar amb @Query perquè fan una consulta sobre la clau forània id_rol i 
+	// Usuario conté una Instancia completa de Rol sencer per tant és una consulta complexa.
+	// Les anotem amb @Query i a value posem la consulta. Finalment posem nativeQuery com true.
 	
 	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol= :rol", nativeQuery=true)
 	public Page<Usuari> findByActivoAndRol(boolean activo, Long rol, Pageable pageable);
@@ -53,6 +64,8 @@ public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 	
 	
 	// HISTÓRICOS CON ROL
+	
+	// Passa exactament igual amb el camp id_rol que el que hem esmentat abans.
 	
 	@Query(value="SELECT * FROM usuaris u WHERE u.id_rol= :rol", nativeQuery=true)
 	public Page<Usuari> findByRol(Long rol, Pageable pageable);
