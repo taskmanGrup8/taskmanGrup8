@@ -86,8 +86,8 @@ public class DepartamentController {
 		// Afegim a la vista el departament trobat, els usuaris que conté, un títol per la vista i el text del bóto,
 		// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
 		model.addAttribute("departament", departament);
-		model.addAttribute("titol", "Detall departament " + departament.getNombre());
-		model.addAttribute("boton","Veure Llistat d'usuaris");
+		model.addAttribute("titol", "Detall del departament: " + departament.getNombre());
+		model.addAttribute("boton","Mostrar usuaris");
 		model.addAttribute("usuaris",departament.getUsuaris());
 		model.addAttribute("empresa",empresa);
 		
@@ -110,8 +110,8 @@ public class DepartamentController {
 		if(empresa==null)return "redirect:/";		
 		
 		// Assignem els titols de creació als nostres atributs
-		titol="Crear Departament";
-		titolBoto="Crear Departament";
+		titol="Crear nou departament";
+		titolBoto="Enviar dades";
 		
 		// Afegim al model el titol i el text del botó acceptar del formulari, un nou departament buït i l'atribut empresa.
 		model.addAttribute("titol", titol);
@@ -295,19 +295,19 @@ public class DepartamentController {
 			departament = departamentService.findById(id);
 			// Si no existeix a la base de dades redireccionem a llistar amb el missatge corresponent.
 			if (departament == null) {
-				flash.addFlashAttribute("error", "El ID del departament no existeix a la BBDD");
+				flash.addFlashAttribute("error", "L'ID del departament no existeix a la BBDD");
 				return "redirect:/departaments/listar";
 			}
 		} else {
 			
 			// Si l'id és erroni redireccionem a listar amb el missatge corresponent.
-			flash.addFlashAttribute("error", "El ID té que ser un número més gran que 0");
+			flash.addFlashAttribute("error", "L'ID ha de ser un número més gran que 0");
 			return "redirect:/departaments/listar";
 		}
 		
 		// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
-		titol="Actualitzar Departament";
-		titolBoto="Actualitzar Departament";
+		titol="Actualitzar departament";
+		titolBoto="Actualitzar departament";
 		
 		// passem el departament trobat, el titol, el text del botó i l'empresa a la vista.
 		model.addAttribute("titol", titol);

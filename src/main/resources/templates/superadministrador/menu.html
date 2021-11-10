@@ -5,16 +5,20 @@
 </head>
 
 <body>
-
+	<!--
+		Vista de la pàgina inicial que visualitza el super administrador en accedir a la pàgina
+		Des d'aquí pot accedir a les tres opcions disponibles de l'aplicació (gestionar departaments, usuaris, i dades de l'empresa)
+	-->
 	<div th:replace="generic/empresa :: cabecera"></div>
-	<div th:replace="generic/head :: mensajes"></div>
 	<div class="container mt-5 pt-5">
-		<div class="row justify-content-center mt-5">
+		<div th:replace="generic/head :: mensajes"></div>
+		<div class="row justify-content-center mt-5 pt-5">
+			<!-- Departaments -->
 			<div class="col-md-4 col-xl-4 mb-4 mb-4">
 				<div class="card style-card">
 					<a th:href="@{/departaments/listar}">
 						<img src="https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
-							class="card-img-top" alt="...">
+							class="card-img-top" alt="Gestiona els departaments">
 					</a>
 					<div class="card-body">
 						<h5 class="card-title fs-4">Gestiona els departaments</h5>
@@ -23,11 +27,12 @@
 					</div>
 				</div>
 			</div>
+			<!-- Usuaris -->
 			<div class="col-md-4 col-xl-4 mb-4 mb-4">
 				<div class="card style-card">
 					<a th:href="@{/usuaris/listar}">
 						<img src="https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-							class="card-img-top" alt="...">
+							class="card-img-top" alt="Gestiona els usuaris">
 					</a>
 					<div class="card-body">
 						<h5 class="card-title fs-4">Gestiona els usuaris</h5>
@@ -36,16 +41,16 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- Empresa -->
 			<div class="col-md-4 col-xl-4 mb-4 mb-4">
 				<div class="card style-card">
 					<a th:href="@{/empreses/actualizar}">
 						<img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
-							class="card-img-top" alt="...">
+							class="card-img-top" alt="Modifica les dades d'empresa">
 					</a>
 					<div class="card-body">
-						<h5 class="card-title fs-4">Modifica les dades d'empresa</h5>
-						<p class="card-text">Des d'aquí podràs modificar les dades i personalitzar la teva empresa.</p>
+						<h5 class="card-title fs-4">Actualitzar les dades d'empresa</h5>
+						<p class="card-text">Des d'aquí podràs actualitzar les dades i personalitzar la teva empresa.</p>
 					</div>
 				</div>
 			</div>

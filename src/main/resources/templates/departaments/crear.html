@@ -5,29 +5,39 @@
 </head>
 
 <body>
+    <!-- 
+		Vista per crear nous departaments.
+		Requereix el camp de l'àlies i el nom
+	-->
     <div th:replace="generic/empresa :: cabecera"></div>
     <div class="container mt-5 pt-5">
         <div th:replace="generic/head :: mensajes"></div>
-
+        <!-- Títol -->
         <div class="pb-4">
             <h2 th:text="${titol}"></h2>
         </div>
 
         <div class="row">
             <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
+                <!-- Àlies -->
                 <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-                    <label for="nom-alias" class="form-label">Alias</label>
+                    <label for="nom-alias" class="form-label">Àlies</label>
                     <input type="text" class="form-control" id="nom-alias" th:field="*{codigo}" />
                 </div>
-                <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="alert alert-danger col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2"></div>
-                
+                <!-- Alerta d'error -->
+                <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
+                    class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
+                <!-- Nom-->
                 <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <label for="nom-departament" class="form-label">Nom del departament</label>
                     <input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
-                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2"></div>
+                    <!-- Alerta d'error -->
+                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2">
+                    </div>
                 </div>
-
-                <input type="submit" class="btn btn-primary" th:value="${titol}" />
+                <!-- Botó per crear el departament -->
+                <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Crear nou departament" th:value="${titolBoto}" />
             </form>
         </div>
     </div>

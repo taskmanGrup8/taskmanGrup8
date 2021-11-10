@@ -103,7 +103,7 @@ public class UsuariController {
 		if(empresa==null)return "redirect:/";	
 
 		titol = "Crear nou usuari";
-		titolBoto = "crear Usuari";
+		titolBoto = "Enviar dades";
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", new Usuari());
 		model.addAttribute("titolBoto", titolBoto);
@@ -247,7 +247,7 @@ public class UsuariController {
 		// Afegim els atributs al model
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
-		model.addAttribute("boton","Ver Listado departamentos");
+		model.addAttribute("boton","Mostrar departaments");
 		model.addAttribute("usuari",usuari);
 		model.addAttribute("empresa", empresa);
 		model.addAttribute("deps", usuari.getDepartaments());

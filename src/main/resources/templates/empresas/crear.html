@@ -5,6 +5,10 @@
 </head>
 
 <body class="container mt-5 pt-5">
+	<!-- 
+		Vista on es realitza l'alta d'una empresa al programa TaskMan
+		Tots els camps són obligatoris d'emprar
+	-->
 	<div class="alert alert-info text-center" th:text="'Es necessari crear una empresa per continuar'"></div>
 	<div class="pb-4">
 		<h2 th:text="${titol}"></h2>
@@ -13,12 +17,13 @@
 	<div class="pt-3">
 		<form class="g-3 mr-5" th:action="@{/empreses/result}" th:object="${empresa}" method="post"
 			enctype="multipart/form-data">
+
 			<div class="row pt-3">
 				<!-- Nom de la empresa -->
 				<div class="col-md-3">
 					<label for="nom" class="form-label">Nom de la empresa</label>
 					<input type="text" class="form-control" id="nom" th:field="*{nombre}">
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="my-2 alert alert-danger">
 					</div>
 				</div>
@@ -26,7 +31,7 @@
 				<div class="col-md-3">
 					<label for="cif" class="form-label">CIF</label>
 					<input type="text" class="form-control" id="cif" th:field="*{cif}" />
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('cif')}" th:errors="*{cif}" class="my-2 alert alert-danger"></div>
 				</div>
 			</div>
@@ -36,7 +41,7 @@
 				<div class="col-md-3">
 					<label for="cif" class="form-label">Adreça</label>
 					<input type="text" class="form-control" id="direccion" th:field="*{direccion}" />
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"
 						class="my-2 alert alert-danger"></div>
 				</div>
@@ -44,7 +49,7 @@
 				<div class="col-md-3">
 					<label for="cif" class="form-label">Localitat</label>
 					<input type="text" class="form-control" id="localidad" th:field="*{localidad}" />
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"
 						class="my-2 alert alert-danger"></div>
 				</div>
@@ -56,7 +61,7 @@
 				<div class="col-md-3">
 					<label for="cif" class="form-label">Província</label>
 					<input type="text" class="form-control" id="provincia" th:field="*{provincia}" />
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}"
 						class="my-2 alert alert-danger"></div>
 				</div>
@@ -65,7 +70,7 @@
 				<div class="col-md-3">
 					<label for="cif" class="form-label">Codi Postal</label>
 					<input type="text" class="form-control" id="cpostal" th:field="*{cpostal}" />
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('cpostal')}" th:errors="*{cpostal}" class="my-2 alert alert-danger">
 					</div>
 				</div>
@@ -77,7 +82,7 @@
 				<div class="col-md-3">
 					<label for="cif" class="form-label">Telèfon</label>
 					<input type="text" class="form-control" id="telefono" th:field="*{telefono}" />
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"
 						class="my-2 alert alert-danger"></div>
 				</div>
@@ -85,14 +90,14 @@
 				<div class="col-md-3">
 					<label for="cif" class="form-label">Correu electrònic</label>
 					<input type="text" class="form-control" id="email" th:field="*{email}" />
-					<!-- err msg -->
+					<!-- Alerta d'error -->
 					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger">
 					</div>
 				</div>
 			</div>
 
 			<div class="row pt-3">
-				<!-- Logo -->
+				<!-- Logo d'empresa -->
 				<div class="col-md-4">
 					<img class="img-thumbnail img-fluid" style="max-width: 15%;"
 						th:if="${#strings.length(empresa.logo)>0}" th:src="@{'/uploads/' + ${empresa.logo}}"
@@ -101,8 +106,10 @@
 						name="file" />
 				</div>
 			</div>
+			<!-- Botó per crear l'empresa -->
 			<div class="pt-4 mb-5">
-				<input type="submit" class="btn btn-primary" th:value="${titol}" />
+				<input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+				title="Modificar les dades" th:value="${boto}" />
 			</div>
 		</form>
 	</div>

@@ -7,7 +7,10 @@
 </head>
 
 <body>
-
+	<!-- 
+		Vista on es pot veure el detall de l'usuari seleccionat: Nom, cognoms, DNI, telèfon, Correu electrònic, rol
+		A sota d'aquests camps d'informació, es poden mostrar u ocultar els departaments als quals pertany aquest usuari
+	-->
 	<div th:replace="generic/empresa :: cabecera"></div>
 	<div class="container mt-5 pt-5">
 		<div class="pb-4">
@@ -53,27 +56,28 @@
 			</form>
 		</div>
 
-		<!-- Botó per ocultar / mostrar la lista -->
-		<input type="submit" class="btn btn-primary mt-4 mb-2" id="btn-filtres" th:value="${boton}" />
-		<!-- Llistat d'usuaris assignats a aquest departament -->
+		<!-- Botó per ocultar / mostrar la llista de departaments -->
+		<input type="submit" class="btn btn-primary mt-4 mb-2" data-bs-toggle="tooltip" data-bs-placement="bottom"
+		title="Mostrar els departaments d'aquest usuari" id="btn-filtres" th:value="${boton}" />
+		<!-- Llistat de departaments assignats a aquest usuari -->
 		<div class="row mt-5" id="mostrar-taula">
 			<div class="pb-4 mt-3">
-				<h2 class="float-start">Llistat dels departaments</h2>
+				<h3 class="float-start">Llistat dels departaments</h3>
 			</div>
-			<div class="col-12">
+			<div class="col-12 mt-4 pt-1">
 				<table class="mt-3 table table-striped">
 					<thead>
 						<tr>
 							<!-- Titols -->
 							<th class="text-center" scope="col">#</th>
-							<th class="text-center" width="15%" scope="col">Alias</th>
+							<th class="text-center" width="15%" scope="col">Àlies</th>
 							<th width="85%" scope="col">Nom</th>
 							<th class="text-center" scope="col">Editar</th>
 							<th class="text-center" scope="col">Eliminar</th>
 						</tr>
 					</thead>
+					<!-- Departaments llistats -->
 					<tbody>
-						<!-- Departaments llistats -->
 						<tr th:each="departament: ${deps}">
 							<td class="text-center"><a class="btn btn-outline-primary btn-sm"
 									th:href="@{/departaments/ver/}+ ${departament.id}" th:text="${departament.id}"></a>

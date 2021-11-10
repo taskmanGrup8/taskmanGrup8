@@ -6,14 +6,18 @@
 </head>
 
 <body>
-
+	<!-- 
+		Vista on es troben llistats tots els usuaris amb els seus camps assignats (ID, Nom, Cognoms, DNI, Email, Telèfon, Rol)
+		Des d'aquesta vista es podrà accedir en detall dins d'un usuari, edita-ho, i eliminar-ho
+		També es pot fer una cerca dels usuaris segons si estan actius o estan deshabilitats, segons el seu rol, nom, cognoms, i DNI
+	-->
 	<div th:replace="generic/empresa :: cabecera"></div>
-
 	<div class="container mt-5 pt-5">
 		<div th:replace="generic/head :: mensajes"></div>
 
 		<!-- Botó filtres -->
-		<button type="button" id="btn-filtres" class="btn btn-primary mb-3">Filtres</button>
+		<button type="button" id="btn-filtres" class="btn btn-primary mb-3" data-bs-toggle="tooltip" data-bs-placement="bottom"
+		title="Filtres per cercar usuaris">Filtres</button>
 
 		<!--  Filtres -->
 		<div class="card col-6" id="card-filtres">
@@ -94,16 +98,17 @@
 		<div class="pb-4 mt-3">
 			<h2 class="float-start">Llistat dels usuaris</h2>
 		</div>
-
+		<!-- Botó crear usuari -->
 		<div class="pt-5 pb-3">
 			<a class="btn btn-primary" th:href="@{/usuaris/crear}">Crear usuari</a>
 		</div>
-
+		<!-- Taula del llistat dels usuaris -->
 		<div class="row">
 			<div class="col-12">
 				<table class="mt-3 table table-striped">
 					<thead>
 						<tr>
+							<!-- Titols -->
 							<th class="text-center" scope="col">#</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Cognoms</th>
@@ -115,11 +120,15 @@
 							<th class="text-center" scope="col">Eliminar</th>
 						</tr>
 					</thead>
-
+					<!-- Usuaris llistats -->
 					<tbody>
 						<tr th:each="usuari: ${usuaris}">
-							<td class="text-center"><a class="btn btn-outline-primary btn-sm"
-									th:href="@{/usuaris/ver/}+ ${usuari.id}" th:text="${usuari.id}"></a></td>
+							<td class="text-center">
+								<a class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"
+									data-bs-placement="bottom" title="Veure usuari"
+									th:href="@{/usuaris/ver/}+ ${usuari.id}" th:text="${usuari.id}">
+								</a>
+							</td>
 							<td th:text="${usuari.nombre}"></td>
 							<td th:text="${usuari.apellidos}"></td>
 							<td th:text="${usuari.dni}"></td>
@@ -128,7 +137,8 @@
 							<td th:text="${usuari.rol.nombre}"></td>
 							<td class="text-center">
 								<a th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i
-										class="fas fa-edit text-primary"></i></a>
+										class="fas fa-edit text-primary"></i>
+								</a>
 							</td>
 							<td class="text-center">
 								<a th:href="@{/usuaris/eliminar/}+ ${usuari.id}"

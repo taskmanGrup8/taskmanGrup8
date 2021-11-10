@@ -1,5 +1,4 @@
 /* Oculta els filtres de la vista usuaris/listar */
-
 #card-filtres {
     display: none;
 }
@@ -20,3 +19,11 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/*
+hr {
+    background: linear-gradient(45deg, #9e2e3c, #691b25);
+    opacity: 1;
+    padding: 25px;
+}
+*/

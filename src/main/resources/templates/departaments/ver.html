@@ -5,7 +5,11 @@
 </head>
 
 <body>
-
+	<!-- 
+		Vista on es pot veure el detall del departament seleccionat (ID, Àlies, i Nom)
+		A sota d'aquests camps d'informació, es poden mostrar u ocultar els usuaris
+		assignats a aquest departamentn
+	-->
 	<div th:replace="generic/empresa :: cabecera"></div>
 	<div class="container mt-5 pt-5">
 
@@ -13,7 +17,7 @@
 		<div class="pb-4">
 			<h2 th:text="${titol}"></h2>
 		</div>
-
+		<!-- Camps del departament seleccionat ( ID | Àlies | Nom )-->
 		<div class="row">
 			<form th:action="@{/departaments/result}" th:object="${departament}" method="post">
 				<fieldset disabled>
@@ -22,9 +26,9 @@
 						<label for="id" class="form-label">ID</label> <input type="text" class="form-control" id="id"
 							th:field="*{id}" />
 					</div>
-					<!-- Alias -->
+					<!-- Àlies -->
 					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-						<label for="nom-alias" class="form-label">Alias</label> <input type="text" class="form-control"
+						<label for="nom-alias" class="form-label">Àlies</label> <input type="text" class="form-control"
 							id="nom-alias" th:field="*{codigo}" />
 					</div>
 					<!-- Nom del departament -->
@@ -33,17 +37,18 @@
 						<input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
 					</div>
 				</fieldset>
-
 			</form>
 		</div>
-		<!-- Botó per ocultar / mostrar la lista -->
-		<input type="submit" class="btn btn-primary mt-3" id="btn-filtres" th:value="${boton}" />
+		<!-- Botó per ocultar / mostrar la llista -->
+		<input type="submit" class="btn btn-primary mt-3" id="btn-filtres" data-bs-toggle="tooltip"
+			data-bs-placement="bottom" title="Mostrar els usuaris que pertanyen a aquest departament"
+			th:value="${boton}" />
 		<!-- Llistat d'usuaris assignats a aquest departament -->
 		<div class="row mt-5" id="mostrar-taula">
 			<div class="pb-4 mt-3">
-				<h2 class="float-start">Llistat dels usuaris</h2>
+				<h3 class="float-start">Llistat dels usuaris</h3>
 			</div>
-			<div class="col-12">
+			<div class="col-12 mt-4 pt-1">
 				<table class="mt-3 table table-striped">
 					<thead>
 						<tr>
@@ -58,7 +63,6 @@
 							<th class="text-center" scope="col">Eliminar</th>
 						</tr>
 					</thead>
-
 					<tbody>
 						<tr th:each="usuari: ${usuaris}">
 							<td class="text-center"><a class="btn btn-outline-primary btn-sm"

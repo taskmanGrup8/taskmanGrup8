@@ -6,7 +6,10 @@
 </head>
 
 <body>
-
+	<!-- 
+		Vista per crear nous usuaris.
+		S'han d'omplir tots els camps menys el de departaments, ja que un usuari pot no tenir cap departament assignat
+	-->
 	<div th:replace="generic/empresa :: cabecera"></div>
 	<div class="container mt-5 pt-5">
 		<div th:replace="generic/head :: mensajes"></div>
@@ -14,8 +17,6 @@
 			<h2 th:text="${titol}"></h2>
 		</div>
 
-		<h5>Omple el formulari que trobaràs a continuació per donar
-			d'alta a un nou usuari</h5>
 		<div class="pt-3">
 			<form class="g-3 mr-5" th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post">
 				<!-- Nom -->
@@ -34,8 +35,9 @@
 							class="my-2 alert alert-danger"></div>
 					</div>
 				</div>
-				<!-- DNI -->
+
 				<div class="row pt-3">
+					<!-- DNI -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 						<label for="dni" class="form-label">DNI</label>
 						<input type="text" class="form-control" id="dni" th:field="*{dni}">
@@ -50,8 +52,9 @@
 							class="my-2 alert alert-danger"></div>
 					</div>
 				</div>
-				<!-- Correu electrònic -->
+
 				<div class="row pt-3">
+					<!-- Correu electrònic -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 						<label for="correu" class="form-label">Correu eletrònic</label>
 						<input type="text" class="form-control" id="correu" th:field="*{email}">
@@ -69,12 +72,13 @@
 						<div th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}" class="alert alert-danger"></div>
 					</div>
 				</div>
-				<!-- Departaments -->
+
 				<div class="row pt-3">
+					<!-- Departaments -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 						<label for="departaments" class="form-label">Departaments</label>
 						<!-- Form multiselect amb select2 -->
-						<select id="departaments" class="form-select departaments-multiple" style="width: 100%" 
+						<select id="departaments" class="form-select departaments-multiple" style="width: 100%"
 							name="departaments[]" th:field="*{departaments}" multiple="multiple">
 							<option th:each="departament: ${listaDepartamentos}" th:text="${departament.nombre}"
 								th:value="${departament.id}"></option>
@@ -83,7 +87,8 @@
 				</div>
 				<!-- Botó -->
 				<div class="pt-4 mb-2">
-					<input type="submit" class="btn btn-primary" th:value="${titolBoto}" />
+					<input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+						title="Crear nou usuari" th:value="${titolBoto}" />
 				</div>
 			</form>
 		</div>

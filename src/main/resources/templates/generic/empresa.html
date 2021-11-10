@@ -2,8 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="cat">
 
 <body>
+	<!-- 
+		Vista del menú principal (navbar) que es mostra un cop s'ha creat l'empresa
+		Apareix el nom de l'empresa i la seva icona, en cas d'haver posat una
+		Es pot navegar pels diferents menús de la pàgina ( Departaments | Usuaris | Empresa )
+	-->
 	<div th:fragment="cabecera" class="bg-dark text-white">
-
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container mr-5">
 				<a class="navbar-brand fs-1">
@@ -22,45 +26,54 @@
 				<!-- Menú -->
 				<div class="collapse navbar-collapse justify-content-end fs-5" id="navbarSupportedContent">
 					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+						<!-- Home -->
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/taskman/super/perfil}">Home
 								&nbsp;&nbsp;| </a>
 						</li>
+						<!-- Departaments -->
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDepartaments" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">
 								Departaments
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<!-- Departaments / Crear departaments -->
 								<li><a class="dropdown-item" th:href="@{/departaments/crear}">Crear departaments</a>
 								</li>
 								<li>
 									<hr class="dropdown-divider">
 								</li>
+								<!-- Departaments / Llistar departaments -->
 								<li><a class="dropdown-item" th:href="@{/departaments/listar}">Llistar departaments</a>
 								</li>
 							</ul>
 						</li>
+						<!-- Usuaris -->
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsuaris" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">
 								Usuaris
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><a class="dropdown-item" th:href="@{/usuaris/crear}">Crear Usuaris</a></li>
+								<!-- Usuaris / Crear usuaris -->
+								<li><a class="dropdown-item" th:href="@{/usuaris/crear}">Crear usuaris</a></li>
 								<li>
 									<hr class="dropdown-divider">
 								</li>
-								<li><a class="dropdown-item" th:href="@{/usuaris/listar}">Llistar Usuaris</a></li>
+								<!-- Usuaris / Llistar usuaris -->
+								<li><a class="dropdown-item" th:href="@{/usuaris/listar}">Llistar usuaris</a></li>
 							</ul>
 						</li>
+						<!-- Empresa -->
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEmpresa" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">
 								Empresa
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><a class="dropdown-item" th:href="@{/empreses/actualizar}">Modificar empresa</a>
+								<!-- Empresa / Actualitzar empresa -->
+								<li><a class="dropdown-item" th:href="@{/empreses/actualizar}">Actualitzar empresa</a>
 								</li>
 							</ul>
 						</li>
