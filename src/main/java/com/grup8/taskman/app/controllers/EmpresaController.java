@@ -116,7 +116,7 @@ public class EmpresaController {
 			}catch(IOException e) {
 				
 				// Si no es pot guardar informem.
-				flash.addAttribute("error", "No s'ha pogut guardar la imatge");
+				flash.addAttribute("error", "Nos'ha pogut guardar la imatge");
 			}
 			
 			// Guardem a empresa la ruta de l'arxiu, si no s'ha pogut guardar serà null
@@ -127,7 +127,7 @@ public class EmpresaController {
 		// Guardem l'empresa
 		if(empresaService.save(empresa)!=null) {
 			
-			flash.addFlashAttribute("success", "Registre gravat amb èxit");
+			flash.addFlashAttribute("success", "Registre gravat am èxit");
 		}else {
 			
 			flash.addFlashAttribute("errors", "No s'ha pogut guardar el registre");

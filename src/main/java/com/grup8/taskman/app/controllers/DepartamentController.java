@@ -86,8 +86,8 @@ public class DepartamentController {
 		// Afegim a la vista el departament trobat, els usuaris que conté, un títol per la vista i el text del bóto,
 		// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
 		model.addAttribute("departament", departament);
-		model.addAttribute("titol", "Detall del departament: " + departament.getNombre());
-		model.addAttribute("boton","Mostrar usuaris");
+		model.addAttribute("titol", "Detall departament " + departament.getNombre());
+		model.addAttribute("boton","Veure Llistat d'usuaris");
 		model.addAttribute("usuaris",departament.getUsuaris());
 		model.addAttribute("empresa",empresa);
 		

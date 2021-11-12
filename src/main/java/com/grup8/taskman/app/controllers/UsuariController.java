@@ -84,6 +84,7 @@ public class UsuariController {
 	private FiltreUsuaris filtreUsuari = new FiltreUsuaris();
 	private String titolBoto;
 	private String titol;
+	private boolean crear;
 	Empresa empresa;
 
 	// MÈTODES
@@ -104,10 +105,12 @@ public class UsuariController {
 
 		titol = "Crear nou usuari";
 		titolBoto = "Enviar dades";
+		crear=true;
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", new Usuari());
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);
+		model.addAttribute("crear",crear);
 
 		return "usuaris/crear";
 	}
@@ -152,7 +155,7 @@ public class UsuariController {
 
 		// Si result conté errors tornem a cridar la vista crear avisant de l'error
 		if (result.hasErrors()) {
-			flash.addFlashAttribute("error", "No ha sido posible guardar los datos");
+			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");
 			return "usuaris/crear";
 		}
 
@@ -165,7 +168,7 @@ public class UsuariController {
 		Usuari user=usuariService.save(usuari);
 		if(user.getId()!=null) {
 			
-			flash.addFlashAttribute("success", "Registro grabado con éxito");
+			flash.addFlashAttribute("success", "Registre guardat amb  èxit");
 		}else {
 			
 			flash.addFlashAttribute("error", "No s'ha pogut guardar el registre");
@@ -190,7 +193,7 @@ public class UsuariController {
 		if(empresa==null)return "redirect:/";	
 		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
-		Pageable pageRequest = PageRequest.of(page, 8, sortByIdAsc());
+		Pageable pageRequest = PageRequest.of(page, 4, sortByIdAsc());
 		
 		// Obtenim la Page que passarem a la vista
 		Page<Usuari> usuaris = filtreUsuari.getUsuaris(pageRequest, usuariService);
@@ -247,7 +250,7 @@ public class UsuariController {
 		// Afegim els atributs al model
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
-		model.addAttribute("boton","Mostrar departaments");
+		model.addAttribute("boton","Ver Listado departamentos");
 		model.addAttribute("usuari",usuari);
 		model.addAttribute("empresa", empresa);
 		model.addAttribute("deps", usuari.getDepartaments());
@@ -285,7 +288,7 @@ public class UsuariController {
 							"Usuari " + user.getNombre() + " " + user.getApellidos() + " eliminat amb èxit");
 				}else {
 					
-					flash.addFlashAttribute("error", "No s'ha pugut eliminar l'usuari!!!");
+					flash.addFlashAttribute("error", "No s'ha pogut eliminar l'usuari!!!");
 				}
 			
 			// Si no trobem l'usuari llavors informem de l'error
@@ -340,12 +343,14 @@ public class UsuariController {
 		}
 
 		// Passem al model els atributs necessaris
-		titolBoto = "Modificar Usuari";
+		titolBoto = "Modificar Usuari";	
 		titol = "Modificar usuari";
+		crear=false;
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);
+		model.addAttribute("crear", crear);
 
 		// Cridem a la vista crear
 		return "usuaris/crear";
