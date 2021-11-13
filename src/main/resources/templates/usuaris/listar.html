@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="cat" xmlns:th="http://www.thymeLeaf.org">
 
-<head th:replace="generic/head :: header">
-
-</head>
+<head th:replace="generic/main :: head"></head>
 
 <body>
 	<!-- 
@@ -11,16 +9,16 @@
 		Des d'aquesta vista es podrà accedir en detall dins d'un usuari, edita-ho, i eliminar-ho
 		També es pot fer una cerca dels usuaris segons si estan actius o estan deshabilitats, segons el seu rol, nom, cognoms, i DNI
 	-->
-	<div th:replace="generic/empresa :: cabecera"></div>
+	<div th:replace="generic/main :: navbar-empresa"></div>
 	<div class="container mt-5 pt-5">
-		<div th:replace="generic/head :: mensajes"></div>
+		<div th:replace="generic/main :: mensajes"></div>
 
 		<!-- Botó filtres -->
 		<button type="button" id="btn-filtres" class="btn btn-primary mb-3" data-bs-toggle="tooltip" data-bs-placement="bottom"
 		title="Filtres per cercar usuaris">Filtres</button>
 
 		<!--  Filtres -->
-		<div class="card col-6" id="card-filtres">
+		<div class="card col-sm-12 col-md-8 col-lg-8 col-xl-6" id="card-filtres">
 			<div class="card-body">
 				<form th:action="@{/usuaris/filtrar}" th:object="${filtreUsuari}" method="post">
 					<!-- Estat d'usuari i rol -->
@@ -96,11 +94,12 @@
 		</div>
 
 		<div class="pb-4 mt-3">
-			<h2 class="float-start">Llistat dels usuaris</h2>
+			<h3 class="float-start">Llistat dels usuaris</h3>
 		</div>
 		<!-- Botó crear usuari -->
 		<div class="pt-5 pb-3">
-			<a class="btn btn-primary" th:href="@{/usuaris/crear}">Crear usuari</a>
+			<a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+			title="Crear nou usuari" th:href="@{/usuaris/crear}">Crear usuari</a>
 		</div>
 		<!-- Taula del llistat dels usuaris -->
 		<div class="row">
@@ -136,12 +135,14 @@
 							<td th:text="${usuari.telefono}"></td>
 							<td th:text="${usuari.rol.nombre}"></td>
 							<td class="text-center">
-								<a th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i
+								<a data-bs-toggle="tooltip" data-bs-placement="bottom"
+								title="Editar" th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i
 										class="fas fa-edit text-primary"></i>
 								</a>
 							</td>
 							<td class="text-center">
-								<a th:href="@{/usuaris/eliminar/}+ ${usuari.id}"
+								<a data-bs-toggle="tooltip" data-bs-placement="bottom"
+								title="Esborrar" th:href="@{/usuaris/eliminar/}+ ${usuari.id}"
 									onclick="return confirm('Estàs segur que vols eliminar?');"><i
 										class="fas fa-trash text-danger"></i></a>
 							</td>
@@ -153,7 +154,7 @@
 		</div>
 	</div>
 
-	<footer th:replace="generic/head :: footer"></footer>
+	<footer th:replace="generic/main :: footer"></footer>
 
 </body>
 

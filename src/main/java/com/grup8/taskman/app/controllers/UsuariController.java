@@ -152,7 +152,7 @@ public class UsuariController {
 
 		// Si result conté errors tornem a cridar la vista crear avisant de l'error
 		if (result.hasErrors()) {
-			flash.addFlashAttribute("error", "No ha sido posible guardar los datos");
+			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");
 			return "usuaris/crear";
 		}
 
@@ -165,7 +165,7 @@ public class UsuariController {
 		Usuari user=usuariService.save(usuari);
 		if(user.getId()!=null) {
 			
-			flash.addFlashAttribute("success", "Registro grabado con éxito");
+			flash.addFlashAttribute("success", "Registre gravat amb èxit");
 		}else {
 			
 			flash.addFlashAttribute("error", "No s'ha pogut guardar el registre");

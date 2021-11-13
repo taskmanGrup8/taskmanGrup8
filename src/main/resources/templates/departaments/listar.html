@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="cat" xmlns:th="http://www.thymeLeaf.org">
 
-<head th:replace="generic/head :: header">
+<head th:replace="generic/main :: head">
 </head>
 
 <body>
@@ -10,11 +10,11 @@
 		Des d'aquesta vista es podrà accedir en detall dins d'un departament, edita-ho, eliminar-ho, i 
 		fer una cerca del departament per l'àlies o el nom
 	-->
-	<div th:replace="generic/empresa :: cabecera"></div>
+	<div th:replace="generic/main :: navbar-empresa"></div>
 	<div class="container mt-5 pt-5">
-		<div th:replace="generic/head :: mensajes"></div>
+		<div th:replace="generic/main :: mensajes"></div>
 		<div class="pb-5">
-			<h2 class="float-start">Llistat dels departaments</h2>
+			<h3 class="float-start">Llistat dels departaments</h3>
 		</div>
 		<!-- Botó per crear un nou departament -->
 		<div class="pt-3 pb-3 row">
@@ -62,12 +62,14 @@
 							<td class="text-center" th:text="${departament.codigo}"></td>
 							<td th:text="${departament.nombre}"></td>
 							<td class="text-center">
-								<a th:href="@{/departaments/actualizar/}+ ${departament.id}"><i
+								<a data-bs-toggle="tooltip" data-bs-placement="bottom"
+								title="Editar" th:href="@{/departaments/actualizar/}+ ${departament.id}"><i
 										class="fas fa-edit text-primary"></i>
 								</a>
 							</td>
 							<td class="text-center">
-								<a th:href="@{/departaments/eliminar/}+ ${departament.id}"
+								<a data-bs-toggle="tooltip" data-bs-placement="bottom"
+								title="Eliminar" th:href="@{/departaments/eliminar/}+ ${departament.id}"
 									onclick="return confirm('Estàs segur que vols eliminar?');"><i
 										class="fas fa-trash text-danger"></i>
 								</a>
@@ -78,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-	<footer th:replace="generic/head :: footer"></footer>
+	<footer th:replace="generic/main :: footer"></footer>
 
 </body>
 

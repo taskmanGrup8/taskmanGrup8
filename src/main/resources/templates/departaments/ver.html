@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
 
-<head th:replace="generic/head :: header">
+<head th:replace="generic/main :: head">
 </head>
 
 <body>
@@ -10,12 +10,12 @@
 		A sota d'aquests camps d'informació, es poden mostrar u ocultar els usuaris
 		assignats a aquest departamentn
 	-->
-	<div th:replace="generic/empresa :: cabecera"></div>
+	<div th:replace="generic/main :: navbar-empresa"></div>
 	<div class="container mt-5 pt-5">
 
-		<div th:replace="generic/head :: mensajes"></div>
+		<div th:replace="generic/main :: mensajes"></div>
 		<div class="pb-4">
-			<h2 th:text="${titol}"></h2>
+			<h3 th:text="${titol}"></h3>
 		</div>
 		<!-- Camps del departament seleccionat ( ID | Àlies | Nom )-->
 		<div class="row">
@@ -85,7 +85,7 @@
 		</div>
 	</div>
 
-	<footer th:replace="generic/head :: footer"></footer>
+	<footer th:replace="generic/main :: footer"></footer>
 
 </body>
 

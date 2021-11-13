@@ -1,5 +1,5 @@
 /* Funció per executar el plugin select2 per seleccionar
-*  més d'un departament a la vista usuaris/crear */
+*  més d'un departament a la vista usuaris/crear.html */
 
 $(document).ready(function () {
   $('.departaments-multiple').select2({
@@ -7,18 +7,18 @@ $(document).ready(function () {
   });
 });
 
-/* Funció per ocultar i mostrar els filtres de la taula
-*  que hi ha a la vista usuaris/listar */
+  /* Funció per ocultar i mostrar els filtres de la taula
+  *  que hi ha a la vista usuaris/listar.html */
 
-$(document).ready(function () {
-  $("#btn-filtres").click(function () {
-    if ($("#card-filtres").css('display') === 'none') {
-      $("#card-filtres").css('display', 'block');
-    } else {
-      $("#card-filtres").css('display', 'none');
-    }
+  $(document).ready(function () {
+    $("#btn-filtres").click(function () {
+      if ($("#card-filtres").css('display') === 'none') {
+        $("#card-filtres").css('display', 'block');
+      } else {
+        $("#card-filtres").css('display', 'none');
+      }
+    });
   });
-});
 
 /* Funció per ocultar i mostrar els llistats de
 *  les taules usuaris & departaments */

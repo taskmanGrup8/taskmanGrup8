@@ -1,119 +1,137 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org" lang="cat">
 
-<head th:replace="generic/head :: header">
+<head th:replace="generic/main :: head">
 </head>
 
-<body class="container mt-5 pt-5">
+<body>
 	<!-- 
 		Vista on es realitza l'alta d'una empresa al programa TaskMan
 		Tots els camps són obligatoris d'emprar
 	-->
-	<div class="alert alert-info text-center" th:text="'Es necessari crear una empresa per continuar'"></div>
-	<div class="pb-4">
-		<h2 th:text="${titol}"></h2>
+	<div th:replace="generic/main :: navbar-generic"></div>
+	<div class="container mt-5 pt-5">
+		<!-- Alerta -->
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8 alert alert-info alert-dismissible fade show text-center" th:if="${alerta!=null}"
+				role="alert">
+				<span th:text="${alerta}"></span>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<div class="col-2"></div>
+		</div>
+
+		<div class="pb-4">
+			<h3 th:text="${titol}"></h3>
+		</div>
+
+		<div class="pt-1">
+			<form class="g-3 mr-5" th:action="@{/empreses/result}" th:object="${empresa}" method="post"
+				enctype="multipart/form-data">
+
+				<div class="row">
+					<!-- Nom de la empresa -->
+					<div class="col-md-3">
+						<label for="nom" class="form-label">Nom de l'empresa <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="nom" maxlength="255" th:field="*{nombre}">
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+							class="my-2 alert alert-danger">
+						</div>
+					</div>
+					<!-- CIF -->
+					<div class="col-md-3">
+						<label for="cif" class="form-label">CIF <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="cif" maxlength="9" th:field="*{cif}" />
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('cif')}" th:errors="*{cif}" class="my-2 alert alert-danger">
+						</div>
+					</div>
+				</div>
+
+				<div class="row pt-3">
+					<!-- Adreça -->
+					<div class="col-md-3">
+						<label for="direccion" class="form-label">Adreça <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="direccion" maxlength="255" th:field="*{direccion}" />
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"
+							class="my-2 alert alert-danger"></div>
+					</div>
+					<!-- Localitat -->
+					<div class="col-md-3">
+						<label for="localidad" class="form-label">Localitat <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="localidad" maxlength="255" th:field="*{localidad}" />
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"
+							class="my-2 alert alert-danger"></div>
+					</div>
+
+				</div>
+
+				<div class="row pt-3">
+					<!-- Provincia -->
+					<div class="col-md-3">
+						<label for="provincia" class="form-label">Província <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="provincia" maxlength="255" th:field="*{provincia}" />
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}"
+							class="my-2 alert alert-danger"></div>
+					</div>
+
+					<!-- Codi postal -->
+					<div class="col-md-3">
+						<label for="cpostal" class="form-label">Codi Postal <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="cpostal" maxlength="5" th:field="*{cpostal}" />
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('cpostal')}" th:errors="*{cpostal}"
+							class="my-2 alert alert-danger">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row pt-3">
+					<!-- Telèfon -->
+					<div class="col-md-3">
+						<label for="telefono" class="form-label">Telèfon <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="telefono" maxlength="9" th:field="*{telefono}" />
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"
+							class="my-2 alert alert-danger"></div>
+					</div>
+					<!-- Correu -->
+					<div class="col-md-3">
+						<label for="email" class="form-label">Correu electrònic <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="email" maxlength="255" th:field="*{email}" />
+						<!-- Alerta d'error -->
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger">
+						</div>
+					</div>
+				</div>
+
+				<div class="row pt-3">
+					<!-- Logo d'empresa -->
+					<div class="col-md-4">
+						<img class="img-thumbnail img-fluid" style="max-width: 15%;"
+							th:if="${#strings.length(empresa.logo)>0}" th:src="@{'/uploads/' + ${empresa.logo}}"
+							th:alt="${empresa.logo}" />
+						<label for="file" class="form-label">Logo</label> <input type="file" class="form-control"
+							name="file" />
+					</div>
+					<span class="text-muted pt-4">* Aquests camps són obligatoris</span>
+				</div>
+
+				<!-- Botó per crear l'empresa -->
+				<div class="pt-4 mb-5">
+					<input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+						title="Modificar les dades" th:value="${boto}" />
+				</div>
+			</form>
+		</div>
 	</div>
-
-	<div class="pt-3">
-		<form class="g-3 mr-5" th:action="@{/empreses/result}" th:object="${empresa}" method="post"
-			enctype="multipart/form-data">
-
-			<div class="row pt-3">
-				<!-- Nom de la empresa -->
-				<div class="col-md-3">
-					<label for="nom" class="form-label">Nom de la empresa</label>
-					<input type="text" class="form-control" id="nom" th:field="*{nombre}">
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="my-2 alert alert-danger">
-					</div>
-				</div>
-				<!-- CIF -->
-				<div class="col-md-3">
-					<label for="cif" class="form-label">CIF</label>
-					<input type="text" class="form-control" id="cif" th:field="*{cif}" />
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('cif')}" th:errors="*{cif}" class="my-2 alert alert-danger"></div>
-				</div>
-			</div>
-
-			<div class="row pt-3">
-				<!-- Adreça -->
-				<div class="col-md-3">
-					<label for="cif" class="form-label">Adreça</label>
-					<input type="text" class="form-control" id="direccion" th:field="*{direccion}" />
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"
-						class="my-2 alert alert-danger"></div>
-				</div>
-				<!-- Localitat -->
-				<div class="col-md-3">
-					<label for="cif" class="form-label">Localitat</label>
-					<input type="text" class="form-control" id="localidad" th:field="*{localidad}" />
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"
-						class="my-2 alert alert-danger"></div>
-				</div>
-
-			</div>
-
-			<div class="row pt-3">
-				<!-- Provincia -->
-				<div class="col-md-3">
-					<label for="cif" class="form-label">Província</label>
-					<input type="text" class="form-control" id="provincia" th:field="*{provincia}" />
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}"
-						class="my-2 alert alert-danger"></div>
-				</div>
-
-				<!-- Codi postal -->
-				<div class="col-md-3">
-					<label for="cif" class="form-label">Codi Postal</label>
-					<input type="text" class="form-control" id="cpostal" th:field="*{cpostal}" />
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('cpostal')}" th:errors="*{cpostal}" class="my-2 alert alert-danger">
-					</div>
-				</div>
-
-			</div>
-
-			<div class="row pt-3">
-				<!-- Telèfon -->
-				<div class="col-md-3">
-					<label for="cif" class="form-label">Telèfon</label>
-					<input type="text" class="form-control" id="telefono" th:field="*{telefono}" />
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"
-						class="my-2 alert alert-danger"></div>
-				</div>
-				<!-- Correu -->
-				<div class="col-md-3">
-					<label for="cif" class="form-label">Correu electrònic</label>
-					<input type="text" class="form-control" id="email" th:field="*{email}" />
-					<!-- Alerta d'error -->
-					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger">
-					</div>
-				</div>
-			</div>
-
-			<div class="row pt-3">
-				<!-- Logo d'empresa -->
-				<div class="col-md-4">
-					<img class="img-thumbnail img-fluid" style="max-width: 15%;"
-						th:if="${#strings.length(empresa.logo)>0}" th:src="@{'/uploads/' + ${empresa.logo}}"
-						th:alt="${empresa.logo}" />
-					<label for="file" class="form-label">Logo</label> <input type="file" class="form-control"
-						name="file" />
-				</div>
-			</div>
-			<!-- Botó per crear l'empresa -->
-			<div class="pt-4 mb-5">
-				<input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
-				title="Modificar les dades" th:value="${boto}" />
-			</div>
-		</form>
-	</div>
-
+	<footer th:replace="generic/main :: footer"></footer>
 </body>
 
 </html>

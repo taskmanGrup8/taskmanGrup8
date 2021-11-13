@@ -1,3 +1,13 @@
+/* Tipografia nom d'empresa */
+.empresa-navbar {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* Tipografia general */
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
 /* Oculta els filtres de la vista usuaris/listar */
 #card-filtres {
     display: none;
@@ -7,6 +17,12 @@
 
 #mostrar-taula {
     display: none;
+}
+
+/* Estil table-striped (bootstrap.min.css) */
+
+.table {
+    --bs-table-striped-bg: #0146df1a;
 }
 
 /* Estil definits per a las cards del menú principal */
@@ -20,10 +36,26 @@
     padding-bottom: 10px;
 }
 
-/*
-hr {
-    background: linear-gradient(45deg, #9e2e3c, #691b25);
-    opacity: 1;
-    padding: 25px;
+/* Estil casella selecció Select 2 (select2.min.css) */
+
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #ced4da;
 }
-*/
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #E5ECFC;
+    border: 1px solid #ced4da;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    border-right: none;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: solid #ced4da 1px;
+    outline: 0;
+}
+
+.text-muted {
+    font-size: small;
+}

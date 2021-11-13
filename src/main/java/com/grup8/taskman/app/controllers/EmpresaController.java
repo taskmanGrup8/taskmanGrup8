@@ -55,12 +55,13 @@ public class EmpresaController {
 	@GetMapping("/crear")
 	public String crear(Model model) {
 				
-		titol="Crear empresa";
-		titolBoto="Crear empresa";
+		titol="Dona't d'alta a TaskMan!";
+		titolBoto="Enviar dades";
 		
 		// Passem les dades al model per poder tenir-los a la vista
 		model.addAttribute("titol", titol);
 		model.addAttribute("boto", titolBoto);
+		model.addAttribute("alerta", "És necessari que et donis d'alta per continuar");
 		model.addAttribute("empresa", new Empresa());
 		
 		
@@ -154,7 +155,7 @@ public class EmpresaController {
 		if(empresa==null)return "redirect:crear";
 		
 		// Passem els elements necessaris al model
-		titol="Actualitzar empresa";
+		titol="Actualitzar dades de l'empresa";
 		titolBoto="Enviar dades";
 		model.addAttribute("titol", titol);
 		model.addAttribute("boto", titolBoto);

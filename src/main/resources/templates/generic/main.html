@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<!-- 
+	Vista on es guarden les parts del codi reutilitzable
+	-- Head ==>  Apartat on es guarden el charset per poder codificar els accents i símbols,
+				 l'etiqueta per un correcte funcionament des de dispositius mòbils,
+				 els títols de les diferents vistes, i les biblioteques d'estils
+	-- Footer ==> Apartat on es guarden les biblioteques de jQuery i JS
+	-- Missatges d'esdeveniments ==> Missatges d'alerta que es mostren quan succeeix algun esdeveniment
+-->
+
+<!-- Head -->
+
+<head th:fragment="head">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${titol}"></title>
+	<!-- Bootstrap CSS -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/font-awesome-5/css/fontawesome.min.css}" rel="stylesheet" />
+	<!-- Select2 Bootstrap 5 -->
+	<link th:href="@{/plugins/select2/dist/css/select2.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" th:href="@{/css/select2-bootstrap-5-theme.min.css}" />
+	<!-- CSS -->
+	<link th:href="@{/css/css-main.css}" rel="stylesheet" />
+	<link th:href="@{/css/queries.css}" rel="stylesheet" />
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<!-- Ubuntu -->
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+	<!-- Nunito -->
+	<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+
+<!-- Footer -->
+<footer th:fragment="footer">
+	<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<script src="https://unpkg.com/@popperjs/core@2"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/plugins/select2/dist/js/select2.min.js}"></script>
+	<script th:src="@{/plugins/font-awesome-5/js/all.min.js}"></script>
+	<script th:src="@{/js/js-main.js}"></script>
+</footer>
+
+<!-- Missatges d'esdeveniments -->
+
+<body>
+	<div th:fragment="mensajes" class="position-relative">
+		<!-- Success -->
+		<div class="alert alert-success alert-dismissible fade show position-absolute start-50 translate-middle w-50 btn-alert"
+			th:if="${success!=null}" role="alert">
+			<span th:text="${success}"></span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		<!-- Error -->
+		<div class="alert alert-danger alert-dismissible fade show position-absolute start-50 translate-middle w-50"
+			th:if="${error!=null}" role="alert">
+			<span th:text="${error}"></span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		<!-- Warning -->
+		<div class="alert alert-warning alert-dismissible fade show position-absolute start-50 translate-middle w-50"
+			th:if="${warning!=null}" role="alert">
+			<span th:text="${warning}"></span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		<!-- Info -->
+		<div class="alert alert-info alert-dismissible fade show position-absolute start-50 translate-middle w-50"
+			th:if="${info!=null}" role="alert">
+			<span th:text="${info}"></span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</div>
+</body>
+
+<!-- cabecera genérica -->
+<div th:fragment="navbar-generic" class="bg-dark text-white">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container mr-5">
+			<a class="navbar-brand fs-1">
+				<!-- Logo -->
+				<img th:src="@{/img/logo-taskman.png}" alt="" width="50" height="44" class="d-inline-block align-text-top">
+				<!-- Nom empresa -->
+				&nbsp;<strong class="empresa-navbar">TaskMan</strong>
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Menú -->
+			<div class="collapse navbar-collapse justify-content-end fs-5" id="navbarSupportedContent">
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+					<!-- Home -->
+					<li class="nav-item">
+						<a class="nav-link active fst-italic" aria-current="page">Gestor de tasques</a>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+</div>
+
+	<!-- 
+		Vista del menú principal (navbar) que es mostra un cop s'ha creat l'empresa
+		Apareix el nom de l'empresa i la seva icona, en cas d'haver posat una
+		Es pot navegar pels diferents menús de la pàgina ( Departaments | Usuaris | Empresa )
+	-->
+	<div th:fragment="navbar-empresa" class="bg-dark text-white">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container mr-5">
+				<a class="navbar-brand fs-1">
+					<!-- Logo -->
+					<img th:if="${#strings.length(empresa.logo)>0}" th:src="@{'/uploads/' + ${empresa.logo}}"
+						th:alt="${empresa.logo}" alt="" width="50" height="44"
+						class="d-inline-block align-text-top">
+					<!-- Nom empresa -->
+					&nbsp;<strong class="empresa-navbar" th:text="${empresa.nombre}"></strong>
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<!-- Menú -->
+				<div class="collapse navbar-collapse justify-content-end fs-5" id="navbarSupportedContent">
+					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+						<!-- Home -->
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/taskman/super/perfil}">Home
+								&nbsp;&nbsp;| </a>
+						</li>
+						<!-- Departaments -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDepartaments" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Departaments
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<!-- Departaments / Crear departaments -->
+								<li><a class="dropdown-item" th:href="@{/departaments/crear}">Crear departaments</a>
+								</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<!-- Departaments / Llistar departaments -->
+								<li><a class="dropdown-item" th:href="@{/departaments/listar}">Llistar departaments</a>
+								</li>
+							</ul>
+						</li>
+						<!-- Usuaris -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsuaris" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Usuaris
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<!-- Usuaris / Crear usuaris -->
+								<li><a class="dropdown-item" th:href="@{/usuaris/crear}">Crear usuaris</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<!-- Usuaris / Llistar usuaris -->
+								<li><a class="dropdown-item" th:href="@{/usuaris/listar}">Llistar usuaris</a></li>
+							</ul>
+						</li>
+						<!-- Empresa -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEmpresa" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Empresa
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<!-- Empresa / Actualitzar empresa -->
+								<li><a class="dropdown-item" th:href="@{/empreses/actualizar}">Actualitzar empresa</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+</html>

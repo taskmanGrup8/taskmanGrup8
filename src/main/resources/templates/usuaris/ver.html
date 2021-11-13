@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="cat" xmlns:th="http://www.thymeLeaf.org">
 
-<head th:replace="generic/head :: header">
-
-
-</head>
+<head th:replace="generic/main :: head"></head>
 
 <body>
 	<!-- 
 		Vista on es pot veure el detall de l'usuari seleccionat: Nom, cognoms, DNI, telèfon, Correu electrònic, rol
 		A sota d'aquests camps d'informació, es poden mostrar u ocultar els departaments als quals pertany aquest usuari
 	-->
-	<div th:replace="generic/empresa :: cabecera"></div>
+	<div th:replace="generic/main :: navbar-empresa"></div>
 	<div class="container mt-5 pt-5">
 		<div class="pb-4">
-			<h2 th:text="'Usuari ' + ${usuari.nombre} + ' ' + ${usuari.apellidos}"></h2>
+			<h3 th:text="${usuari.nombre} + ' ' + ${usuari.apellidos}"></h3>
 		</div>
-		<div class="pt-3">
-			<form class="g-3 mr-5" th:object="${usuari}" method="post">
+		<div>
+			<form th:object="${usuari}" method="post">
 				<fieldset disabled>
 					<!-- Nom i Cognoms -->
-					<div class="row pt-3">
+					<div class="row">
 						<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 							<label for="nom" class="form-label">Nom</label> <input type="text" class="form-control"
 								id="nom" th:field="*{nombre}" />
@@ -95,7 +92,7 @@
 			</div>
 		</div>
 	</div>
-	<footer th:replace="generic/head :: footer"></footer>
+	<footer th:replace="generic/main :: footer"></footer>
 </body>
 
 </html>

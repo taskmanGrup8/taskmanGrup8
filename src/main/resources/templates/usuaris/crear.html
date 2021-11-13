@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html lang="cat" xmlns:th="http://www.thymeLeaf.org">
 
-<head th:replace="generic/head :: header">
-
-</head>
+<head th:replace="generic/main :: head"></head>
 
 <body>
 	<!-- 
 		Vista per crear nous usuaris.
 		S'han d'omplir tots els camps menys el de departaments, ja que un usuari pot no tenir cap departament assignat
 	-->
-	<div th:replace="generic/empresa :: cabecera"></div>
+	<div th:replace="generic/main :: navbar-empresa"></div>
 	<div class="container mt-5 pt-5">
-		<div th:replace="generic/head :: mensajes"></div>
+		<div th:replace="generic/main :: mensajes"></div>
 		<div class="pb-4">
-			<h2 th:text="${titol}"></h2>
+			<h3 th:text="${titol}"></h3>
 		</div>
 
-		<div class="pt-3">
-			<form class="g-3 mr-5" th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post">
+		<div>
+			<form th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post">
 				<!-- Nom -->
-				<div class="row pt-3">
+				<div class="row">
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="nom" class="form-label">Nom</label>
-						<input type="text" class="form-control" id="nom" th:field="*{nombre}">
+						<label for="nom" class="form-label">Nom <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="nom" maxlength="255" th:field="*{nombre}">
 						<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
 							class="my-2 alert alert-danger"></div>
 					</div>
 					<!-- Cognoms -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="cognoms" class="form-label">Cognoms</label>
-						<input type="text" class="form-control" id="cognoms" th:field="*{apellidos}">
+						<label for="cognoms" class="form-label">Cognoms <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="cognoms" maxlength="255" th:field="*{apellidos}">
 						<div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"
 							class="my-2 alert alert-danger"></div>
 					</div>
@@ -39,15 +37,15 @@
 				<div class="row pt-3">
 					<!-- DNI -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="dni" class="form-label">DNI</label>
-						<input type="text" class="form-control" id="dni" th:field="*{dni}">
+						<label for="dni" class="form-label">DNI <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="dni" maxlength="9" th:field="*{dni}">
 						<div th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="my-2 alert alert-danger">
 						</div>
 					</div>
 					<!-- Telèfon -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="telefon" class="form-label">Telèfon</label>
-						<input type="text" class="form-control" id="telefon" th:field="*{telefono}">
+						<label for="telefon" class="form-label">Telèfon <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="telefon" maxlength="9" th:field="*{telefono}">
 						<div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"
 							class="my-2 alert alert-danger"></div>
 					</div>
@@ -56,14 +54,14 @@
 				<div class="row pt-3">
 					<!-- Correu electrònic -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="correu" class="form-label">Correu eletrònic</label>
-						<input type="text" class="form-control" id="correu" th:field="*{email}">
+						<label for="correu" class="form-label">Correu eletrònic <span class="text-muted">*</span></label>
+						<input type="text" class="form-control" id="correu" maxlength="255" th:field="*{email}">
 						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger">
 						</div>
 					</div>
 					<!-- Rol -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="rol" class="form-label">Rol</label>
+						<label for="rol" class="form-label">Rol <span class="text-muted">*</span></label>
 						<select id="rol" class="form-select" th:field="*{rol}" required>
 							<option value="">Selecciona un rol</option>
 							<option th:each="rol: ${listaRoles}" th:text="${rol.nombre}" th:value="${rol.id}"></option>
@@ -76,7 +74,7 @@
 				<div class="row pt-3">
 					<!-- Departaments -->
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="departaments" class="form-label">Departaments</label>
+						<label for="departaments" class="form-label">Departaments <span class="text-muted">**</span></label>
 						<!-- Form multiselect amb select2 -->
 						<select id="departaments" class="form-select departaments-multiple" style="width: 100%"
 							name="departaments[]" th:field="*{departaments}" multiple="multiple">
@@ -84,9 +82,11 @@
 								th:value="${departament.id}"></option>
 						</select>
 					</div>
+					<p class="text-muted mt-3">* Aquests camps són obligatoris</p>
+					<p class="text-muted">** Has de fer clic en el quadre de text per poder assignar els departaments</p>
 				</div>
 				<!-- Botó -->
-				<div class="pt-4 mb-2">
+				<div class="mb-2">
 					<input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
 						title="Crear nou usuari" th:value="${titolBoto}" />
 				</div>
@@ -94,9 +94,7 @@
 		</div>
 	</div>
 
-	<footer th:replace="generic/head :: footer">
-
-	</footer>
+	<footer th:replace="generic/main :: footer"></footer>
 </body>
 
 </html>
