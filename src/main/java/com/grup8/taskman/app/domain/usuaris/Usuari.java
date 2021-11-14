@@ -88,7 +88,7 @@ public class Usuari implements Serializable {
 	// ni espais en blanc i a més ha de tenir format de correu electrònic.
 	@NotBlank
 	@Email
-	@Column(name="email")
+	@Column(name="email", nullable=false)
 	private String email;
 	
 	// Indiquem la relació que té usuaris amb rol. Com que nomès tindrà un rol posem fetch EAGER i l'unim a la comumna id de rol
