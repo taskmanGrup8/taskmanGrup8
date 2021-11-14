@@ -36,6 +36,7 @@ public class Empresa implements Serializable {
 	// Attribut que s'autogenerarà i que marquem con id a la base de dades
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private Integer id;
 	
 	// Indiquem que nombre no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null 
@@ -45,8 +46,7 @@ public class Empresa implements Serializable {
 	private String nombre;	
 	
 	// Indiquem que el camp cif dels formularis ha de tenir el patró indicat. No pot ser ni null ni espais en blanc.
-	// A la base de dades serà unique i no podrà ser null
-	@NotBlank
+	// A la base de dades serà unique i no podrà ser null	
 	@Pattern(regexp="([0-9]{8}[A-Z]{1})|([A-Z]{1}[0-9]{8})")	
 	@Column(name="cif", unique=true, length=9, nullable=false)
 	private String cif;
@@ -71,14 +71,14 @@ public class Empresa implements Serializable {
 	
 	// Indiquem que direccion no pot ser null a la base de dades i té 5 dígits. també indiquem que la validació no pot ser ni null 
 	// ni espais en blanc i a més ha de tenir 5 caracters que han de ser números.
-	@NotBlank	
+		
 	@Pattern(regexp="([0-9]{5})")
 	@Column(name="cpostal", length=5, nullable=false)
 	private String cpostal;
 	
 	// Indiquem que telefono no pot ser null a la base de dades i té 9 dígits. També indiquem que la validació no pot ser ni null
 	// ni espais en blanc i a més ha de tenir 9 caracters que han de ser números
-	@NotBlank
+	
 	@Pattern(regexp="[0-9]{9}")	
 	@Column(name="telefono", length=9, nullable=false)
 	private String telefono;
