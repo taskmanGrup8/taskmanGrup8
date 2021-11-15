@@ -57,7 +57,7 @@ public class EmpresaController {
 	public String crear(Model model) {
 				
 		titol="Crear empresa";
-		titolBoto="Crear empresa";
+		titolBoto="Dona d'alta la teva empresa a Taskamn!";
 		
 		
 		// Passem les dades al model per poder tenir-los a la vista
@@ -158,7 +158,7 @@ public class EmpresaController {
 		if(empresa==null)return "redirect:crear";
 		
 		// Passem els elements necessaris al model
-		titol="Actualitzar empresa";
+		titol="Actualitzar dades de l' empresa";
 		titolBoto="Enviar dades";		
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
