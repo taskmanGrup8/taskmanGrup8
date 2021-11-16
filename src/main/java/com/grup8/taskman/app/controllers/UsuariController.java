@@ -193,7 +193,7 @@ public class UsuariController {
 		if(empresa==null)return "redirect:/";	
 		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
-		Pageable pageRequest = PageRequest.of(page, 4, sortByIdAsc());
+		Pageable pageRequest = PageRequest.of(page, 8, sortByIdAsc());
 		
 		// Obtenim la Page que passarem a la vista
 		Page<Usuari> usuaris = filtreUsuari.getUsuaris(pageRequest, usuariService);
@@ -250,7 +250,7 @@ public class UsuariController {
 		// Afegim els atributs al model
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
-		model.addAttribute("boton","Ver Listado departamentos");
+		model.addAttribute("boton","Mostrar departaments");
 		model.addAttribute("usuari",usuari);
 		model.addAttribute("empresa", empresa);
 		model.addAttribute("deps", usuari.getDepartaments());
@@ -343,7 +343,7 @@ public class UsuariController {
 		}
 
 		// Passem al model els atributs necessaris
-		titolBoto = "Modificar Usuari";	
+		titolBoto = "Enviar dades";	
 		titol = "Modificar usuari";
 		crear=false;
 		model.addAttribute("titol", titol);

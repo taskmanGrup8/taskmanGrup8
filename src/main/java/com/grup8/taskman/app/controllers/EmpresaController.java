@@ -56,9 +56,8 @@ public class EmpresaController {
 	@GetMapping("/crear")
 	public String crear(Model model) {
 				
-		titol="Crear empresa";
-		titolBoto="Dona d'alta la teva empresa a Taskamn!";
-		
+		titol="Dona d'alta la teva empresa a TaskMan!";
+		titolBoto="Enviar dades";
 		
 		// Passem les dades al model per poder tenir-los a la vista
 		model.addAttribute("titol", titol);
@@ -120,7 +119,7 @@ public class EmpresaController {
 			}catch(IOException e) {
 				
 				// Si no es pot guardar informem.
-				flash.addAttribute("error", "Nos'ha pogut guardar la imatge");
+				flash.addAttribute("error", "No s'ha pogut guardar la imatge");
 			}
 			
 			// Guardem a empresa la ruta de l'arxiu, si no s'ha pogut guardar serà null
@@ -162,7 +161,8 @@ public class EmpresaController {
 		titolBoto="Enviar dades";		
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
-		model.addAttribute("empresa", empresa);		
+		model.addAttribute("empresa", empresa);
+
 		
 		// Cridem a la vista crear
 		
