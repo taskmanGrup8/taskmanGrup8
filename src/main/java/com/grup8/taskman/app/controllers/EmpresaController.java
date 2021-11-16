@@ -45,6 +45,7 @@ public class EmpresaController {
 	private String titolBoto;
 	private String titol;
 	
+	
 	// MÈTODES
 	
 	/**
@@ -63,6 +64,7 @@ public class EmpresaController {
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("alerta", "És necessari que et donis d'alta per continuar");
 		model.addAttribute("empresa", new Empresa());
+		
 		
 		
 		return "empresas/crear"; // Cridem a la vista que conté el formulari per crear empreses.
@@ -155,11 +157,12 @@ public class EmpresaController {
 		if(empresa==null)return "redirect:crear";
 		
 		// Passem els elements necessaris al model
-		titol="Actualitzar dades de l'empresa";
-		titolBoto="Enviar dades";
+		titol="Actualitzar dades de l' empresa";
+		titolBoto="Enviar dades";		
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);
+
 		
 		// Cridem a la vista crear
 		

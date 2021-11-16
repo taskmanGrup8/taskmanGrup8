@@ -171,7 +171,7 @@ public class DepartamentController {
 		}else {
 			
 			// Afegim al model el missatge que no s'ha guardat correctament 
-			flash.addFlashAttribute("error", "El registre no s'ha pogut guardar a la base de dades");
+			flash.addFlashAttribute("errors", "El registre no s'ha pogut guardar a la base de dades");
 		}
 		
 		// Confimem que s'ha completat tot el procès i que ja no cal que guardi les dades de departament.
@@ -253,12 +253,12 @@ public class DepartamentController {
 				
 				// Per saber si hem eliminat el registre, si no el trobem enviem un missatge com que s'he eliminat
 				// correctament, en cas contrari enviem un missatge d'error
-				if(departamentService.findById(id)==null) {
+				if(departamentService.findById(id)!=null) {
 					
-					flash.addFlashAttribute("success", "Departament " + departament.getNombre() + " esborrat amb èxit");					
+					flash.addAttribute("success", "Departament " + departament.getNombre() + " esborrat amb èxit");					
 				}else {
 					
-					flash.addFlashAttribute("error", "El departament " + departament.getNombre() + " no s'ha pogut eliminar");
+					flash.addAttribute("error", "El departament " + departament.getNombre() + " no s'ha pogut eliminar");
 				}
 			}						
 
