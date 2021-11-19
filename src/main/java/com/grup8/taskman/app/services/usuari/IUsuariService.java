@@ -11,6 +11,7 @@ public interface IUsuariService {
 	public Usuari save(Usuari usuari);
 	public Usuari findByDni(String dni);
 	public Usuari findById(Long id);
+	public Usuari findByUsername(String username);
 	public void deleteAll();
 	
 	// FILTRES
@@ -68,6 +69,10 @@ public interface IUsuariService {
 	public Page<Usuari> findByDniStartsWith(String dni, Pageable pageable);	
 	public Page<Usuari> findByNombreStartsWithAndDniStartsWith(String nombre, String dni, Pageable pageable);
 	public Page<Usuari> findByApellidosStartsWithAndDniStartsWith(String apellido, String dni, Pageable pageable);
-	public Page<Usuari> findByNombreStartsWithAndApellidosStartsWithAndDniStartsWith(String nombre, String apellidos, String dni, Pageable pageable);	
+	public Page<Usuari> findByNombreStartsWithAndApellidosStartsWithAndDniStartsWith(String nombre, String apellidos, String dni, Pageable pageable);
+	
+
+	
+	
 
 }
