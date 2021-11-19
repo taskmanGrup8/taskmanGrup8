@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -80,6 +82,10 @@ public class UsuariController {
 	// Injectem el servei de empreses per poder realitzar accions a la taula empreses.
 	@Autowired
 	IEmpresaService empresaService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 
 	private FiltreUsuaris filtreUsuari = new FiltreUsuaris();
 	private String titolBoto;
@@ -95,6 +101,7 @@ public class UsuariController {
 	 * @return Crida a la vista "usuaris/crear" si l'atribut empresa no és null, en cas contrari redirecciona 
 	 * a home.
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/crear")
 	public String crear(Model model) {
 		
@@ -143,6 +150,8 @@ public class UsuariController {
 	@PostMapping("/guardar")
 	public String guardar(@Valid Usuari usuari, BindingResult result, Model model, RedirectAttributes flash,
 			SessionStatus status) {
+		
+		
 
 		// Afegim al model els atributs necessaris
 		model.addAttribute("titol", titol);
@@ -162,7 +171,13 @@ public class UsuariController {
 		// Emplenem els camps per defecte. 
 		usuari.setActivo(true); // Per defecte l'usuari pertany a l'empresa
 		usuari.setPrivacidadFirmada(false); // Per defecte l'usuari no ha signat la privacitat
-		usuari.setPassword("1111"); // Password per defecte, més endavant el pot canviar
+		
+		if(usuari.getPassword()==null) {
+			String passwordEncriptado=passwordEncoder.encode("1111");		
+			usuari.setPassword(passwordEncriptado); // Password per defecte, més endavant el pot canviar
+			usuari.setUsername(usuari.getDni());
+		}
+		
 
 		// Guardem l'usuari
 		Usuari user=usuariService.save(usuari);
@@ -184,6 +199,7 @@ public class UsuariController {
 	 * @param model És el model que es passa a la vista
 	 * @return Si la empresa no existeix redirecciona a home, si no crida a la vista listar
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/listar")
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page,	Model model) {
 
@@ -193,7 +209,7 @@ public class UsuariController {
 		if(empresa==null)return "redirect:/";	
 		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
-		Pageable pageRequest = PageRequest.of(page, 8, sortByIdAsc());
+		Pageable pageRequest = PageRequest.of(page, 4, sortByIdAsc());
 		
 		// Obtenim la Page que passarem a la vista
 		Page<Usuari> usuaris = filtreUsuari.getUsuaris(pageRequest, usuariService);
@@ -218,6 +234,7 @@ public class UsuariController {
 	 * @param model Model que passem a la vista
 	 * @return Redirecciona a listar
 	 */
+
 	@PostMapping("/filtrar")
 	public String filtrar(FiltreUsuaris filtreUsuari, Model model) {
 		
@@ -233,6 +250,7 @@ public class UsuariController {
 	 * per paràmetre es troba a la base de dades, si no existeix la empresa redirecciona a home i si no existeix el 
 	 * l'usuari redirecciona a listar. 
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/ver/{id}")
 	public String ver(@PathVariable Long id, Model model) {
 		// Si la variable empresa encara és igual a null la cerquem
@@ -250,7 +268,7 @@ public class UsuariController {
 		// Afegim els atributs al model
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
-		model.addAttribute("boton","Mostrar departaments");
+		model.addAttribute("boton","Ver Listado departamentos");
 		model.addAttribute("usuari",usuari);
 		model.addAttribute("empresa", empresa);
 		model.addAttribute("deps", usuari.getDepartaments());
@@ -265,6 +283,7 @@ public class UsuariController {
 	 * @param flash Variable que s'encarrega d'enviar els missatges a la vista a la que redireccionem.
 	 * @return Si l'atribut empresa és null redirecciona a home, en cas contrari redirecciona a listar.
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
 
@@ -316,6 +335,7 @@ public class UsuariController {
 	 * @return Si l'atribut empresa és null redireccionem a home, en cas contrari redireccionem a listar si l'id no
 	 * existeix a la base de dades o cridem a la vista crear si el trobem.
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/actualizar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
 
@@ -343,7 +363,7 @@ public class UsuariController {
 		}
 
 		// Passem al model els atributs necessaris
-		titolBoto = "Enviar dades";	
+		titolBoto = "Modificar Usuari";	
 		titol = "Modificar usuari";
 		crear=false;
 		model.addAttribute("titol", titol);
@@ -393,6 +413,12 @@ public class UsuariController {
 		 	lista.add(orden);
 		 	// Retornem la instància de sort amb la llista d'ordres.
 		 	return Sort.by(lista);
-	    }
+	}
+	
+	@ModelAttribute("usuariAutenticat")
+	public Usuari getUsuariAuthenticat() {
+		
+		return Usuari.USUARIAUTENTICAT;
+	}
 
 }

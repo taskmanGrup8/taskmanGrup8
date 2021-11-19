@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.grup8.taskman.app.domain.departaments.Departament;
 import com.grup8.taskman.app.domain.empreses.Empresa;
+import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.departament.IDepartamentService;
 import com.grup8.taskman.app.services.empresa.IEmpresaService;
 import com.grup8.taskman.app.util.Utilidades;
@@ -71,6 +74,7 @@ public class DepartamentController {
 	 * per paràmetre es troba a la base de dades, si no existeix la empresa redirecciona a home i si no existeix el 
 	 * departament redirecciona a llistar. 
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/ver/{id}")
 	public String ver(@PathVariable Long id, Model model) {
 		
@@ -87,7 +91,7 @@ public class DepartamentController {
 		// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
 		model.addAttribute("departament", departament);
 		model.addAttribute("titol", "Detall departament " + departament.getNombre());
-		model.addAttribute("boton","Mostrar usuaris");
+		model.addAttribute("boton","Veure Llistat d'usuaris");
 		model.addAttribute("usuaris",departament.getUsuaris());
 		model.addAttribute("empresa",empresa);
 		
@@ -101,6 +105,7 @@ public class DepartamentController {
 	 * @return Crida a la vista "departaments/crear" si l'atribut empresa no és null, en cas contrari redirecciona 
 	 * a home.
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/crear")
 	public String crear(Model model) {
 		
@@ -188,6 +193,7 @@ public class DepartamentController {
 	 * mostren tots els elements.
 	 * @return Si no hi ha una empresa creada redirecciona a home, en cas contrari crida a la vista listar. 
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/listar")
 	public String listar(Model model, String keyword) {
 		
@@ -216,7 +222,7 @@ public class DepartamentController {
 		}		
 		
 		// Afegirm al model el títol, la llista de departaments, si està filtrat o no i la empresa.
-		model.addAttribute("titol", "Mostrar departaments");
+		model.addAttribute("titol", "Listado de departamentos");
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("filtrado", filtrado);
 		model.addAttribute("empresa",empresa);
@@ -232,6 +238,7 @@ public class DepartamentController {
 	 * @param flash Variable que s'encarrega d'enviar els missatges a la vista a la que redireccionem.
 	 * @return Si l'atribut empresa és null redirecciona a home, en cas contrari redirecciona a listar.
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
 
@@ -277,6 +284,7 @@ public class DepartamentController {
 	 * @return Si l'atribut empresa és null redireccionem a home, en cas contrari redireccionem a listar si l'id no
 	 * existeix a la base de dades o cridem a la vista crear si el trobem.
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/actualizar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
 		
@@ -306,8 +314,8 @@ public class DepartamentController {
 		}
 		
 		// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
-		titol="Modificar departament";
-		titolBoto="Enviar dades";
+		titol="Actualitzar departament";
+		titolBoto="Actualitzar departament";
 		
 		// passem el departament trobat, el titol, el text del botó i l'empresa a la vista.
 		model.addAttribute("titol", titol);
@@ -370,6 +378,12 @@ public class DepartamentController {
 		}	
 		
 		return result;
+	}
+	
+	@ModelAttribute("usuariAutenticat")
+	public Usuari getUsuariAuthenticat() {
+		
+		return Usuari.USUARIAUTENTICAT;
 	}
 
 }

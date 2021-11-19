@@ -4,10 +4,12 @@ import java.io.IOException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.grup8.taskman.app.domain.empreses.Empresa;
+import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.empresa.IEmpresaService;
 import com.grup8.taskman.app.services.imatges.IImatgesHandlerService;
 
@@ -53,11 +56,13 @@ public class EmpresaController {
 	 * @param model
 	 * @return
 	 */
+	@Secured("ROLE_SUPER")
 	@GetMapping("/crear")
 	public String crear(Model model) {
 				
-		titol="Dona d'alta la teva empresa a TaskMan!";
-		titolBoto="Enviar dades";
+		titol="Crear empresa";
+		titolBoto="Dona d'alta la teva empresa a Taskamn!";
+		
 		
 		// Passem les dades al model per poder tenir-los a la vista
 		model.addAttribute("titol", titol);
@@ -119,7 +124,7 @@ public class EmpresaController {
 			}catch(IOException e) {
 				
 				// Si no es pot guardar informem.
-				flash.addAttribute("error", "No s'ha pogut guardar la imatge");
+				flash.addAttribute("error", "Nos'ha pogut guardar la imatge");
 			}
 			
 			// Guardem a empresa la ruta de l'arxiu, si no s'ha pogut guardar serà null
@@ -140,7 +145,7 @@ public class EmpresaController {
 		status.setComplete();
 		
 		// De moment redireccionem al perfil temporal del superadministrador
-		return "redirect:/taskman/super/perfil";
+		return "redirect:/";
 	}
 	
 	/**
@@ -149,6 +154,7 @@ public class EmpresaController {
 	 * @param model És el model que passem a la vista
 	 * @return Si no troba empresa redirecciona a crear, en cas contrari crida a la vista crear passant les dades de l'empresa.
 	 */
+	@Secured("ROLE_SUPER")
 	@GetMapping("/actualizar")
 	public String actualizar(Model model) {
 		
@@ -157,17 +163,22 @@ public class EmpresaController {
 		if(empresa==null)return "redirect:crear";
 		
 		// Passem els elements necessaris al model
-		titol="Actualitzar dades de l' empresa";
+		titol="Actualitzar empresa";
 		titolBoto="Enviar dades";		
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
-		model.addAttribute("empresa", empresa);
-
+		model.addAttribute("empresa", empresa);		
 		
 		// Cridem a la vista crear
 		
 		return "empresas/crear";		
 		
+	}
+	
+	@ModelAttribute("usuariAutenticat")
+	public Usuari getUsuariAuthenticat() {
+		
+		return Usuari.USUARIAUTENTICAT;
 	}
 
 }
