@@ -110,5 +110,9 @@ public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 
 	public Optional<Usuari> findByDni(String dni);
 	
+	// LOGIN
+	
+	public Optional<Usuari> findByUsername(String username);
+	
 
 }
