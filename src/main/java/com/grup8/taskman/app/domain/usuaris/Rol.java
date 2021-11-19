@@ -25,6 +25,11 @@ public class Rol implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	// CONSTANTS
+	public static final int ADMINISTRADOR=1;
+	public static final int USUARI=2;
+	public static final int SUPERADMINISTRADOR=3;
 
 	// ATRIBUTS
 	

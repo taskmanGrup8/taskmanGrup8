@@ -1,6 +1,7 @@
 package com.grup8.taskman.app.domain.usuaris;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -37,6 +39,7 @@ public class Usuari implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static Usuari USUARIAUTENTICAT=null;
 	
 	// ATRIBUTS
 	
@@ -73,8 +76,11 @@ public class Usuari implements Serializable {
 	private String telefono;
 	
 	// Indiquem que telefono no pot ser null a la base de dades i té 4 dígits.
-	@Column(name="password", length=4, nullable=false)
+	@Column(name="password", length=60, nullable=false)
 	private String password;
+	
+	@Column(name="username", unique=true, length=30, nullable=false)
+	private String username;
 	
 	// Camp per determinar si un usuari encara està en actiu a l'empresa.
 	@Column(name="activo")
@@ -96,7 +102,11 @@ public class Usuari implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_rol")
-	private Rol rol;
+	private Rol rol;	
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	private List<Permiso> permisos;
 	
 	/* Indiquem la relació que té usuaris amb departaments. En aquest cas un usuari pot tenir molts departaments i un departament
 	* pot tenir molts usuaris per tant es many to many. Aquesta part la fem EAGER perque un usuari no tindrà molts departaments.
@@ -117,6 +127,7 @@ public class Usuari implements Serializable {
 	
 	public Usuari() {
 		
+		permisos=new ArrayList<Permiso>();
 	}
 	
 	// SETTERS I GETTERS
@@ -175,7 +186,7 @@ public class Usuari implements Serializable {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
-	}
+	}		
 
 	public Rol getRol() {
 		return rol;
@@ -184,7 +195,15 @@ public class Usuari implements Serializable {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-	
+
+	public List<Permiso> getPermisos() {
+		return permisos;
+	}
+
+	public void setPermiso(List<Permiso> permisos) {
+		this.permisos = permisos;
+	}
+
 	public boolean isPrivacidadFirmada() {
 		return privacidadFirmada;
 	}
@@ -207,6 +226,16 @@ public class Usuari implements Serializable {
 
 	public void setDepartaments(List<Departament> departaments) {
 		this.departaments = departaments;
+	}
+	
+	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	// Modifiquem equals perquè ho faci amb el dni que és unic per cada usuari
@@ -237,6 +266,43 @@ public class Usuari implements Serializable {
 		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
 		return result;
 
+	}
+	
+	public void eliminarPermisos() {
+		
+		permisos.clear();
+	}
+	
+	public void assignarPermissos() {
+		
+		Permiso permisUsuari=new Permiso();
+		permisUsuari.setAuthority("ROLE_USER");
+		Permiso permisAdministrador=new Permiso();
+		permisUsuari.setAuthority("ROLE_ADMIN");
+		Permiso permisSuperAdministrador=new Permiso();
+		permisUsuari.setAuthority("ROLE_SUPER");
+		
+		switch(Math.toIntExact(rol.getId())) {
+		
+		case Rol.ADMINISTRADOR:
+			permisos.add(permisUsuari);
+			permisos.add(permisAdministrador);
+			break;
+		case Rol.USUARI:
+			permisos.add(permisUsuari);
+			break;
+		case Rol.SUPERADMINISTRADOR:
+			permisos.add(permisUsuari);
+			permisos.add(permisAdministrador);
+			permisos.add(permisSuperAdministrador);
+			break;
+		default:
+			permisos.add(permisUsuari);
+			break;
+		
+		
+		
+		}
 	}
 
 }
