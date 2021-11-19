@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.grup8.taskman.app.domain.departaments.Departament;
 import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.usuaris.FiltreUsuaris;
+import com.grup8.taskman.app.domain.usuaris.Permiso;
 import com.grup8.taskman.app.domain.usuaris.Rol;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.departament.IDepartamentService;
@@ -172,12 +173,13 @@ public class UsuariController {
 		usuari.setActivo(true); // Per defecte l'usuari pertany a l'empresa
 		usuari.setPrivacidadFirmada(false); // Per defecte l'usuari no ha signat la privacitat
 		
-		if(usuari.getPassword()==null) {
-			String passwordEncriptado=passwordEncoder.encode("1111");		
+		if(usuari.getPassword()==null) {	
+			String passwordEncriptado=passwordEncoder.encode("1234");
+			System.out.println(passwordEncriptado);
 			usuari.setPassword(passwordEncriptado); // Password per defecte, més endavant el pot canviar
 			usuari.setUsername(usuari.getDni());
-		}
-		
+			usuari.assignarPermissos();
+		}		
 
 		// Guardem l'usuari
 		Usuari user=usuariService.save(usuari);
