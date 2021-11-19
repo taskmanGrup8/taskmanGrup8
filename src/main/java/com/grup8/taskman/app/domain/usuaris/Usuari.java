@@ -273,18 +273,18 @@ public class Usuari implements Serializable {
 		permisos.clear();
 	}
 	
-	public void assignarPermissos() {
+	public void assignarPermissos() {		
 		
 		Permiso permisUsuari=new Permiso();
-		permisUsuari.setAuthority("ROLE_USER");
+		permisUsuari.setAuthority("ROLE_USER");		
 		Permiso permisAdministrador=new Permiso();
-		permisUsuari.setAuthority("ROLE_ADMIN");
+		permisAdministrador.setAuthority("ROLE_ADMIN");
 		Permiso permisSuperAdministrador=new Permiso();
-		permisUsuari.setAuthority("ROLE_SUPER");
+		permisSuperAdministrador.setAuthority("ROLE_SUPER");
 		
 		switch(Math.toIntExact(rol.getId())) {
 		
-		case Rol.ADMINISTRADOR:
+		case Rol.ADMINISTRADOR:			
 			permisos.add(permisUsuari);
 			permisos.add(permisAdministrador);
 			break;
@@ -298,11 +298,9 @@ public class Usuari implements Serializable {
 			break;
 		default:
 			permisos.add(permisUsuari);
-			break;
+			break;		
+		}		
 		
-		
-		
-		}
 	}
 
 }
