@@ -32,21 +32,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		http.authorizeRequests().antMatchers("/css/**", "/js/**", "/img/**", "/plugins/**").permitAll()
-	/*	.antMatchers("/departaments/listar").hasAnyRole("ADMIN")
-		.antMatchers("/departaments/crear").hasAnyRole("ADMIN")
-		.antMatchers("/departaments/eliminar/**").hasAnyRole("ADMIN")
-		.antMatchers("/departaments/actualizar/**").hasAnyRole("ADMIN")
-		.antMatchers("/departaments/ver/**").hasAnyRole("ADMIN")
-		.antMatchers("/usuaris/listar").hasAnyRole("ADMIN")
-		.antMatchers("/usuaris/crear").hasAnyRole("ADMIN")
-		.antMatchers("/usuaris/eliminar/**").hasAnyRole("ADMIN")
-		.antMatchers("/usuaris/actualizar/**").hasAnyRole("ADMIN")
-		.antMatchers("/usuaris/ver/**").hasAnyRole("ADMIN")
-		.antMatchers("/usuaris/filtrar").hasAnyRole("ADMIN")
-		.antMatchers("/empreses/crear").hasAnyRole("SUPER")		
-		.antMatchers("/empreses/actualizar/**").hasAnyRole("SUPER")
-		.antMatchers("/taskman/super/perfil").hasAnyRole("USER")*/
+		http.authorizeRequests().antMatchers("/css/**", "/js/**", "/img/**", "/plugins/**").permitAll()	
 		.antMatchers("/uploads/**").hasAnyRole("USER")
 		.anyRequest().authenticated()
 		.and()
