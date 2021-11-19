@@ -1,1 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org" lang="cat">
 
+<head th:replace="generic/main :: head">
+</head>
+
+<body>
+	
+	<div th:replace="generic/main :: navbar-generic"></div>
+	<div th:replace="generic/main :: mensajes"></div>
+	<div class="container py-4">
+
+		<div class="card bg-danger text-white">
+
+			<div class="card-header">Error: Accés denegat</div>
+			<div class="card-body">
+
+				<h5 class="card-title">Ho sentim <span th:text="${#authentication.name}"></span> NO tens permissos per accedir a aquesta pàgina</h5>
+				<a th:href="@{/}" class="btn btn-outline-light" role="button">Pàgina principal</a>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<footer th:replace="generic/main :: footer"></footer>
+</body>
+
+</html>
