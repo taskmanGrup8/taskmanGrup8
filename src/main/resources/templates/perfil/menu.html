@@ -1,1 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<head th:replace="generic/main :: head"></head>
+
+<body>
+	<!--
+		Vista de la pàgina inicial que visualitza el super administrador en accedir a la pàgina
+		Des d'aquí pot accedir a les tres opcions disponibles de l'aplicació (gestionar departaments, usuaris, i dades de l'empresa)
+	-->
+	<div th:replace="generic/main :: navbar-empresa"></div>
+	<div class="container mt-5 pt-5">
+		<div th:replace="generic/main :: mensajes"></div>
+		<div class="row justify-content-center mt-5 pt-5">
+			<!-- Departaments -->
+			<div sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-4 col-xl-4 mb-4 mb-4">
+				<div class="card style-card">
+					<a th:href="@{/departaments/listar}">
+						<img th:src="@{/img/gestor-departaments.jpg}" class="card-img-top" alt="Gestiona els departaments">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title fs-4">Gestiona els departaments</h5>
+						<p class="card-text">Accedeix a aquest apartat per veure el llistat dels departaments,
+							modificar-los, i crear-ne de nous.</p>
+					</div>
+				</div>
+			</div>
+			<!-- Usuaris -->
+			<div sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-4 col-xl-4 mb-4 mb-4">
+				<div class="card style-card">
+					<a  th:href="@{/usuaris/listar}">
+						<img th:src="@{/img/gestor-usuaris.jpg}" class="card-img-top" alt="Gestiona els usuaris">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title fs-4">Gestiona els usuaris</h5>
+						<p class="card-text">Accedeix a aquest apartat per veure el llistat dels usuaris, modificar-los,
+							i crear-ne de nous.</p>
+					</div>
+				</div>
+			</div>
+			<!-- Empresa -->
+			<div sec:authorize="hasRole('ROLE_SUPER')" class="col-md-4 col-xl-4 mb-4 mb-4">
+				<div class="card style-card">
+					<a th:href="@{/empreses/actualizar}">
+						<img th:src="@{/img/actualitzar-empresa.jpg}" class="card-img-top" alt="Modifica les dades d'empresa">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title fs-4">Actualitzar les dades d'empresa</h5>
+						<p class="card-text">Des d'aquí podràs actualitzar les dades i personalitzar la teva empresa.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="generic/main :: footer"></footer>
+</body>
+
+</html>
