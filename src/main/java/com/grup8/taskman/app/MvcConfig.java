@@ -11,11 +11,10 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Classe de configuració que enregistra la carpeta uploads que farem servir
- * per guardar les imatges. 
+ * Classe de configuració que enregistra diferents aspectes de l'aplicació
  * 
  * @author Sergio Esteban Gutiérrez
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 
@@ -40,15 +39,28 @@ public class MvcConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/uploads/**").addResourceLocations(resourcePath);
 	}
 	
+	/**
+	 * Enregistrem un ViewController amb la Url "/error_403" i amb la vista "errores/error_403", això 
+	 * ho faig per no haver de crear un controlador per aquesta url ja que la seva funció només és cridar
+	 * a la vista.
+	 */
+	
 	public void addViewControllers(ViewControllerRegistry registry) {
 		
 		registry.addViewController("/error_403").setViewName("errores/error_403");
+		
+		
 	}
+	
+	/**
+	 * Funció que genera un nou Bean del tipus BCryptPasswordEncoder.
+	 * @return Retorna una nova instància de BCryptPasswordEncoder.
+	 */
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder(12);
 	}
 
 	
