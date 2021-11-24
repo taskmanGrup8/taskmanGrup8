@@ -235,7 +235,7 @@ public class UsuariController {
 		// Si estem creant un usuari nou assignem el password 1111 i l'encriptem.
 		if(funcion==CREAR) {
 		
-			String passwordEncriptado=passwordEncoder.encode("1111");
+			String passwordEncriptado=passwordEncoder.encode(usuari.getPassword());
 			usuari.setPassword(passwordEncriptado);				
 		}
 		
@@ -386,6 +386,11 @@ public class UsuariController {
 			if (user != null) {
 
 				user.setActivo(false);
+				// Quan donem de baixa un usuari eliminem ens assegurem que no pot fer login, per fer-ho canviem el
+				// password per un que no pugui saber.
+				
+				String passwordEncriptado=passwordEncoder.encode("!AW23?");
+				user.setPassword(passwordEncriptado);				
 				Usuari usuari=usuariService.save(user);
 				if(usuari.getId()!=null) {
 					flash.addFlashAttribute("success",
