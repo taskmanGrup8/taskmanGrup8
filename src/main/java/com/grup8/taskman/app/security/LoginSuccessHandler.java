@@ -16,6 +16,12 @@ import org.springframework.web.servlet.support.SessionFlashMapManager;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.usuari.IUsuariService;
 
+/**
+ * Classe que manega l'event success del login. L'anotem amb @Component per poder-la injectar.
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ */
+
 @Component
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 	
@@ -26,12 +32,17 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		
-		
+		// Actualitzem la constant USUARIAUTENTICAT amb el nou login
 		String username=authentication.getName();
 		Usuari.USUARIAUTENTICAT=usuariService.findByUsername(username);
+		
+		// Com que no tenim RedirectAttributes creem un manager de Maps de tipus flash amb sessió. 
 		SessionFlashMapManager flashMapManager=new SessionFlashMapManager();		
+		// Creem un nou FlashMap que exten de HashMap
 		FlashMap flashMap=new FlashMap();
+		// Afegim el missatge success amb el contingut que volem
 		flashMap.put("success", "Benvingut " + authentication.getName());
+		// Guardem el flashmap al manager.
 		flashMapManager.saveOutputFlashMap(flashMap, request, response);		
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
