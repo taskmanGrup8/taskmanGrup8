@@ -26,8 +26,10 @@ import com.grup8.taskman.app.repository.usuari.IUsuariDao;
  * indicar que fan accions sobre la base de dades. Les que tenen l'atribut
  * readOnly=true indiquen que nomès són de consulta.
  * 
+ * També implementa l'interface UserDetailsService necessària pel login
+ * 
  * @author Sergio Esteban Gutiérrez
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 
@@ -691,27 +693,46 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 				pageable);
 	}
 
+	/**
+	 * Fem override sobre el mètode loadUserByUsername de la interfície UserDetailsService
+	 * que carrega l'usuari amb els seus permisos que seran gestionats a la classe de configuració de seguretat.
+	 * @param username Username de l'usuari que buscarem.
+	 * @return Retornem una instancia de la classe User amb l'username, el password, si encara està actiu i les autoritzacions.
+	 * @throws UsernameNotFoundException
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+		// Busquem l'usuari
 		Usuari usuari = usuariDao.findByUsername(username).orElse(null);
 
+		// Si no el trobem llencem l'error
 		if (usuari == null)
 			throw new UsernameNotFoundException("Username " + username + " no existeix al sistema");
 
+		// Creem una llista de GrantedAuthority que dona les diferents autoritzacions
 		List<GrantedAuthority> permisos = new ArrayList<GrantedAuthority>();
+		
+		// Per cada permis a la llista de permisos de l'usuari creem una nova autorització.
 		for (Permiso permiso : usuari.getPermisos()) {
 
 			permisos.add(new SimpleGrantedAuthority(permiso.getAuthority()));
 		}
 		
+		// Si no haguessim creat cap`llavors llencem un error perquè no hem assignat rol
 		if(permisos.isEmpty())throw new UsernameNotFoundException("Error: " + username + " no té rol assignat");
 
+		// Retornem una instancia de la classe User amb l'username, el password, si encara està actiu i les autoritzacions.
 		return new User(username, usuari.getPassword(), usuari.isActivo(), true, true, true, permisos);
 
 	}
 
+	/**
+	 * Mètode que busca a la base de dades un usuari mitjançant el seu username
+	 * @param username Username a buscar a la base de dades
+	 * @return Retorna l'usuari trobat o null si no en troba cap
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Usuari findByUsername(String username) {
