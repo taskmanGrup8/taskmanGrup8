@@ -1,10 +1,9 @@
 package com.grup8.taskman.app.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,16 +24,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.grup8.taskman.app.domain.departaments.Departament;
 import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.usuaris.FiltreUsuaris;
 import com.grup8.taskman.app.domain.usuaris.Permiso;
 import com.grup8.taskman.app.domain.usuaris.Rol;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
+import com.grup8.taskman.app.security.PasswordChange;
 import com.grup8.taskman.app.services.departament.IDepartamentService;
 import com.grup8.taskman.app.services.empresa.IEmpresaService;
+import com.grup8.taskman.app.services.imatges.IImatgesHandlerService;
 import com.grup8.taskman.app.services.rol.IRolService;
 import com.grup8.taskman.app.services.usuari.IUsuariService;
 import com.grup8.taskman.app.util.PageRender;
@@ -42,10 +43,10 @@ import com.grup8.taskman.app.util.PageRender;
 /**
  * Classe que controla el mòdul d'usuaris.
  * Rebra les sol.licituts a partir de la url "/usuaris" i tindrà
- * les funcionalitats de crear, actualitzar, guardar, llistar i veure detall de l'usuari.
+ * les funcionalitats de crear, actualitzar, guardar, llistar, veure detall de l'usuari sel.leccionat,
+ * canviar les dades personals i la contrasnya de l'usuari autenticat.
  * 
- *  De moment no s'està tenint en compte el rol de qui ho fa servir, mès endavant nomès els
- *  administrador i el súper administrador podràn fer servir aquesta èina.
+ *  Cada mètode referent a url estarà anotat amb @secured i el rol mínim de l'usuari que el pot utilitzar.
  *  
  *  Des del menú del superadministrador s'accedeix a llistar i és el camí que ha de seguir
  *  el programa pel bon funcionament. Si algún crida a qualsevol de les url des del navegador
@@ -65,6 +66,11 @@ import com.grup8.taskman.app.util.PageRender;
 @RequestMapping("/usuaris")
 @SessionAttributes("usuari")
 public class UsuariController {
+	
+	public static final int CREAR=1;
+	public static final int MODIFICAR=2;
+	public static final int MODIFICAR_PERFIL=3;
+	public static final int CAMBIAR_CONTRASEÑA=4;
 
 	// ATRIBUTS
 	
@@ -87,11 +93,15 @@ public class UsuariController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	// Injecció del service d'imatges que ens permetrà pujar imatges al sistema
+	@Autowired
+	IImatgesHandlerService imatgesService;
+	
 
 	private FiltreUsuaris filtreUsuari = new FiltreUsuaris();
 	private String titolBoto;
 	private String titol;
-	private boolean crear;
+	private int funcion;
 	Empresa empresa;
 
 	// MÈTODES
@@ -113,12 +123,16 @@ public class UsuariController {
 
 		titol = "Crear nou usuari";
 		titolBoto = "Enviar dades";
-		crear=true;
+		funcion=CREAR;
+		Usuari usuari=new Usuari();
+		usuari.setPrivacidadFirmada(false); // Per defecte l'usuari no ha signat la privacitat
+		usuari.setActivo(true); // Per defecte l'usuari pertany a l'empresa					
+		usuari.setPassword("1234"); // Password per defecte, més endavant el pot canviar
 		model.addAttribute("titol", titol);
-		model.addAttribute("usuari", new Usuari());
+		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);
-		model.addAttribute("crear",crear);
+	
 
 		return "usuaris/crear";
 	}
@@ -149,8 +163,9 @@ public class UsuariController {
 	 * @return Redirecciona a llistar usuaris si tot és correcte, en cas contrari crida a la vista crear.
 	 */
 	@PostMapping("/guardar")
-	public String guardar(@Valid Usuari usuari, BindingResult result, Model model, RedirectAttributes flash,
-			SessionStatus status) {
+	public String guardar(@Valid Usuari usuari, BindingResult result, Model model,
+			@RequestParam(name="file", required=false) MultipartFile foto, 
+			RedirectAttributes flash, SessionStatus status) {
 		
 		
 
@@ -160,26 +175,70 @@ public class UsuariController {
 		model.addAttribute("empresa", empresa);
 		
 		// Validem el dni perquè no existeixi a la base de dades
-		if (!comprobacionDni(usuari))
+		if (!comprobacionDni(usuari) && funcion!=MODIFICAR_PERFIL)
 			result.rejectValue("dni", "usuari.dniExistente");
+		
+		if(usuari.getUsername()==null) {	
+			
+			usuari.setUsername(usuari.getDni());
+		}
+		
+		
+		if (!comprobacionUsername(usuari) && funcion==MODIFICAR_PERFIL)
+			result.rejectValue("username", "usuari.usernameExistente");
 
 		// Si result conté errors tornem a cridar la vista crear avisant de l'error
 		if (result.hasErrors()) {
 			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");
-			return "usuaris/crear";
+		
+			if(funcion==MODIFICAR_PERFIL) {
+				return "usuaris/modificar_perfil";
+			}else {
+				return "usuaris/crear";
+			}
 		}
 
 		// Emplenem els camps per defecte. 
-		usuari.setActivo(true); // Per defecte l'usuari pertany a l'empresa
-		usuari.setPrivacidadFirmada(false); // Per defecte l'usuari no ha signat la privacitat
 		
-		if(usuari.getPassword()==null) {	
-			String passwordEncriptado=passwordEncoder.encode("1234");
-			System.out.println(passwordEncriptado);
-			usuari.setPassword(passwordEncriptado); // Password per defecte, més endavant el pot canviar
-			usuari.setUsername(usuari.getDni());
-			usuari.assignarPermissos();
-		}		
+		if(foto!=null && !foto.isEmpty()) {
+			
+			// Si es tracta d'una actualització hem d'esborrar l'anterior logo per tant ens assegurem que l'empresa
+			// existeix i que té un logo pujat.
+			if(usuari.getId()!=null && usuari.getId()>0 && usuari.getFoto()!=null && usuari.getFoto().length()>0) {
+				
+				// Esborrem el logo anterior.
+				imatgesService.delete(usuari.getFoto());
+			}
+			
+			// Intentem guardar la imatge i informarem del resultat
+			String uniqueFilename=null;
+			try {
+				//Guardem la imatge i ens retorna el path on ha estat guardat
+				uniqueFilename=imatgesService.copy(foto);
+				flash.addAttribute("info", "Imatge gravada amb èxit");
+				
+			}catch(IOException e) {
+				
+				// Si no es pot guardar informem.
+				flash.addAttribute("error", "Nos'ha pogut guardar la imatge");
+			}
+			
+			// Guardem a empresa la ruta de l'arxiu, si no s'ha pogut guardar serà null
+			usuari.setFoto(uniqueFilename);
+			
+		}
+		if(funcion==CREAR) {
+		
+			String passwordEncriptado=passwordEncoder.encode(usuari.getPassword());
+			usuari.setPassword(passwordEncriptado);				
+		}
+		
+		if(funcion!=MODIFICAR_PERFIL) {
+			
+			usuari.eliminarPermisos();
+			usuari.assignarPermissos();			
+		
+		}
 
 		// Guardem l'usuari
 		Usuari user=usuariService.save(usuari);
@@ -190,7 +249,14 @@ public class UsuariController {
 			
 			flash.addFlashAttribute("error", "No s'ha pogut guardar el registre");
 		}
-		status.setComplete();		
+		
+		if(Usuari.USUARIAUTENTICAT.getDni().equalsIgnoreCase(usuari.getDni())) {
+			
+			Usuari.USUARIAUTENTICAT=usuariService.findByDni(usuari.getDni());
+		}
+		status.setComplete();
+		
+		if(funcion==MODIFICAR_PERFIL || funcion==CAMBIAR_CONTRASEÑA)return "redirect:/";
 		return "redirect:listar";
 	}
 
@@ -208,7 +274,11 @@ public class UsuariController {
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";	
+		if(empresa==null) {
+			
+			System.out.println("Por algún motivo da null");
+			return "redirect:/";	
+		}
 		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
 		Pageable pageRequest = PageRequest.of(page, 4, sortByIdAsc());
@@ -342,6 +412,7 @@ public class UsuariController {
 	public String editar(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
 
 		Usuari usuari = null;
+		funcion=MODIFICAR;
 		
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
@@ -363,20 +434,110 @@ public class UsuariController {
 			flash.addFlashAttribute("error", "L'ID de l'usuari no pot ser 0");
 			return "redirect:/usuaris/listar";
 		}
-
+		
+		List<Permiso> permisos=usuari.getPermisos();
+		
+		for(Permiso p: permisos)System.out.println(p.getAuthority());
 		// Passem al model els atributs necessaris
 		titolBoto = "Modificar Usuari";	
-		titol = "Modificar usuari";
-		crear=false;
+		titol = "Modificar usuari";		
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);
-		model.addAttribute("empresa", empresa);
-		model.addAttribute("crear", crear);
+		model.addAttribute("empresa", empresa);		
 
 		// Cridem a la vista crear
 		return "usuaris/crear";
 	}
+	
+	@Secured("ROLE_USER")
+	@GetMapping("/modificar_perfil")
+	public String modificarPerfil(Model model) {
+		
+		funcion=MODIFICAR_PERFIL;
+		// Si la variable empresa encara és igual a null la cerquem
+		if(empresa==null)empresa=empresaService.findById(1);
+		// Si desprès de cercar no tenim empresa llavors redireccionem a home
+		if(empresa==null)return "redirect:/";	
+
+		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());
+			
+			
+		titol = "Actualitzar perfil";
+		titolBoto = "Enviar dades";		
+		model.addAttribute("titol", titol);			
+		model.addAttribute("titolBoto", titolBoto);
+		model.addAttribute("empresa", empresa);		
+		model.addAttribute("usuari", usuari);
+		
+		return "usuaris/modificar_perfil";
+	}
+	
+	
+	@Secured("ROLE_USER")
+	@GetMapping("/canvi_password")
+	public String cambiarPassword(Model model) {
+		
+		funcion=CAMBIAR_CONTRASEÑA;
+		// Si la variable empresa encara és igual a null la cerquem
+		if(empresa==null)empresa=empresaService.findById(1);
+		// Si desprès de cercar no tenim empresa llavors redireccionem a home
+		if(empresa==null)return "redirect:/";	
+
+		
+		titol = "Canviar contrasenya";
+		titolBoto = "Enviar dades";		
+		
+		PasswordChange passwordChange=new PasswordChange();
+		passwordChange.setId(Usuari.USUARIAUTENTICAT.getId());
+		System.out.println(passwordChange.getId());
+		model.addAttribute("titol", titol);			
+		model.addAttribute("titolBoto", titolBoto);
+		model.addAttribute("empresa", empresa);		
+		model.addAttribute("canviContrasenya", passwordChange);
+		return "usuaris/cambiar_password";
+		
+		
+	}
+	
+	@PostMapping("/guardarContrasenya")
+	public String guardarPassword(@Valid PasswordChange passwordChange, BindingResult result, Model model,
+						RedirectAttributes flash) {
+		// Afegim al model els atributs necessaris
+		model.addAttribute("titol", titol);
+		model.addAttribute("titolBoto", titolBoto);
+		model.addAttribute("empresa", empresa);
+	
+		
+		if(!comprobarPassword(passwordChange)) {
+			
+			result.rejectValue("nouPassword", "passwordChange.oldPasswordInvalid");
+		}		
+		
+		if (result.hasErrors()) {
+			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");		
+			return "usuaris/cambiar_password";		
+		}
+		
+		Usuari usuari=usuariService.findById(passwordChange.getId());
+		String passwordEncriptado=passwordEncoder.encode(passwordChange.getNewPassword());
+		usuari.setPassword(passwordEncriptado);	
+		
+		Usuari user=usuariService.save(usuari);
+		if(user.getId()!=null) {
+			
+			flash.addFlashAttribute("success", "Registre guardat amb  èxit");
+		}else {
+			
+			flash.addFlashAttribute("error", "No s'ha pogut guardar el registre");
+		}
+		
+		
+		return "redirect:/";
+	}
+		
+	
+	
 
 	/**
 	 * Mètode que comproba que el dni que s'està introduint no existeixi a la base de dades.
@@ -399,6 +560,42 @@ public class UsuariController {
 
 		}
 		// Retornem result
+		return result;
+	}
+	
+	private boolean comprobacionUsername(Usuari usuario) {
+
+		// Inicialitzem a true el resultat
+		boolean result = true;
+		// Busquem l'usuari mitjançant el dni
+		Usuari usuariPerUsername = usuariService.findByUsername(usuario.getUsername());
+		// Si el trobem
+		if (usuariPerUsername != null) {
+			
+		
+			// Si els dni coincideixen llavors no estem intentant repetir per tant retornem false
+			if (!usuario.getDni().equalsIgnoreCase(usuariPerUsername.getDni())) {
+				
+				result = false;
+			}
+
+		}
+		// Retornem result
+		return result;
+	}
+	
+	private boolean comprobarPassword(PasswordChange passwordChange) {
+		
+		boolean result=false;		
+		Usuari usuario=usuariService.findById(passwordChange.getId());
+		if(passwordEncoder.matches(passwordChange.getOldPassword(), usuario.getPassword())) {
+			
+			result=true;
+		}
+		
+		
+		
+		
 		return result;
 	}
 	
