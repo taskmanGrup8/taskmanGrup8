@@ -384,13 +384,8 @@ public class UsuariController {
 			
 			// Si el trobem canviem l'atribut activo a false, guardem i retornem el resultat
 			if (user != null) {
-
-				user.setActivo(false);
-				// Quan donem de baixa un usuari eliminem ens assegurem que no pot fer login, per fer-ho canviem el
-				// password per un que no pugui saber.
-				
-				String passwordEncriptado=passwordEncoder.encode("!AW23?");
-				user.setPassword(passwordEncriptado);				
+				// Quan posem activo en false, quan faci login no podrà accedir al sistema.
+				user.setActivo(false);							
 				Usuari usuari=usuariService.save(user);
 				if(usuari.getId()!=null) {
 					flash.addFlashAttribute("success",
