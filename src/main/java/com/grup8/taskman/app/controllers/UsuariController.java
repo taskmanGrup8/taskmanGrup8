@@ -48,17 +48,16 @@ import com.grup8.taskman.app.util.PageRender;
  * 
  *  Cada mètode referent a url estarà anotat amb @secured i el rol mínim de l'usuari que el pot utilitzar.
  *  
- *  Des del menú del superadministrador s'accedeix a llistar i és el camí que ha de seguir
- *  el programa pel bon funcionament. Si algún crida a qualsevol de les url des del navegador
- *  abans de passar per llistar, l'atribut empresa serà null i es redireccionarà l'aplicació a home.
+ *  Si algún crida a qualsevol de les url des del navegador si l'atribut empresa és null 
+ *  es redireccionarà l'aplicació a home.
  *  
- *  L'empresa ha de estar creada abans de fer servir aquesta funcionalitat.
+ *  L'empresa ha de estar creada abans de fer servir qualsevol funcionalitat.
  *  
  *  Passarem la variable anomenada usuari a SessionAttributes perquè guardi el valor de la mateixa 
  *  d'un a altre mètode. 
  *  
  * @author Sergio Esteban Gutiérrez
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 
@@ -90,6 +89,7 @@ public class UsuariController {
 	@Autowired
 	IEmpresaService empresaService;
 	
+	// Injectem el bean per l'encriptació
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -107,7 +107,8 @@ public class UsuariController {
 	// MÈTODES
 	
 	/**
-	 * Funció que crida a la vista crear que conté el formulari per crear un usuari
+	 * Funció que crida a la vista crear que conté el formulari per crear un usuari. Només qui tingui un rol
+	 * d'administrador o superior el podrà fer servir.
 	 * @param model És el model que passem a la vista
 	 * @return Crida a la vista "usuaris/crear" si l'atribut empresa no és null, en cas contrari redirecciona 
 	 * a home.
@@ -152,15 +153,16 @@ public class UsuariController {
 	}
 
 	/**
-	 * Funció que es crida des de la vista crear i que rep les dades del formulari emplenat per l'usuari, valida les
-	 * dades i les guarda a la base de dades si tot és correcte. Si el formulari no ha estat emplenat correctament i 
-	 * conté errors llavors torna a cridar a la vista crear.
+	 * Funció que es crida des de la vista crear, actualitzar o modificar_perfil. Rep les dades del formulari emplenat 
+	 * per l'usuari, valida les dades i les guarda a la base de dades si tot és correcte. Si el formulari no ha estat 
+	 * emplenat correctament i conté errors llavors torna a cridar a la vista que correspongui.
 	 * @param usuari Instancia d'usuari amb el contingut del formulari
 	 * @param result Instancia que conté els errors que han hagut al formulari.
 	 * @param model És el model que passem a la vista
+	 * @param foto És l'arxiu d'imatge de perfil carregada a la vista per l'usuari
 	 * @param flash Variable utilitzada per passar missatges a la vista.
 	 * @param status Variable que controla l'estat en aquest cas de la variable departament.
-	 * @return Redirecciona a llistar usuaris si tot és correcte, en cas contrari crida a la vista crear.
+	 * @return Redirecciona a diferents urls segons de quina funció provingui la crida.
 	 */
 	@PostMapping("/guardar")
 	public String guardar(@Valid Usuari usuari, BindingResult result, Model model,
@@ -175,35 +177,38 @@ public class UsuariController {
 		model.addAttribute("empresa", empresa);
 		
 		// Validem el dni perquè no existeixi a la base de dades
-		if (!comprobacionDni(usuari) && funcion!=MODIFICAR_PERFIL)
+		// Això nomès ho validarem quan el creem per primer cop, desprès el dni no es pot canviar
+		if (!comprobacionDni(usuari) && funcion==CREAR)
 			result.rejectValue("dni", "usuari.dniExistente");
 		
+		// el primer cop que creem un usuari username es null per tant l'assignem el dni com username
 		if(usuari.getUsername()==null) {	
 			
 			usuari.setUsername(usuari.getDni());
 		}
 		
-		
+		// Comprovem que username es únic. A la creació ja hem posat el dni que sabem que és unic per tant només ho validem
+		// quan modifiquem el perfil
 		if (!comprobacionUsername(usuari) && funcion==MODIFICAR_PERFIL)
 			result.rejectValue("username", "usuari.usernameExistente");
 
-		// Si result conté errors tornem a cridar la vista crear avisant de l'error
+		// Si result conté errors tornem a cridar la que correspongui avisant de l'error
 		if (result.hasErrors()) {
 			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");
 		
 			if(funcion==MODIFICAR_PERFIL) {
 				return "usuaris/modificar_perfil";
 			}else {
-				return "usuaris/crear";
+				return "usuaris/crear"; // Actualitzar també crida la vista crear
 			}
 		}
 
-		// Emplenem els camps per defecte. 
+		// Comprobem si tenim una foto
 		
 		if(foto!=null && !foto.isEmpty()) {
 			
-			// Si es tracta d'una actualització hem d'esborrar l'anterior logo per tant ens assegurem que l'empresa
-			// existeix i que té un logo pujat.
+			// Si es tracta d'una actualització hem d'esborrar l'anterior foto per tant ens assegurem que l'usuari
+			// existeix i que té una foto pujada.
 			if(usuari.getId()!=null && usuari.getId()>0 && usuari.getFoto()!=null && usuari.getFoto().length()>0) {
 				
 				// Esborrem el logo anterior.
@@ -223,18 +228,21 @@ public class UsuariController {
 				flash.addAttribute("error", "Nos'ha pogut guardar la imatge");
 			}
 			
-			// Guardem a empresa la ruta de l'arxiu, si no s'ha pogut guardar serà null
-			usuari.setFoto(uniqueFilename);
-			
+			// Guardem a usuari la ruta de l'arxiu, si no s'ha pogut guardar serà null
+			usuari.setFoto(uniqueFilename);			
 		}
+		
+		// Si estem creant un usuari nou assignem el password 1111 i l'encriptem.
 		if(funcion==CREAR) {
 		
-			String passwordEncriptado=passwordEncoder.encode(usuari.getPassword());
+			String passwordEncriptado=passwordEncoder.encode("1111");
 			usuari.setPassword(passwordEncriptado);				
 		}
 		
+		// Si creem o actualitzem un usuari hem de tornar a assignar els permissos. 		
 		if(funcion!=MODIFICAR_PERFIL) {
 			
+			// Per poder reassignar permissos primer eliminem els que té i després tornem a assignar els que toquin
 			usuari.eliminarPermisos();
 			usuari.assignarPermissos();			
 		
@@ -242,7 +250,13 @@ public class UsuariController {
 
 		// Guardem l'usuari
 		Usuari user=usuariService.save(usuari);
+		// Mirem si l'usuari s'ha guardat correctament per enviar els missatges que toquin
 		if(user.getId()!=null) {
+			// Si l'usuari modificat correspon con l'autenticat actualitzem la constant
+			if(Usuari.USUARIAUTENTICAT.getDni().equalsIgnoreCase(usuari.getDni())) {
+				
+				Usuari.USUARIAUTENTICAT=usuariService.findByDni(usuari.getDni());
+			}
 			
 			flash.addFlashAttribute("success", "Registre guardat amb  èxit");
 		}else {
@@ -250,13 +264,12 @@ public class UsuariController {
 			flash.addFlashAttribute("error", "No s'ha pogut guardar el registre");
 		}
 		
-		if(Usuari.USUARIAUTENTICAT.getDni().equalsIgnoreCase(usuari.getDni())) {
-			
-			Usuari.USUARIAUTENTICAT=usuariService.findByDni(usuari.getDni());
-		}
+		// Completem l'status d'usuari
 		status.setComplete();
 		
+		// Si hem modificat perfil o canviat el password redireccionem a home
 		if(funcion==MODIFICAR_PERFIL || funcion==CAMBIAR_CONTRASEÑA)return "redirect:/";
+		// Si hem creat o actualitzat un usuari llavors redireccionem a listar
 		return "redirect:listar";
 	}
 
@@ -450,6 +463,12 @@ public class UsuariController {
 		return "usuaris/crear";
 	}
 	
+	/**
+	 * Fúnció que permet a un usuari canviar algunes dades del seu perfil
+	 * @param model Model passat a la vista
+	 * @return crida a la vista modificar_perfil si la empresa existeix, en cas contrari redirecciona a home
+	 */
+	
 	@Secured("ROLE_USER")
 	@GetMapping("/modificar_perfil")
 	public String modificarPerfil(Model model) {
@@ -459,10 +478,9 @@ public class UsuariController {
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null)return "redirect:/";	
-
-		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());
-			
-			
+		
+		// L'usuari correspon a l'usuari autenticat però el busquem per si tinguès qualsevol canvi pendent.
+		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());			
 		titol = "Actualitzar perfil";
 		titolBoto = "Enviar dades";		
 		model.addAttribute("titol", titol);			
@@ -473,7 +491,11 @@ public class UsuariController {
 		return "usuaris/modificar_perfil";
 	}
 	
-	
+	/**
+	 * Funció que crida a la vista cambiar_password per poder canviar la contrasenya
+	 * @param model Model passat a la vista
+	 * @return Crida a la vista cambiar_password si existeix l'empresa, en cas contrari redirecciona a home
+	 */
 	@Secured("ROLE_USER")
 	@GetMapping("/canvi_password")
 	public String cambiarPassword(Model model) {
@@ -482,24 +504,33 @@ public class UsuariController {
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";	
-
+		if(empresa==null)return "redirect:/";
 		
 		titol = "Canviar contrasenya";
-		titolBoto = "Enviar dades";		
-		
+		titolBoto = "Enviar dades";				
 		PasswordChange passwordChange=new PasswordChange();
+		// Assignem a la variable passwordChage l'id de l'usuari autenticat que serà a quí canviarem la contrasenya
 		passwordChange.setId(Usuari.USUARIAUTENTICAT.getId());
-		System.out.println(passwordChange.getId());
+		
+		// Passem al model els atributs necessaris
 		model.addAttribute("titol", titol);			
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);		
 		model.addAttribute("canviContrasenya", passwordChange);
-		return "usuaris/cambiar_password";
 		
+		// cridem a la vista cambiar_password
+		return "usuaris/cambiar_password";		
 		
 	}
 	
+	/**
+	 * Funció que guarda la contrasenya nova de un usuari després d'assegurar-se que sap l'antiga
+	 * @param passwordChange Variable que conté l'antiga i la nova contrasenya introduida per l'usuari
+	 * @param result Variable que conté els errors de la validació.
+	 * @param model Model que passem a la vista
+	 * @param flash Parámetre que utilitzarem per enviar missatges a la vista
+	 * @return Si no hi ha cap error redirecciona a home, en cas contrari torna a cridar la vista cambiar_password
+	 */
 	@PostMapping("/guardarContrasenya")
 	public String guardarPassword(@Valid PasswordChange passwordChange, BindingResult result, Model model,
 						RedirectAttributes flash) {
@@ -508,22 +539,26 @@ public class UsuariController {
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);
 	
-		
+		//Validem el password antic. Si no passa la validació assignem l'error a result
 		if(!comprobarPassword(passwordChange)) {
 			
-			result.rejectValue("nouPassword", "passwordChange.oldPasswordInvalid");
+			result.rejectValue("oldPassword", "passwordChange.oldPasswordInvalid");
 		}		
 		
+		// Si result conté errors enviem un missatge d'error i tornem a cridar la vista cambiar_password
 		if (result.hasErrors()) {
 			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");		
 			return "usuaris/cambiar_password";		
 		}
 		
+		// Si tot es correcte busquem l'usuari
 		Usuari usuari=usuariService.findById(passwordChange.getId());
+		// encriptem el nou password i l'asignem a l'usuari
 		String passwordEncriptado=passwordEncoder.encode(passwordChange.getNewPassword());
 		usuari.setPassword(passwordEncriptado);	
-		
+		// Guardem l'usuari
 		Usuari user=usuariService.save(usuari);
+		// Mirem si l'usuari s'ha guardat amb éxit
 		if(user.getId()!=null) {
 			
 			flash.addFlashAttribute("success", "Registre guardat amb  èxit");
@@ -532,7 +567,7 @@ public class UsuariController {
 			flash.addFlashAttribute("error", "No s'ha pogut guardar el registre");
 		}
 		
-		
+		// Redireccionem a home
 		return "redirect:/";
 	}
 		
