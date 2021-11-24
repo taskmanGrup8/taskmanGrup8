@@ -75,10 +75,13 @@ public class Usuari implements Serializable {
 	@Column(name="telefono", length=9)
 	private String telefono;
 	
+	// Indiquem que password no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null 
+	// ni espais en blanc.
 	@NotBlank()	
 	@Column(name="password", length=60, nullable=false)
 	private String password;
 		
+	// Indiquem que el camp username no pot ser null i és únic
 	@Column(name="username", unique=true, length=30, nullable=false)
 	private String username;
 	
@@ -104,6 +107,8 @@ public class Usuari implements Serializable {
 	@JoinColumn(name="id_rol")
 	private Rol rol;	
 	
+	// Indiquem la relació que té usuaris amb Permiso. Un usuari pot tenir molts permissos. Fem cascade all perquè si
+	// esborrem un usuari volem que s'eliminin els seus permisos.
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private List<Permiso> permisos;
@@ -281,11 +286,17 @@ public class Usuari implements Serializable {
 
 	}
 	
+	/**
+	 * Mètode que elimina tots els permissos de la llista permisos
+	 */
 	public void eliminarPermisos() {
 		
 		permisos.clear();
 	}
 	
+	/**
+	 * Mètode que assigna els permissos a la llista de permisos en funció del rol que té assignat
+	 */
 	public void assignarPermissos() {		
 		
 		Permiso permisUsuari=new Permiso();
