@@ -9,6 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+/**
+ * Classe que equival a un permís d'usuari a la base de dades.
+ * Está mapejada a la taula authorities. Afegim una constraint on indiquem que la dupla "user_id", "authority"
+ * tenen que ser úniques. 
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ */
 
 @Entity
 @Table(name="authorities", uniqueConstraints= {@UniqueConstraint(columnNames= {"user_id", "authority"})})
@@ -25,9 +32,7 @@ public class Permiso implements Serializable{
 	private Long id;
 	
 	@Column(name="authority")
-	private String authority;
-	
-	
+	private String authority;	
 
 	public Permiso() {
 		
@@ -47,8 +52,6 @@ public class Permiso implements Serializable{
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
-	}
-	
-	
+	}	
 
 }
