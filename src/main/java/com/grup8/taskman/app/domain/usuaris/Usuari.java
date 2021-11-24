@@ -75,10 +75,10 @@ public class Usuari implements Serializable {
 	@Column(name="telefono", length=9)
 	private String telefono;
 	
-	// Indiquem que telefono no pot ser null a la base de dades i té 4 dígits.
+	@NotBlank()	
 	@Column(name="password", length=60, nullable=false)
 	private String password;
-	
+		
 	@Column(name="username", unique=true, length=30, nullable=false)
 	private String username;
 	
@@ -122,6 +122,9 @@ public class Usuari implements Serializable {
 			inverseJoinColumns=@JoinColumn(name="id_departament")
 			)
 	private List<Departament> departaments;
+	
+	@Column(name="foto")
+	private String foto="";
 
 	// CONSTRUCTOR
 	
@@ -226,9 +229,19 @@ public class Usuari implements Serializable {
 
 	public void setDepartaments(List<Departament> departaments) {
 		this.departaments = departaments;
+	}	
+
+	public String getFoto() {
+		return foto;
 	}
-	
-	
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public void setPermisos(List<Permiso> permisos) {
+		this.permisos = permisos;
+	}
 
 	public String getUsername() {
 		return username;
