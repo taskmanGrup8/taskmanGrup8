@@ -113,7 +113,7 @@
 					<!-- Home -->
 					<li class="nav-item"><a class="nav-link active fst-italic"
 						aria-current="page">Gestor de tasques</a></li>
-					<li  class="nav-item">
+					<li  th:if="${usuariAutenticat}" class="nav-item">
 						<p sec:authorize="isAuthenticated()">
 							Usuari: <span th:text="${usuariAutenticat.nombre} + ' ' + ${usuariAutenticat.apellidos}"></span> | Rol: <span
 								th:text="${usuariAutenticat.rol.nombre}"></span>
