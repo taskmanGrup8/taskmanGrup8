@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -123,7 +124,58 @@ public class Tasca implements Serializable {
 		this.setTiempoEstimado(tiempo);
 	}
 	
+	@PrePersist
+	public void prePersist() {
+		
+		this.codigo=codigo.toUpperCase();
+	}
 	
+	
+	/**
+	 * Fem override del mètode equals perque volem que les comparacions siguin personalitzades pel nom de la fase
+	 * que és únic a la base de dades.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		
+		// Si obj és el mateix objecte que this retornem true
+		if(this==obj)return true;
+		// si obj és null retornem false
+		if(obj==null)return false;
+		
+		// Si obj no es de la mateixa classe Departament retornem false
+		if(getClass() !=obj.getClass())return false;
+		
+		// Fem cast d'obj
+		Tasca tasca=(Tasca) obj;
+		
+		// Si l'atribut nombre és null i l'atribut nombre d'obj no llavors retornem false
+		if(nombre==null) {
+			
+			if(tasca.getNombre()!=null)return false;
+			
+		// En cas contrari si nombre no és igual a l'atribut nombre d'obj retornem false 	
+		}else if(!nombre.equals(tasca.getNombre())) {
+			
+			return false;
+		}
+		
+		// Retornem true perquè els dos noms son iguals
+		return true;
+	}
+	
+	/**
+	 * Fem override del métode hashCode perquè sigui personalitzat al camp nombre
+	 */
+	@Override
+	public int hashCode() {
+		final int prime=31;
+		int result = 1;
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		return result;
+		
+	}	
+
 	
 	
 
