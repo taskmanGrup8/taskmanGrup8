@@ -91,7 +91,7 @@ public class DepartamentController {
 		// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
 		model.addAttribute("departament", departament);
 		model.addAttribute("titol", "Detall departament " + departament.getNombre());
-		model.addAttribute("boton","Mostrar usuaris");
+		model.addAttribute("boton","Veure Llistat d'usuaris");
 		model.addAttribute("usuaris",departament.getUsuaris());
 		model.addAttribute("empresa",empresa);
 		
@@ -155,7 +155,7 @@ public class DepartamentController {
 			result.rejectValue("codigo", "departament.codigoExistente");
 		
 		if(!comprobacionNombre(departament))
-			result.rejectValue("codigo", "departament.nombreExistente");
+			result.rejectValue("nombre", "departament.nombreExistente");
 		
 		// L'anotacio @Valid ha validat les dades de departament a partir de les anotacions fetes a la classe
 		// departament i els errors que ha trobat els ha passat a result amb els missatges asociats.
@@ -222,7 +222,7 @@ public class DepartamentController {
 		}		
 		
 		// Afegirm al model el títol, la llista de departaments, si està filtrat o no i la empresa.
-		model.addAttribute("titol", "Mostrar departaments");
+		model.addAttribute("titol", "Llistat de departaments");
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("filtrado", filtrado);
 		model.addAttribute("empresa",empresa);
@@ -314,8 +314,8 @@ public class DepartamentController {
 		}
 		
 		// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
-		titol="Modificar departament";
-		titolBoto="Enviar dades";
+		titol="Actualitzar departament";
+		titolBoto="Actualitzar departament";
 		
 		// passem el departament trobat, el titol, el text del botó i l'empresa a la vista.
 		model.addAttribute("titol", titol);

@@ -353,7 +353,7 @@ public class UsuariController {
 		// Afegim els atributs al model
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
-		model.addAttribute("boton","Mostrar departaments");
+		model.addAttribute("boton","Ver Listado departamentos");
 		model.addAttribute("usuari",usuari);
 		model.addAttribute("empresa", empresa);
 		model.addAttribute("deps", usuari.getDepartaments());
@@ -452,8 +452,8 @@ public class UsuariController {
 		
 		for(Permiso p: permisos)System.out.println(p.getAuthority());
 		// Passem al model els atributs necessaris
-		titolBoto = "Enviar dades";	
-		titol = "Modificar usuari";
+		titolBoto = "Modificar Usuari";	
+		titol = "Modificar usuari";		
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);
