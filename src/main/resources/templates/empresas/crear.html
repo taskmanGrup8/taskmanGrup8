@@ -12,10 +12,10 @@
 	<div th:replace="generic/main :: navbar-generic"></div>
 	<div class="container mt-5 pt-5">
 		<!-- Alerta -->
-		<div class="row">
+		<div class="row d-flex justify-content-center">
 			<div class="col-2"></div>
-			<div class="col-8 alert alert-info alert-dismissible fade show text-center" th:if="${alerta!=null}"
-				role="alert">
+			<div class="col-xs-4 col-sm-8 col-lg-4 col-xl-4 alert alert-info alert-dismissible fade show text-center mb-5"
+				th:if="${alerta!=null}" role="alert">
 				<span th:text="${alerta}"></span>
 				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
@@ -54,7 +54,8 @@
 					<!-- Adreça -->
 					<div class="col-md-3">
 						<label for="direccion" class="form-label">Adreça <span class="text-muted">*</span></label>
-						<input type="text" class="form-control" id="direccion" maxlength="255" th:field="*{direccion}" />
+						<input type="text" class="form-control" id="direccion" maxlength="255"
+							th:field="*{direccion}" />
 						<!-- Alerta d'error -->
 						<div th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"
 							class="my-2 alert alert-danger"></div>
@@ -62,7 +63,8 @@
 					<!-- Localitat -->
 					<div class="col-md-3">
 						<label for="localidad" class="form-label">Localitat <span class="text-muted">*</span></label>
-						<input type="text" class="form-control" id="localidad" maxlength="255" th:field="*{localidad}" />
+						<input type="text" class="form-control" id="localidad" maxlength="255"
+							th:field="*{localidad}" />
 						<!-- Alerta d'error -->
 						<div th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"
 							class="my-2 alert alert-danger"></div>
@@ -74,7 +76,8 @@
 					<!-- Provincia -->
 					<div class="col-md-3">
 						<label for="provincia" class="form-label">Província <span class="text-muted">*</span></label>
-						<input type="text" class="form-control" id="provincia" maxlength="255" th:field="*{provincia}" />
+						<input type="text" class="form-control" id="provincia" maxlength="255"
+							th:field="*{provincia}" />
 						<!-- Alerta d'error -->
 						<div th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}"
 							class="my-2 alert alert-danger"></div>
@@ -103,7 +106,8 @@
 					</div>
 					<!-- Correu -->
 					<div class="col-md-3">
-						<label for="email" class="form-label">Correu electrònic <span class="text-muted">*</span></label>
+						<label for="email" class="form-label">Correu electrònic <span
+								class="text-muted">*</span></label>
 						<input type="text" class="form-control" id="email" maxlength="255" th:field="*{email}" />
 						<!-- Alerta d'error -->
 						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger">

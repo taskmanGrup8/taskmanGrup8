@@ -91,7 +91,7 @@ public class DepartamentController {
 		// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
 		model.addAttribute("departament", departament);
 		model.addAttribute("titol", "Detall departament " + departament.getNombre());
-		model.addAttribute("boton","Veure Llistat d'usuaris");
+		model.addAttribute("boton","Mostrar usuaris");
 		model.addAttribute("usuaris",departament.getUsuaris());
 		model.addAttribute("empresa",empresa);
 		
@@ -222,7 +222,7 @@ public class DepartamentController {
 		}		
 		
 		// Afegirm al model el títol, la llista de departaments, si està filtrat o no i la empresa.
-		model.addAttribute("titol", "Listado de departamentos");
+		model.addAttribute("titol", "Mostrar departaments");
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("filtrado", filtrado);
 		model.addAttribute("empresa",empresa);
@@ -314,8 +314,8 @@ public class DepartamentController {
 		}
 		
 		// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
-		titol="Actualitzar departament";
-		titolBoto="Actualitzar departament";
+		titol="Modificar departament";
+		titolBoto="Enviar dades";
 		
 		// passem el departament trobat, el titol, el text del botó i l'empresa a la vista.
 		model.addAttribute("titol", titol);

@@ -60,8 +60,8 @@ public class EmpresaController {
 	@GetMapping("/crear")
 	public String crear(Model model) {
 				
-		titol="Crear empresa";
-		titolBoto="Dona d'alta la teva empresa a Taskamn!";
+		titol="Dona d'alta la teva empresa a Taskan!";
+		titolBoto="Enviar dades";
 		
 		
 		// Passem les dades al model per poder tenir-los a la vista

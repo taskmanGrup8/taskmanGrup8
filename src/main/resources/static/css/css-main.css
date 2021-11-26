@@ -1,11 +1,26 @@
-/* Tipografia nom d'empresa */
-.empresa-navbar {
-    font-family: 'Ubuntu', sans-serif;
-}
-
 /* Tipografia general */
 body {
     font-family: 'Nunito', sans-serif;
+}
+
+/* icones login */
+.login-icon div span {
+    background-color: #0079f3;
+    color: #fff;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+/* Contrasenya oblidada */
+.pwd-forgotten {
+    font-size: 13px;
+}
+
+/* Tipografia nom d'empresa */
+.empresa-navbar {
+    font-family: 'Ubuntu', sans-serif;
 }
 
 /* Oculta els filtres de la vista usuaris/listar */
