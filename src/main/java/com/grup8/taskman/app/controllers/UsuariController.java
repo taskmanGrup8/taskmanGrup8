@@ -452,14 +452,8 @@ public class UsuariController {
 		
 		for(Permiso p: permisos)System.out.println(p.getAuthority());
 		// Passem al model els atributs necessaris
-<<<<<<< Updated upstream
-		titolBoto = "Modificar Usuari";	
-		titol = "Modificar usuari";		
-=======
 		titolBoto = "Enviar dades";	
 		titol = "Modificar usuari";
-		crear=false;
->>>>>>> Stashed changes
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);

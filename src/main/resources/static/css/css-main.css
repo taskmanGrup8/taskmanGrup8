@@ -3,6 +3,11 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+/* Tipografia nom d'empresa */
+.empresa-navbar {
+  font-family: 'Ubuntu', sans-serif;
+}
+
 /* icones login */
 .login-icon div span {
     background-color: #0079f3;
