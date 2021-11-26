@@ -11,24 +11,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import com.grup8.taskman.app.domain.departaments.Departament;
 
 @Entity
-@Table(name="fases")
-public class Fase implements Serializable{
-
+@Table(name="tasques")
+public class Tasca implements Serializable {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
@@ -52,22 +48,20 @@ public class Fase implements Serializable{
 	@Column(name="descripcion", nullable=false)
 	private String descripcion;	
 		
-	// Indiquem que tiempo no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null.2
-	
-	@NotNull
+	// Indiquem que tiempo no pot ser null a la base de dades.		
 	@Column(name="tiempo", nullable=false)
 	private int tiempoEstimado;
 	
-	@ManyToMany(mappedBy="fases", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Tasca> tasques;
-	
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_departament")
-	private Departament departament;
+	@ManyToMany(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(
+			name="fase_tasca",			
+			joinColumns=@JoinColumn(name="id_fase"),
+			inverseJoinColumns=@JoinColumn(name="id_tasca")						
+			)
+	private List<Fase> fases;
 
-	public Fase() {
-	
+	public Tasca() {
+		
 	}
 
 	public Long getId() {
@@ -110,72 +104,27 @@ public class Fase implements Serializable{
 		this.tiempoEstimado = tiempoEstimado;
 	}
 
-	public List<Tasca> getTasques() {
-		return tasques;
+	public List<Fase> getFases() {
+		return fases;
 	}
 
-	public void setTasques(List<Tasca> tasques) {
-		this.tasques = tasques;
-	}
-
-	public Departament getDepartament() {
-		return departament;
-	}
-
-	public void setDepartament(Departament departament) {
-		this.departament = departament;
+	public void setFases(List<Fase> fases) {
+		this.fases = fases;
 	}
 	
-	@PrePersist
-	public void prePersist() {
+	public void calcularTiempoEstimado() {
 		
-		this.codigo=codigo.toUpperCase();
-	}
-	
-	
-	/**
-	 * Fem override del mètode equals perque volem que les comparacions siguin personalitzades pel nom de la fase
-	 * que és únic a la base de dades.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		
-		// Si obj és el mateix objecte que this retornem true
-		if(this==obj)return true;
-		// si obj és null retornem false
-		if(obj==null)return false;
-		
-		// Si obj no es de la mateixa classe Departament retornem false
-		if(getClass() !=obj.getClass())return false;
-		
-		// Fem cast d'obj
-		Fase fase=(Fase) obj;
-		
-		// Si l'atribut nombre és null i l'atribut nombre d'obj no llavors retornem false
-		if(nombre==null) {
+		int tiempo=0;
+		for(Fase fase: fases) {
 			
-			if(fase.getNombre()!=null)return false;
-			
-		// En cas contrari si nombre no és igual a l'atribut nombre d'obj retornem false 	
-		}else if(!nombre.equals(fase.getNombre())) {
-			
-			return false;
+			tiempo+=fase.getTiempoEstimado();
 		}
 		
-		// Retornem true perquè els dos noms son iguals
-		return true;
+		this.setTiempoEstimado(tiempo);
 	}
 	
-	/**
-	 * Fem override del métode hashCode perquè sigui personalitzat al camp nombre
-	 */
-	@Override
-	public int hashCode() {
-		final int prime=31;
-		int result = 1;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		return result;
-		
-	}	
+	
+	
+	
 
 }
