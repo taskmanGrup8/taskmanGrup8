@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
 
+<head th:replace="generic/main :: head">
+</head>
+
+<body>
+    <!-- 
+		Vista per crear noves fases.
+		
+	-->
+    <div th:replace="generic/main :: navbar-empresa"></div>
+    <div class="container mt-5 pt-5">
+        <div th:replace="generic/main :: mensajes"></div>
+        <!-- Títol -->
+        <div class="pb-4">
+            <h3 th:text="${titol}"></h3>
+        </div>
+        
+        <div class="row">
+            <form th:action="@{/fases/result}" th:object="${fase}" method="post">
+                <!-- Àlies -->
+                <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    <label for="nom-alias" class="form-label">Àlies <span class="text-muted">**</span></label>
+                    <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{codigo}" />
+                    <!-- Alerta d'error -->
+                	<div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
+                    class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
+                </div>
+                
+                <!-- Nom-->
+                <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                    <label for="nom-fase" class="form-label">Nom de la fase <span class="text-muted">*</span></label>
+                    <input type="text" class="form-control" maxlength="20" id="nom-fase" th:field="*{nombre}" />
+                    <!-- Alerta d'error -->
+                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2">
+                    </div>
+                </div>
+                
+                 <!-- Descripció -->
+                <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    <label for="descripcio" class="form-label">Descripció <span class="text-muted">**</span></label>
+                    <input type="text" class="form-control" id="descripcio" th:field="*{descripcion}" />
+                    <!-- Alerta d'error -->
+                	<div th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"
+                    class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
+                </div>
+                
+                <!-- Temps estimat-->
+                <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                    <label for="temps" class="form-label">Temps estimat en minuts <span class="text-muted">*</span></label>
+                    <input type="text" class="form-control" id="temps" th:field="*{tiempoEstimado}" />
+                    <!-- Alerta d'error -->
+                    <div th:if="${#fields.hasErrors('tiempoEstimado')}" th:errors="*{tiempoEstimado}" class="alert alert-danger mt-2">
+                    </div>
+                </div>
+                
+                <!-- Departaments -->
+					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+						<label for="departament" class="form-label">Departament <span class="text-muted">*</span></label>
+						<select id="departament" class="form-select" th:field="*{departament}" required>
+							<option value="">Selecciona un departament</option>
+							<option th:each="dep: ${listaDepartaments}" th:text="${dep.nombre}" th:value="${dep.id}"></option>
+
+						</select>
+						<div th:if="${#fields.hasErrors('departament')}" th:errors="*{departament}" class="alert alert-danger"></div>
+					</div>
+                
+                
+                
+                <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
+                <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters</p>
+                <!-- Botó per crear la fase -->
+                <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Crear nova fase" th:value="${titolBoto}" />
+            </form>
+        </div>
+    </div>
+    <footer th:replace="generic/main :: footer"></footer>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="cat" xmlns:th="http://www.thymeLeaf.org">
+
+<head th:replace="generic/main :: head">
+</head>
+
+<body>
+	<!-- 
+		Vista on es troben llistades totes les fases amb els seus camps assignats
+		Des d'aquesta vista es podrà accedir en detall dins d'una fase, edita-ho, eliminar-ho, i 
+		fer una cerca de la fase per l'àlies o el nom
+	-->
+	<div th:replace="generic/main :: navbar-empresa"></div>
+	<div class="container mt-5 pt-5">
+		<div th:replace="generic/main :: mensajes"></div>
+		<div class="pb-5">
+			<h3 class="float-start">Llistat de fases</h3>
+		</div>
+		<!-- Botó per crear una nova fase -->
+		<div class="pt-3 pb-3 row">
+			<div class="col-md-8 col-lg-8 col-sm-12 float-start pt-3">
+				<a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+					title="Crear nova fase" th:href="@{/fases/crear}">Crear	fase</a>
+			</div>
+			<!-- Cercador per buscar una fase existent -->
+			<div class="boto-cercar-fase col-md-4 col-lg-4 col-sm-12 float-end pt-3" th:if="${not filtrado}">
+				<form class="d-flex" th:action="@{/fases/listar}" method="get">
+					<input class="form-control" type="text" placeholder="Cercar fase" aria-label="Search"
+						name="keyword" id=>
+					<button class="btn btn-primary" type="submit">Cercar</button>
+				</form>
+			</div>
+			<!-- Fases trobades a la cerca -->
+			<div th:if="${filtrado}" class="boto-eliminar-filtre col-md-4 col-lg-4 col-sm-12 text-end pt-3">
+				<a class="btn btn-primary" th:href="@{/fases/listar}" th:text="'Eliminar filtre'"></a>
+			</div>
+		</div>
+
+		<!-- Taula del llistat de fases existents -->
+		<div class="row">
+			<div class="col-12">
+				<table class="mt-3 table table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<!-- Titols -->
+							<th class="text-center" scope="col">#</th>
+							<th class="text-center" width="15%" scope="col">Àlies</th>
+							<th width="85%" scope="col">Nom</th>
+							<th class="text-center" scope="col">Departament</th>
+							<th class="text-center" scope="col">Editar</th>
+							<th class="text-center" scope="col">Eliminar</th>
+						</tr>
+					</thead>
+					<!-- Fases llistades -->
+					<tbody>
+						<tr th:each="fase: ${fases}">
+							<td class="text-center">
+								<a class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"
+									data-bs-placement="bottom" title="Veure fase"
+									th:href="@{/fases/ver/}+ ${fase.id}" th:text="${fase.id}"></a>
+							</td>
+							<td class="text-center" th:text="${fase.codigo}"></td>
+							<td th:text="${fase.nombre}"></td>
+							<td th:text="${fase.departament.nombre}"></td>
+							<td class="text-center">
+								<a data-bs-toggle="tooltip" data-bs-placement="bottom"
+								title="Editar" th:href="@{/fases/actualizar/}+ ${fase.id}"><i
+										class="fas fa-edit text-primary"></i>
+								</a>
+							</td>
+							<td class="text-center">
+								<a data-bs-toggle="tooltip" data-bs-placement="bottom"
+								title="Eliminar" th:href="@{/fases/eliminar/}+ ${fase.id}"
+									onclick="return confirm('Estàs segur que vols eliminar?');"><i
+										class="fas fa-trash text-danger"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="generic/main :: footer"></footer>
+
+</body>
+
+</html>
