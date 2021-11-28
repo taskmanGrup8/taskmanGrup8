@@ -225,7 +225,7 @@ public class UsuariController {
 			}catch(IOException e) {
 				
 				// Si no es pot guardar informem.
-				flash.addAttribute("error", "Nos'ha pogut guardar la imatge");
+				flash.addAttribute("error", "No s'ha pogut guardar la imatge");
 			}
 			
 			// Guardem a usuari la ruta de l'arxiu, si no s'ha pogut guardar serà null
@@ -294,7 +294,7 @@ public class UsuariController {
 		}
 		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
-		Pageable pageRequest = PageRequest.of(page, 4, sortByIdAsc());
+		Pageable pageRequest = PageRequest.of(page, 8, sortByIdAsc());
 		
 		// Obtenim la Page que passarem a la vista
 		Page<Usuari> usuaris = filtreUsuari.getUsuaris(pageRequest, usuariService);
@@ -353,7 +353,7 @@ public class UsuariController {
 		// Afegim els atributs al model
 		model.addAttribute("departaments", departaments);
 		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
-		model.addAttribute("boton","Ver Listado departamentos");
+		model.addAttribute("boton","Mostrar departaments");
 		model.addAttribute("usuari",usuari);
 		model.addAttribute("empresa", empresa);
 		model.addAttribute("deps", usuari.getDepartaments());
@@ -438,7 +438,7 @@ public class UsuariController {
 			usuari = usuariService.findById(id);
 			// Si no el trobem informem de l'error i redireccionem a listar
 			if (usuari == null) {
-				flash.addFlashAttribute("error", "El ID de l'usuari no existeix a la BBDD");
+				flash.addFlashAttribute("error", "L'ID de l'usuari no existeix a la BBDD");
 				return "redirect:/usuaris/listar";
 			}
 		// Si l'id no és més gran que cero cridem a listar	

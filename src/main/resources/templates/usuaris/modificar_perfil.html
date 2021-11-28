@@ -4,85 +4,105 @@
 <head th:replace="generic/main :: head"></head>
 
 <body>
-	<!-- 
+  <!-- 
 		Vista per crear nous usuaris.
 		S'han d'omplir tots els camps menys el de departaments, ja que un usuari pot no tenir cap departament assignat
 	-->
-	<div th:replace="generic/main :: navbar-empresa"></div>
-	<div class="container mt-5 pt-5">
-		<div th:replace="generic/main :: mensajes"></div>
-		<div class="pb-4">
-			<h3 th:text="${titol}"></h3>
-		</div>
+  <div th:replace="generic/main :: navbar-empresa"></div>
+  <div class="container mt-5 pt-5">
+    <div th:replace="generic/main :: mensajes"></div>
+    <div class="pb-4">
+      <h3 th:text="${titol}"></h3>
+    </div>
 
-		<div>
-			<form th:action="@{/usuaris/guardar}" th:object="${usuari}"
-				method="post" enctype="multipart/form-data">
-				
-				<!-- username -->
-				<div class="row">
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="username" class="form-label">Nickname <span
-							class="text-muted">*</span></label> <input type="text"
-							class="form-control" id="username" th:field="*{username}" />
+    <div>
+      <form th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post" enctype="multipart/form-data">
+        <!-- Nom -->
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="nom" maxlength="255" th:field="*{nombre}" disabled>
+            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="my-2 alert alert-danger"></div>
+          </div>
+          <!-- Cognoms -->
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="cognoms" class="form-label">Cognoms</label>
+            <input type="text" class="form-control" id="cognoms" maxlength="255" th:field="*{apellidos}" disabled>
+            <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="my-2 alert alert-danger">
+            </div>
+          </div>
+        </div>
 
-					</div>
-					<div th:if="${#fields.hasErrors('username')}"
-						th:errors="*{username}" class="my-2 alert alert-danger"></div>
-				
-				<div class="row pt-3">
+        <!-- Nickname -->
+        <div class="row pt-3">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="username" class="form-label">Nickname</label>
+            <input type="text" class="form-control" id="username" maxlength="255" th:field="*{username}">
+            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{username}" class="my-2 alert alert-danger"></div>
+          </div>
+          <!-- DNI -->
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="dni" class="form-label">DNI</label>
+            <input type="text" class="form-control" id="dni" maxlength="9" th:field="*{dni}" disabled>
+            <div th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="my-2 alert alert-danger">
+            </div>
+          </div>
+        </div>
 
-					<!-- Tel�fon -->
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="telefon" class="form-label">Tel�fon <span
-							class="text-muted">*</span></label> <input type="text"
-							class="form-control" id="telefon" maxlength="9"
-							th:field="*{telefono}">
-						<div th:if="${#fields.hasErrors('telefono')}"
-							th:errors="*{telefono}" class="my-2 alert alert-danger"></div>
-					</div>
-				</div>
+        <div class="row pt-3">
+          <!-- Telèfon -->
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="telefon" class="form-label">Telèfon <span class="text-muted">*</span></label>
+            <input type="text" class="form-control" id="telefon" maxlength="9" th:field="*{telefono}">
+            <div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="my-2 alert alert-danger"></div>
+          </div>
 
-				<div class="row pt-3">
-					<!-- Correu electr�nic -->
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-						<label for="correu" class="form-label">Correu eletr�nic <span
-							class="text-muted">*</span></label> <input type="text"
-							class="form-control" id="correu" maxlength="255"
-							th:field="*{email}">
-						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-							class="my-2 alert alert-danger"></div>
-					</div>
+          <!-- Correu electrònic -->
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="correu" class="form-label">Correu eletrònic <span class="text-muted">*</span></label>
+            <input type="text" class="form-control" id="correu" maxlength="255" th:field="*{email}">
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger">
+            </div>
+          </div>
+        </div>
 
-					<div class="col-md-4">
-						<img class="img-thumbnail img-fluid" style="max-width: 15%;"
-							th:if="${#strings.length(usuariAutenticat.foto)>0}"
-							th:src="@{'/uploads/' + ${usuariAutenticat.foto}}"
-							th:alt="${usuariAutenticat.foto}" /> <label for="file"
-							class="form-label">Foto</label> <input type="file"
-							class="form-control" name="file" />
-					</div>
+        <div class="row pt-3">
 
-				</div>
+          <!-- Rol -->
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="rol" class="form-label">Rol</label>
+            <select id="rol" class="form-select" th:field="*{rol}" disabled>
+              <option value="">Selecciona un rol</option>
+              <option th:each="rol: ${listaRoles}" th:text="${rol.nombre}" th:value="${rol.id}"></option>
 
-			
+            </select>
+            <div th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}" class="alert alert-danger"></div>
+          </div>
+        </div>
 
-				<div class="row pt-3">
-					<p class="text-muted mt-3">* Aquests camps s�n obligatoris</p>
-					<p class="text-muted">** Has de fer clic en el quadre de text
-						per poder assignar els departaments</p>
-				</div>
-				<!-- Bot� -->
-				<div class="mb-2">
-					<input type="submit" class="btn btn-primary"
-						data-bs-toggle="tooltip" data-bs-placement="bottom"
-						title="Modificar perfil" th:value="${titolBoto}" />
-				</div>
-			</form>
-		</div>
-	</div>
+        <div class="row pt-3">
+          <div class="col-12 col-sm-8 col-md-8 col-lg-5 col-xl-5">
+            <img class="img-thumbnail img-fluid" style="max-width: 15%;"
+              th:if="${#strings.length(usuariAutenticat.foto)>0}" th:src="@{'/uploads/' + ${usuariAutenticat.foto}}"
+              th:alt="${usuariAutenticat.foto}" /> <label for="file" class="form-label">Foto</label> <input type="file"
+              class="form-control" name="file" />
+          </div>
+        </div>
 
-	<footer th:replace="generic/main :: footer"></footer>
+        <div class="row pt-3">
+          <p class="text-muted mt-3">* Aquests camps són obligatoris</p>
+        </div>
+        <!-- Botó -->
+        <div class="mb-2">
+          <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Modificar perfil" th:value="${titolBoto}" />
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <footer th:replace="generic/main :: footer"></footer>
 </body>
 
 </html>

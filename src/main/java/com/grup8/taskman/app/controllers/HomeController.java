@@ -48,7 +48,6 @@ public class HomeController {
 		}
 		
 		// Com de moment no hem implementat els permissos cridem al menú sense tenir en compte qui ho ha fet
-		
 		model.addAttribute("empresa", empresa);
 		return "perfil/menu";
 		

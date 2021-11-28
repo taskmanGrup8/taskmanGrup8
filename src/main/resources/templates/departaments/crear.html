@@ -28,7 +28,7 @@
                 <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
                     class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
                 <!-- Nom-->
-                <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                <div class="mb-3 col-10 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <label for="nom-departament" class="form-label">Nom del departament <span class="text-muted">*</span></label>
                     <input type="text" class="form-control" maxlength="20" id="nom-departament" th:field="*{nombre}" />
                     <!-- Alerta d'error -->
