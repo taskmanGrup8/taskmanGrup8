@@ -1,9 +1,6 @@
 package com.grup8.taskman.app.domain.tasques;
 
 import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -37,29 +33,20 @@ public class Fase implements Serializable{
 	// Indiquem que codigo no pot ser null i que és únic a la base de dades. també indiquem que la validació no pot ser ni nul 
 	// ni espais en blanc.
 	@NotBlank
-	@Column(name="codigo", unique=true, length=3, nullable=false)
+	@Column(name="codigo", length=3, nullable=false)
 	private String codigo;
 	
 	// Indiquem que nombre no pot ser null i que és únic a la base de dades. també indiquem que la validació no pot ser ni nul 
 	// ni espais en blanc.
 	@NotBlank
-	@Column(name="nombre", unique=true, length=40, nullable=false)
+	@Column(name="nombre", length=40, nullable=false)
 	private String nombre;	
 	
 	// Indiquem que nombre no pot ser null i que és únic a la base de dades. també indiquem que la validació no pot ser ni nul 
 	// ni espais en blanc.
 	@NotBlank
 	@Column(name="descripcion", nullable=false)
-	private String descripcion;	
-		
-	// Indiquem que tiempo no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null.2
-	
-	@NotNull
-	@Column(name="tiempo", nullable=false)
-	private int tiempoEstimado;
-	
-	@ManyToMany(mappedBy="fases", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Tasca> tasques;
+	private String descripcion;		
 	
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -101,22 +88,7 @@ public class Fase implements Serializable{
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
-	public int getTiempoEstimado() {
-		return tiempoEstimado;
-	}
-
-	public void setTiempoEstimado(int tiempoEstimado) {
-		this.tiempoEstimado = tiempoEstimado;
-	}
-
-	public List<Tasca> getTasques() {
-		return tasques;
-	}
-
-	public void setTasques(List<Tasca> tasques) {
-		this.tasques = tasques;
-	}
+	
 
 	public Departament getDepartament() {
 		return departament;

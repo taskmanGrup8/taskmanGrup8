@@ -10,11 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -53,12 +52,10 @@ public class Tasca implements Serializable {
 	@Column(name="tiempo", nullable=false)
 	private int tiempoEstimado;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(
-			name="fase_tasca",			
-			joinColumns=@JoinColumn(name="id_fase"),
-			inverseJoinColumns=@JoinColumn(name="id_tasca")						
-			)
+	@OneToMany(mappedBy="tasca", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<FaseConTiempo> fasesConTiempo;
+	
+	@Transient
 	private List<Fase> fases;
 
 	public Tasca() {
@@ -103,6 +100,14 @@ public class Tasca implements Serializable {
 
 	public void setTiempoEstimado(int tiempoEstimado) {
 		this.tiempoEstimado = tiempoEstimado;
+	}	
+	
+	public List<FaseConTiempo> getFasesConTiempo() {
+		return fasesConTiempo;
+	}
+
+	public void setFasesConTiempo(List<FaseConTiempo> fasesConTiempo) {
+		this.fasesConTiempo = fasesConTiempo;
 	}
 
 	public List<Fase> getFases() {
@@ -112,11 +117,11 @@ public class Tasca implements Serializable {
 	public void setFases(List<Fase> fases) {
 		this.fases = fases;
 	}
-	
+
 	public void calcularTiempoEstimado() {
 		
 		int tiempo=0;
-		for(Fase fase: fases) {
+		for(FaseConTiempo fase: fasesConTiempo) {
 			
 			tiempo+=fase.getTiempoEstimado();
 		}
@@ -174,9 +179,5 @@ public class Tasca implements Serializable {
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 		
-	}	
-
-	
-	
-
+	}
 }
