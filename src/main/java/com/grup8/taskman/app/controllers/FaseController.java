@@ -18,14 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.grup8.taskman.app.domain.departaments.Departament;
 import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.tasques.Fase;
+import com.grup8.taskman.app.domain.tasques.FaseConTiempo;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.departament.IDepartamentService;
 import com.grup8.taskman.app.services.empresa.IEmpresaService;
+import com.grup8.taskman.app.services.tasques.IFaseConTiempoService;
 import com.grup8.taskman.app.services.tasques.IFaseService;
+import com.grup8.taskman.app.services.tasques.ITascaService;
 import com.grup8.taskman.app.util.Utilidades;
 
 @Controller
@@ -46,6 +48,12 @@ public class FaseController {
 		// Injectem el servei de empresa per poder determinar si ja existeix la empresa.
 		@Autowired
 		IEmpresaService empresaService;	
+		
+		@Autowired
+		IFaseConTiempoService faseConTiempoService;
+		
+		@Autowired
+		ITascaService tascaService;
 			
 		private String titolBoto;
 		private String titol;
@@ -196,6 +204,12 @@ public class FaseController {
 				// Si el trobem l'eliminem
 				if(fase!=null) {
 					// Eliminem la fase a la base de dades
+					List<FaseConTiempo> lista= faseConTiempoService.findByFase(fase.getId());					
+					for(FaseConTiempo f: lista) {
+						
+						tascaService.delete(f.getTasca());
+					}					
+					
 					faseService.delete(fase);
 					
 					// Per saber si hem eliminat el registre, si no el trobem enviem un missatge com que s'he eliminat

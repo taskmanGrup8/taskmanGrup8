@@ -20,10 +20,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.tasques.Fase;
+import com.grup8.taskman.app.domain.tasques.FaseConTiempo;
 import com.grup8.taskman.app.domain.tasques.Tasca;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.departament.IDepartamentService;
 import com.grup8.taskman.app.services.empresa.IEmpresaService;
+import com.grup8.taskman.app.services.tasques.IFaseConTiempoService;
 import com.grup8.taskman.app.services.tasques.IFaseService;
 import com.grup8.taskman.app.services.tasques.ITascaService;
 import com.grup8.taskman.app.util.Utilidades;
@@ -42,6 +44,9 @@ public class TascaController {
 		// Injectem el servei de fases per poder realitzar accions a la taula fases.
 		@Autowired
 		IFaseService faseService;	
+		
+		@Autowired
+		IFaseConTiempoService faseConTiempoService;
 		
 		// Injectem el servei de tasques per poder realitzar accions a la taula tasques.
 		@Autowired
@@ -113,7 +118,7 @@ public class TascaController {
 				result.rejectValue("codigo", "tasca.codigoExistente");
 			
 			if(!comprobacionNombre(tasca))
-				result.rejectValue("nombre", "fase.nombreExistente");
+				result.rejectValue("nombre", "tasca.nombreExistente");
 			
 			// L'anotacio @Valid ha validat les dades de fase a partir de les anotacions fetes a la classe
 			// fase i els errors que ha trobat els ha passat a result amb els missatges asociats.
@@ -126,9 +131,12 @@ public class TascaController {
 				return "tasques/crear";
 			}		
 			
-			tasca.calcularTiempoEstimado();
 			
-			// Guardem el registre	
+			tasca.setTiempoEstimado(0);
+			List<FaseConTiempo> fasesConTiempo=FaseConTiempo.generarLista(tasca.getFases());
+			tasca.setFasesConTiempo(fasesConTiempo);			
+			
+	/*		// Guardem el registre	
 			if(tascaService.save(tasca)!=null) {
 			
 				// Afegim al model el missatge que s'ha guardat correctament 
@@ -140,9 +148,9 @@ public class TascaController {
 			}
 			
 			// Confimem que s'ha completat tot el procès i que ja no cal que guardi les dades de departament.
-			status.setComplete();
+			status.setComplete();*/
 			// Redireccionem a llistar
-			return "redirect:listar";
+			return "tasques/configurar";
 		}
 		
 		
@@ -306,6 +314,45 @@ public class TascaController {
 			return "tasques/ver";
 		}
 		
+		
+		@PostMapping("/configurar")
+		public String configurar(@Valid Tasca tasca, BindingResult result, Model model, 
+		RedirectAttributes flash, SessionStatus status){
+			
+						
+									
+			// L'anotacio @Valid ha validat les dades de fase a partir de les anotacions fetes a la classe
+			// fase i els errors que ha trobat els ha passat a result amb els missatges asociats.
+			// Si la variable result conté qualsevol error llavors passem l'informació de que no s'ha pogut
+			// guardar el registre i redireccionem a crear. Implicitament result assigna al model el camp errors
+			// que gestionarem amb thymeleaf per coneixer quins errors han hagut. Cridem de nou a la vista crear.
+			
+				
+			
+			for(FaseConTiempo fase: tasca.getFasesConTiempo()) {
+				System.out.println(fase.getFase().getNombre());
+			}
+			tasca.calcularTiempoEstimado();
+			
+			
+			// Guardem el registre	
+			if(tascaService.save(tasca)!=null) {
+				
+				guardarFasesConTiempo(tascaService.findByCodigo(tasca.getCodigo()));
+			
+				// Afegim al model el missatge que s'ha guardat correctament 
+				flash.addFlashAttribute("success", "Registre guardat amb èxit");
+			}else {
+				
+				// Afegim al model el missatge que no s'ha guardat correctament 
+				flash.addFlashAttribute("errors", "El registre no s'ha pogut guardar a la base de dades");
+			}
+			
+			// Confimem que s'ha completat tot el procès i que ja no cal que guardi les dades de departament.
+			status.setComplete();			
+			return "redirect:listar";
+		}
+		
 		private boolean comprobacionCodigo(Tasca tasca) {
 
 			// Inicialitzem result a true. Nomès el canviarem si existeix a la base de dades
@@ -347,6 +394,16 @@ public class TascaController {
 			}	
 			
 			return result;
+		}
+		
+		private void guardarFasesConTiempo(Tasca tasca) {
+			
+			for(FaseConTiempo fase: tasca.getFasesConTiempo()) {
+				
+				fase.setTasca(tasca);
+				faseConTiempoService.save(fase);
+			}
+			
 		}
 		
 		@ModelAttribute("usuariAutenticat")
