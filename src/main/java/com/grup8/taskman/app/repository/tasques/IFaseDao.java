@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
-
 import com.grup8.taskman.app.domain.tasques.Fase;
+
 
 public interface IFaseDao extends CrudRepository<Fase, Long> {
 	
