@@ -225,7 +225,7 @@ public class UsuariController {
 			}catch(IOException e) {
 				
 				// Si no es pot guardar informem.
-				flash.addAttribute("error", "No s'ha pogut guardar la imatge");
+				flash.addAttribute("error", "Nos'ha pogut guardar la imatge");
 			}
 			
 			// Guardem a usuari la ruta de l'arxiu, si no s'ha pogut guardar serà null
@@ -288,8 +288,7 @@ public class UsuariController {
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null) {
-			
-			System.out.println("Por algún motivo da null");
+						
 			return "redirect:/";	
 		}
 		
@@ -352,7 +351,7 @@ public class UsuariController {
 		
 		// Afegim els atributs al model
 		model.addAttribute("departaments", departaments);
-		model.addAttribute("titol", "Detalle usuario " + usuari.getNombre());
+		model.addAttribute("titol", "Detall usuari " + usuari.getNombre());
 		model.addAttribute("boton","Mostrar departaments");
 		model.addAttribute("usuari",usuari);
 		model.addAttribute("empresa", empresa);
@@ -438,7 +437,7 @@ public class UsuariController {
 			usuari = usuariService.findById(id);
 			// Si no el trobem informem de l'error i redireccionem a listar
 			if (usuari == null) {
-				flash.addFlashAttribute("error", "L'ID de l'usuari no existeix a la BBDD");
+				flash.addFlashAttribute("error", "El ID de l'usuari no existeix a la BBDD");
 				return "redirect:/usuaris/listar";
 			}
 		// Si l'id no és més gran que cero cridem a listar	
