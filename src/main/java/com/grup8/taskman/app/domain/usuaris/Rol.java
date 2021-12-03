@@ -30,6 +30,7 @@ public class Rol implements Serializable {
 	public static final int ADMINISTRADOR=1;
 	public static final int USUARI=2;
 	public static final int SUPERADMINISTRADOR=3;
+	public static final int TASKMAN=4;
 
 	// ATRIBUTS
 	
@@ -41,11 +42,11 @@ public class Rol implements Serializable {
 	private Long id;
 	
 	// Indiquem que codigo no pot ser null a la base de dades, és únic, no es pot actualitzar i té un tamany màxim de 20 dígits.
-	@Column(name="codigo", unique=true, length=10, nullable=false, updatable=false )
+	@Column(name="codigo", unique=true, length=15, nullable=false, updatable=false )
 	private String codigo;
 	
 	// Indiquem que nombre no pot ser null a la base de dades, és únic, no es pot actualitzar i té un tamany màxim de 20 dígits.		
-	@Column(name="nombre", unique=true, length=20, nullable=false, updatable=false )
+	@Column(name="nombre", unique=true, length=25, nullable=false, updatable=false )
 	private String nombre;
 	
 	
