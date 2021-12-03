@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.support.SessionFlashMapManager;
 
+import com.grup8.taskman.app.domain.usuaris.FiltreUsuaris;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.usuari.IUsuariService;
 
@@ -35,6 +36,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		// Actualitzem la constant USUARIAUTENTICAT amb el nou login
 		String username=authentication.getName();
 		Usuari.USUARIAUTENTICAT=usuariService.findByUsername(username);
+		FiltreUsuaris.filtreUsuari=new FiltreUsuaris();
 		
 		// Com que no tenim RedirectAttributes creem un manager de Maps de tipus flash amb sessió. 
 		SessionFlashMapManager flashMapManager=new SessionFlashMapManager();		
