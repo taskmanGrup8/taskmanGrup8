@@ -15,6 +15,8 @@ import com.grup8.taskman.app.services.usuari.IUsuariService;
 public class FiltreUsuaris {
 
 	// CONSTANTS
+	
+	public static FiltreUsuaris filtreUsuari;
 
 	// Les constants representen les diferents combinacions de filtres
 
