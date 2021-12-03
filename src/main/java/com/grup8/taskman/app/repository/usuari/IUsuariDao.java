@@ -50,7 +50,7 @@ public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 	public Page<Usuari> findByActivoAndRolAndNombreStartsWithAndApellidosStartsWithAndDniStartsWith(boolean activo, Long rol, String nom, String cognoms, String dni, Pageable pageable);
 	
 	
-	// ACTIVOS SIN ROL
+	// ACTIVOS SIN ROL PETICION DE TASKMAN
 	
 	public Page<Usuari> findByActivo(boolean activo, Pageable pageable);
 	public Page<Usuari> findByActivoAndNombreStartsWith(boolean activo, String nom, Pageable pageable);
@@ -60,6 +60,34 @@ public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 	public Page<Usuari> findByActivoAndNombreStartsWithAndDniStartsWith(boolean activo, String nom, String dni, Pageable pageable);
 	public Page<Usuari> findByActivoAndApellidosStartsWithAndDniStartsWith(boolean activo, String cognoms, String dni, Pageable pageable);
 	public Page<Usuari> findByActivoAndNombreStartsWithAndApellidosStartsWithAndDniStartsWith(boolean activo, String nom, String cognoms, String dni, Pageable pageable);
+	
+	
+	// ACTIVOS SIN ROL PETICION DE ADMINISTRADORES
+	
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3", nativeQuery=true)
+	public Page<Usuari> findByActivoAdmin(boolean activo, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%')", nativeQuery=true)
+	public Page<Usuari> findByActivoAndNombreStartsWithAdmin(boolean activo, String nom, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3 AND u.apellidos LIKE CONCAT(:cognoms,'%')", nativeQuery=true)
+	public Page<Usuari> findByActivoAndApellidosStartsWithAdmin(boolean activo, String cognoms, Pageable pageable);
+		
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3 AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByActivoAndDniStartsWithAdmin(boolean activo, String dni, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%') AND u.apellidos LIKE CONCAT(:cognoms,'%')", nativeQuery=true)
+	public Page<Usuari> findByActivoAndNombreStartsWithAndApellidosStartsWithAdmin(boolean activo, String nom, String cognoms, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%') AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByActivoAndNombreStartsWithAndDniStartsWithAdmin(boolean activo, String nom, String dni, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3 AND u.apellidos LIKE CONCAT(:cognoms,'%') AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByActivoAndApellidosStartsWithAndDniStartsWithAdmin(boolean activo, String cognoms, String dni, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.activo= :activo AND u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%') AND u.apellidos LIKE CONCAT(:cognoms,'%') AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByActivoAndNombreStartsWithAndApellidosStartsWithAndDniStartsWithAdmin(boolean activo, String nom, String cognoms, String dni, Pageable pageable);
 	
 	
 	
@@ -95,7 +123,7 @@ public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 	
 	
 	
-	// HISTÓRICOS SIN ROL
+	// HISTÓRICOS SIN ROL PETICIÓN DE TASKMAN
 	
 	public Page<Usuari> findByNombreStartsWith(String nom, Pageable pageable);
 	public Page<Usuari> findByApellidosStartsWith(String cognoms, Pageable pageable);	
@@ -104,6 +132,34 @@ public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 	public Page<Usuari> findByNombreStartsWithAndDniStartsWith(String nombre, String dni, Pageable pageable);
 	public Page<Usuari> findByApellidosStartsWithAndDniStartsWith(String apellido, String dni, Pageable pageable);
 	public Page<Usuari> findByNombreStartsWithAndApellidosStartsWithAndDniStartsWith(String nombre, String apellidos, String dni, Pageable pageable);
+	
+	
+	// HISTÓRICOS SIN ROL PETICIÓN DE ADMINISTRADORES
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.id_rol<3", nativeQuery=true)
+	public Page<Usuari> findAllAdmin(Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE NOT u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%')", nativeQuery=true)
+	public Page<Usuari> findByNombreStartsWithAdmin(String nom, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE NOT u.id_rol<3 AND u.apellidos LIKE CONCAT(:cognoms,'%')", nativeQuery=true)
+	public Page<Usuari> findByApellidosStartsWithAdmin(String cognoms, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE NOT u.id_rol<3 AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByDniStartsWithAdmin(String dni, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE NOT u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%') AND u.apellidos LIKE CONCAT(:cognoms,'%')", nativeQuery=true)
+	public Page<Usuari> findByNombreStartsWithAndApellidosStartsWithAdmin(String nom, String cognoms, Pageable pageable);
+
+	@Query(value="SELECT * FROM usuaris u WHERE NOT u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%') AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByNombreStartsWithAndDniStartsWithAdmin(String nom, String dni, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.id_rol<3 AND u.apellidos LIKE CONCAT(:cognoms,'%') AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByApellidosStartsWithAndDniStartsWithAdmin(String cognoms, String dni, Pageable pageable);
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.id_rol<3 AND u.nombre LIKE CONCAT(:nom,'%') AND u.apellidos LIKE CONCAT(:cognoms,'%') AND u.dni LIKE CONCAT(:dni,'%')", nativeQuery=true)
+	public Page<Usuari> findByNombreStartsWithAndApellidosStartsWithAndDniStartsWithAdmin(String nom, String cognoms, String dni, Pageable pageable);
+	
 	
 	
 	// OTROS	
