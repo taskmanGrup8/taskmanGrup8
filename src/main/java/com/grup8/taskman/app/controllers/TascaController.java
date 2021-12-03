@@ -308,7 +308,7 @@ public class TascaController {
 			model.addAttribute("tasca", tasca);
 			model.addAttribute("titol", "Detall tasca " + tasca.getNombre());			
 			model.addAttribute("empresa",empresa);
-			model.addAttribute("fases", tasca.getFases());
+			model.addAttribute("fases", tasca.getFasesConTiempo());
 			
 			// Cridem a la vista ver.
 			return "tasques/ver";

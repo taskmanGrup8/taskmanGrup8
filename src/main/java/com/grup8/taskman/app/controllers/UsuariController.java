@@ -98,7 +98,7 @@ public class UsuariController {
 	IImatgesHandlerService imatgesService;
 	
 
-	private FiltreUsuaris filtreUsuari = new FiltreUsuaris();
+	
 	private String titolBoto;
 	private String titol;
 	private int funcion;
@@ -142,7 +142,16 @@ public class UsuariController {
 	@ModelAttribute("listaRoles")
 	public List<Rol> listaRoles() {
 
-		return rolService.findAll();
+		List<Rol> listaRoles=rolService.findAll();
+		
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()!=Rol.TASKMAN) {
+			
+			for(int i=listaRoles.size()-1; i>-1; i--) {
+				
+				if(listaRoles.get(i).getId()>2)listaRoles.remove(i);
+			}
+		}
+		return listaRoles;
 	}
 
 	// Afegim als models sempre l'atribut listaDepartamentos que conté la llista amb tots els departaments
@@ -292,18 +301,19 @@ public class UsuariController {
 			return "redirect:/";	
 		}
 		
+		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
 		Pageable pageRequest = PageRequest.of(page, 8, sortByIdAsc());
 		
 		// Obtenim la Page que passarem a la vista
-		Page<Usuari> usuaris = filtreUsuari.getUsuaris(pageRequest, usuariService);
+		Page<Usuari> usuaris = FiltreUsuaris.filtreUsuari.getUsuaris(pageRequest, usuariService);
 		// Fem el pageRender de la pàgina que passarem per parámetre
 		PageRender<Usuari> pageRender = new PageRender<Usuari>("/usuaris/listar", usuaris);
 		
 		// Afegim els atributs necessaris al model per poder-los utilitzar a la vista
 		model.addAttribute("titol", "Llistat d'usuaris");
 		model.addAttribute("page", pageRender);
-		model.addAttribute("filtreUsuari", filtreUsuari);
+		model.addAttribute("filtreUsuari", FiltreUsuaris.filtreUsuari);
 		model.addAttribute("usuaris", usuaris);
 		model.addAttribute("empresa", empresa);
 
@@ -322,7 +332,7 @@ public class UsuariController {
 	@PostMapping("/filtrar")
 	public String filtrar(FiltreUsuaris filtreUsuari, Model model) {
 		
-		this.filtreUsuari=filtreUsuari;		
+		FiltreUsuaris.filtreUsuari=filtreUsuari;		
 		return "redirect:listar";
 	}
 	
@@ -652,6 +662,6 @@ public class UsuariController {
 	public Usuari getUsuariAuthenticat() {
 		
 		return Usuari.USUARIAUTENTICAT;
-	}
+	}	
 
 }

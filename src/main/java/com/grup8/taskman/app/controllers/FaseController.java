@@ -258,13 +258,13 @@ public class FaseController {
 				// Si no existeix a la base de dades redireccionem a llistar amb el missatge corresponent.
 				if (fase == null) {
 					flash.addFlashAttribute("error", "L'ID de la fase no existeix a la BBDD");
-					return "redirect:/fases/listar";
+					return "redirect:listar";
 				}
 			} else {
 				
 				// Si l'id és erroni redireccionem a listar amb el missatge corresponent.
 				flash.addFlashAttribute("error", "L'ID ha de ser un número més gran que 0");
-				return "redirect:/fases/listar";
+				return "redirect:listar";
 			}
 			
 			// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
