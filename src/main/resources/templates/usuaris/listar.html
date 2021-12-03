@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cat" xmlns:th="http://www.thymeLeaf.org">
+<html lang="cat" xmlns:th="http://www.thymeLeaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="generic/main :: head"></head>
 
@@ -59,6 +59,16 @@
 								<input class="form-check-input" type="radio" name="rol" id="administrador"
 									th:field="*{rol}" th:value=1 />
 								<label class="form-check-label" for="flexRadioDefault2">Administrador</label>
+							</div>
+							
+							<!-- Super Administrador -->
+							<div sec:authorize="hasRole('ROLE_TASKMAN')" class="form-check">
+																				
+								<input class="form-check-input" type="radio" name="rol" id="superadministrador"
+									th:field="*{rol}" th:value=3 />
+								<label class="form-check-label" for="flexRadioDefault2">Super Administrador</label>
+							
+							
 							</div>
 						</div>
 					</div>
