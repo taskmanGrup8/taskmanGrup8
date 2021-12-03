@@ -2,10 +2,13 @@
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_ADMIN', 'Administrador');
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_USER', 'Usuario');
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_SUPER', 'Super Administrador');
+INSERT INTO rols (codigo, nombre) VALUES('ROLE_TASKMAN', 'Taskman Manager');
+
 
 INSERT INTO departaments (codigo, nombre) VALUES('INF', 'Informàtica');
 INSERT INTO departaments (codigo, nombre) VALUES('CON', 'Contabilitat');
 INSERT INTO departaments (codigo, nombre) VALUES('PRD', 'Producció');
+
 
 
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Vázquel Iglesias', '72345678A', 'Paula', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554411', 3, 'sergio@correo.com', 'Paula', '');
@@ -33,6 +36,7 @@ INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmad
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Ferrer Bakero', '11111111A', 'Maria', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554411', 1, 'maria@correo.com', 'Maria', '');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Martin Soria', '12845678A', 'Cristina', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554411', 1, 'cristina@correo.com', 'Cristina', '');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Díaz Martos', '12945679A', 'Dolores', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554422', 2, 'lola@correo.com', 'Dolors', '');
+INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Taskman', '55555555A', 'Taskman', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554422', 4, 'taskman@correo.com', 'Taskman', '');
 
 
 INSERT INTO authorities(user_id, authority) VALUES(1, 'ROLE_USER');
@@ -75,3 +79,18 @@ INSERT INTO authorities(user_id, authority) VALUES(23, 'ROLE_ADMIN');
 INSERT INTO authorities(user_id, authority) VALUES(24, 'ROLE_USER');
 INSERT INTO authorities(user_id, authority) VALUES(24, 'ROLE_ADMIN');
 INSERT INTO authorities(user_id, authority) VALUES(25, 'ROLE_USER');
+INSERT INTO authorities(user_id, authority) VALUES(26, 'ROLE_USER');
+INSERT INTO authorities(user_id, authority) VALUES(26, 'ROLE_ADMIN');
+INSERT INTO authorities(user_id, authority) VALUES(26, 'ROLE_SUPER');
+INSERT INTO authorities(user_id, authority) VALUES(26, 'ROLE_TASKMAN');
+
+
+INSERT INTO fases(codigo, nombre, descripcion, id_departament) VALUES('RMA', 'Reunió de materials', 'Es reuniran materials', 3);
+INSERT INTO fases(codigo, nombre, descripcion, id_departament) VALUES('MIM', 'Montatje i mecanitzat', 'Es montarà el que faci falta', 3);
+
+
+INSERT INTO empreses(nombre, cif, direccion, localidad, provincia, cpostal, telefono, email, logo) VALUES('NIKE', 'A12345678', 'Carrer Aragon, 13', 'Barcelona', 'Barcelona', '08080', '543781204', 'nike@gmail.com', '');
+
+
+
+	
