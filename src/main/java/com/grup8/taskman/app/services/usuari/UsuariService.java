@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.grup8.taskman.app.domain.usuaris.Permiso;
+import com.grup8.taskman.app.domain.usuaris.Rol;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.repository.usuari.IUsuariDao;
 
@@ -49,8 +50,17 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Usuari> findAll(Pageable pageable) {
+		
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
 
-		return usuariDao.findAll(pageable);
+			return usuariDao.findAll(pageable);
+			
+		}else {
+			
+			return usuariDao.findAllAdmin(pageable);
+		}
+		
+		
 	}
 
 	/**
@@ -81,8 +91,16 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByNombreStartsWithAndApellidosStartsWith(String nombre, String apellidos,
 			Pageable pageable) {
+		
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			
+			return usuariDao.findByNombreStartsWithAndApellidosStartsWith(nombre, apellidos, pageable);
+			
+		}else {
 
-		return usuariDao.findByNombreStartsWithAndApellidosStartsWith(nombre, apellidos, pageable);
+			return usuariDao.findByNombreStartsWithAndApellidosStartsWithAdmin(nombre, apellidos, pageable);
+		
+		}
 
 	}
 
@@ -126,8 +144,15 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByActivo(boolean activo, Pageable pageable) {
+		
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			
+			return usuariDao.findByActivo(activo, pageable);
+			
+		}else {		
 
-		return usuariDao.findByActivo(activo, pageable);
+			return usuariDao.findByActivoAdmin(activo, pageable);
+		}
 	}
 
 	/**
@@ -154,7 +179,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByNombreStartsWith(String nom, Pageable pageable) {
 
-		return usuariDao.findByNombreStartsWith(nom, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByNombreStartsWith(nom, pageable);
+		}else {
+			return usuariDao.findByNombreStartsWithAdmin(nom, pageable);
+		}
 	}
 
 	/**
@@ -169,8 +198,12 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByApellidosStartsWith(String cognoms, Pageable pageable) {
-
-		return usuariDao.findByApellidosStartsWith(cognoms, pageable);
+		
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByApellidosStartsWith(cognoms, pageable);
+		}else {
+			return usuariDao.findByApellidosStartsWithAdmin(cognoms, pageable);
+		}
 	}
 
 	/**
@@ -203,7 +236,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByActivoAndNombreStartsWith(boolean activo, String nom, Pageable pageable) {
 
-		return usuariDao.findByActivoAndNombreStartsWith(activo, nom, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByActivoAndNombreStartsWith(activo, nom, pageable);
+		}else {
+			return usuariDao.findByActivoAndNombreStartsWithAdmin(activo, nom, pageable);
+		}
 	}
 
 	/**
@@ -238,7 +275,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByActivoAndApellidosStartsWith(boolean activo, String cognoms, Pageable pageable) {
 
-		return usuariDao.findByActivoAndApellidosStartsWith(activo, cognoms, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByActivoAndApellidosStartsWith(activo, cognoms, pageable);
+		}else {
+			return usuariDao.findByActivoAndApellidosStartsWithAdmin(activo, cognoms, pageable);
+		}
 	}
 
 	/**
@@ -275,7 +316,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByActivoAndDniStartsWith(boolean activo, String dni, Pageable pageable) {
 
-		return usuariDao.findByActivoAndDniStartsWith(activo, dni, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByActivoAndDniStartsWith(activo, dni, pageable);
+		}else {
+			return usuariDao.findByActivoAndDniStartsWithAdmin(activo, dni, pageable);
+		}
 	}
 
 	/**
@@ -314,7 +359,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	public Page<Usuari> findByActivoAndNombreStartsWithAndApellidosStartsWith(boolean activo, String nom,
 			String cognoms, Pageable pageable) {
 
-		return usuariDao.findByActivoAndNombreStartsWithAndApellidosStartsWith(activo, nom, cognoms, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByActivoAndNombreStartsWithAndApellidosStartsWith(activo, nom, cognoms, pageable);
+		}else {
+			return usuariDao.findByActivoAndNombreStartsWithAndApellidosStartsWithAdmin(activo, nom, cognoms, pageable);
+		}
 	}
 
 	/**
@@ -357,7 +406,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	public Page<Usuari> findByActivoAndApellidosStartsWithAndDniStartsWith(boolean activo, String cognoms, String dni,
 			Pageable pageable) {
 
-		return usuariDao.findByActivoAndApellidosStartsWithAndDniStartsWith(activo, cognoms, dni, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByActivoAndApellidosStartsWithAndDniStartsWith(activo, cognoms, dni, pageable);
+		}else {
+			return usuariDao.findByActivoAndApellidosStartsWithAndDniStartsWithAdmin(activo, cognoms, dni, pageable);
+		}
 	}
 
 	/**
@@ -399,7 +452,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	public Page<Usuari> findByActivoAndNombreStartsWithAndDniStartsWith(boolean activo, String nom, String dni,
 			Pageable pageable) {
 
-		return usuariDao.findByActivoAndNombreStartsWithAndDniStartsWith(activo, nom, dni, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByActivoAndNombreStartsWithAndDniStartsWith(activo, nom, dni, pageable);
+		}else {
+			return usuariDao.findByActivoAndNombreStartsWithAndDniStartsWithAdmin(activo, nom, dni, pageable);
+		}
 	}
 
 	/**
@@ -444,8 +501,13 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	public Page<Usuari> findByActivoAndNombreStartsWithAndApellidosStartsWithAndDniStartsWith(boolean activo,
 			String nom, String cognoms, String dni, Pageable pageable) {
 
-		return usuariDao.findByActivoAndNombreStartsWithAndApellidosStartsWithAndDniStartsWith(activo, nom, cognoms,
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByActivoAndNombreStartsWithAndApellidosStartsWithAndDniStartsWith(activo, nom, cognoms,
 				dni, pageable);
+		}else {
+			return usuariDao.findByActivoAndNombreStartsWithAndApellidosStartsWithAndDniStartsWithAdmin(activo, nom, cognoms,
+					dni, pageable);
+		}
 	}
 
 	/**
@@ -549,7 +611,12 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByDniStartsWith(String dni, Pageable pageable) {
-		return usuariDao.findByDniStartsWith(dni, pageable);
+		
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByDniStartsWith(dni, pageable);
+		}else {
+			return usuariDao.findByDniStartsWithAdmin(dni, pageable);
+		}
 	}
 
 	/**
@@ -607,7 +674,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByNombreStartsWithAndDniStartsWith(String nombre, String dni, Pageable pageable) {
 
-		return usuariDao.findByNombreStartsWithAndDniStartsWith(nombre, dni, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByNombreStartsWithAndDniStartsWith(nombre, dni, pageable);
+		}else {
+			return usuariDao.findByNombreStartsWithAndDniStartsWithAdmin(nombre, dni, pageable);
+		}
 	}
 
 	/**
@@ -625,7 +696,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public Page<Usuari> findByApellidosStartsWithAndDniStartsWith(String apellido, String dni, Pageable pageable) {
 
-		return usuariDao.findByApellidosStartsWithAndDniStartsWith(apellido, dni, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByApellidosStartsWithAndDniStartsWith(apellido, dni, pageable);
+		}else {
+			return usuariDao.findByApellidosStartsWithAndDniStartsWithAdmin(apellido, dni, pageable);
+		}
 	}
 
 	/**
@@ -647,7 +722,11 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	public Page<Usuari> findByNombreStartsWithAndApellidosStartsWithAndDniStartsWith(String nombre, String apellidos,
 			String dni, Pageable pageable) {
 
-		return usuariDao.findByNombreStartsWithAndApellidosStartsWithAndDniStartsWith(nombre, apellidos, dni, pageable);
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()==Rol.TASKMAN) {
+			return usuariDao.findByNombreStartsWithAndApellidosStartsWithAndDniStartsWith(nombre, apellidos, dni, pageable);
+		}else {
+			return usuariDao.findByNombreStartsWithAndApellidosStartsWithAndDniStartsWithAdmin(nombre, apellidos, dni, pageable);
+		}
 	}
 
 	/**
@@ -668,7 +747,8 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 			Pageable pageable) {
 
 		return usuariDao.findByRolAndApellidosStartsWithAndDniStartsWith(rol, cognoms, dni, pageable);
-	}
+	}	
+	
 
 	/**
 	 * Mètode que busca a la taula usuaris els registres amb el rol amb id passat
