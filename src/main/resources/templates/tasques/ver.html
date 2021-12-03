@@ -27,7 +27,7 @@
 					</div>
 					<!-- Àlies -->
 					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-						<label for="nom-alias" class="form-label">�lies</label> <input type="text" class="form-control"
+						<label for="nom-alias" class="form-label">Àlies</label> <input type="text" class="form-control"
 							id="nom-alias" th:field="*{codigo}" />
 					</div>
 					
@@ -35,13 +35,14 @@
 					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
 						<label for="descripcio" class="form-label">Descripció</label> <input type="text" class="form-control"
 							id="descripcio" th:field="*{descripcion}" />
-					</div>
+					</div>	
 					
-					<!-- Temps estimat -->
+					<!-- Descripció -->
 					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-						<label for="temps" class="form-label">Temps estimat</label> <input type="text" class="form-control"
-							id="temps" th:field="*{tiempoEstimado}" />
-					</div>
+						<label for="tiempoEstimado" class="form-label">Descripció</label> <input type="text" class="form-control"
+							id="tiempoEstimado" th:field="*{tiempoEstimado}" />
+					</div>					
+					
 				</fieldset>
 			</form>
 		</div>	
@@ -68,15 +69,15 @@
 					<tbody>
 						<tr th:each="fase: ${fases}">
 							<td class="text-center"><a class="btn btn-outline-primary btn-sm"
-									th:href="@{/fases/ver/}+ ${fase.id}" th:text="${fase.id}"></a></td>
-							<td th:text="${fase.codigo}"></td>
-							<td th:text="${fase.nombre}"></td>
-							<td th:text="${fase.descripcion}"></td>
+									th:href="@{/fasesConTiempo/ver/}+ ${fase.id}" th:text="${fase.id}"></a></td>
+							<td th:text="${fase.fase.codigo}"></td>
+							<td th:text="${fase.fase.nombre}"></td>
+							<td th:text="${fase.fase.descripcion}"></td>
 							<td th:text="${fase.tiempoEstimado}"></td>
-							<td th:text="${fase.departament.nombre}"></td>							
-							<td class="text-center"><a th:href="@{/fases/actualizar/}+ ${fase.id}"><i
+							<td th:text="${fase.fase.departament.nombre}"></td>							
+							<td class="text-center"><a th:href="@{/fasesConTiempo/actualizar/}+ ${fase.id}"><i
 										class="fas fa-edit text-primary"></i></a></td>
-							<td class="text-center"><a th:href="@{/fases/eliminar/}+ ${fase.id}"
+							<td class="text-center"><a th:href="@{/fasesConTiempo/eliminar/}+ ${fase.id}"
 									onclick="return confirm('Estàs segur que vols eliminar?');"><i
 										class="fas fa-trash text-danger"></i></a></td>
 						</tr>
