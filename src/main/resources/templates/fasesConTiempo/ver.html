@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
 
+<head th:replace="generic/main :: head">
+</head>
+
+<body>
+	<!-- 
+		Vista on es pot veure el detall de la fase seleccionada
+		
+	-->
+	<div th:replace="generic/main :: navbar-empresa"></div>
+	<div class="container mt-5 pt-5">
+
+		<div th:replace="generic/main :: mensajes"></div>
+		<div class="pb-4">
+			<h3 th:text="${titol}"></h3>
+		</div>
+		<!-- Camps de la fase seleccionada-->
+		<div class="row">
+			<form th:action="@{/fasesConTiempo/result}" th:object="${fase}" method="post">
+				<fieldset disabled>
+					<!-- ID -->
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+						<label for="id" class="form-label">ID</label> <input type="text" class="form-control" id="id"
+							th:field="*{id}" />
+					</div>
+					<!-- Àlies -->
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+						<label for="nom-alias" class="form-label">Àlies</label> <input type="text" class="form-control"
+							id="nom-alias" th:field="*{fase.codigo}" />
+					</div>
+					<!-- Nom del departament -->
+					<div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+						<label for="nom-departament" class="form-label">Nom de la fase</label>
+						<input type="text" class="form-control" id="nom-departament" th:field="*{fase.nombre}" />
+					</div>
+					<!-- Descripció -->
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+						<label for="descripcio" class="form-label">Descripció</label> <input type="text" class="form-control"
+							id="descripcio" th:field="*{fase.descripcion}" />
+					</div>
+					
+					<!-- Temps estimat -->
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+						<label for="temps" class="form-label">Temps estimat</label> <input type="text" class="form-control"
+							id="temps" th:field="*{tiempoEstimado}" />
+					</div>
+					
+					<!-- Descripci� -->
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+						<label for="departament" class="form-label">Departament</label> <input type="text" class="form-control"
+							id="departament" th:field="*{fase.departament.nombre}" />
+					</div>
+					
+					
+					
+					
+				</fieldset>
+			</form>
+		</div>		
+	</div>
+
+	<footer th:replace="generic/main :: footer"></footer>
+
+</body>
+
+</html>
