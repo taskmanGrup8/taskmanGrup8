@@ -1,3 +1,25 @@
+/*** Scrollbar ***/
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* Tipografia general */
 body {
   font-family: 'Nunito', sans-serif;
@@ -14,11 +36,12 @@ body {
   color: #fff;
 }
 
+/* Treure la decoració dels enllaços */
 a {
   text-decoration: none !important;
 }
 
-/* Contrasenya oblidada */
+/* Estil aplicat a la pàgina del login. Contrasenya oblidada */
 .pwd-forgotten {
   font-size: 13px;
 }
@@ -28,25 +51,40 @@ a {
   font-family: 'Ubuntu', sans-serif;
 }
 
-/* Oculta els filtres de la vista usuaris/listar */
+/* Ocultar i mostrar els filtres de la vista usuaris/listar */
 #card-filtres {
   display: none;
 }
 
-/* Ocultar & mostrar els llistats d'usuaris i departaments */
-
+/* Ocultar i mostrar els llistats d'usuaris i departaments */
 #mostrar-taula {
   display: none;
 }
 
-/* Estil table-striped (bootstrap.min.css) */
+/* Ocultar i mostrar el canvi de clau al perfil de l'usuari */
+#mostrar-canvi-clau {
+  display: none;
+}
 
+/* Estil aplicat a menu.html */
+.style-index {
+  opacity: 0.3;
+}
+
+#name {
+  font-size: 80px;
+}
+
+#description {
+  font-size: 45px;
+}
+
+/* Estil table-striped (bootstrap.min.css) */
 .table {
   --bs-table-striped-bg: #0146df1a;
 }
 
 /* Estil definits per a las cards del menú principal */
-
 .style-card {
   border: none;
 }
@@ -57,7 +95,6 @@ a {
 }
 
 /* Estil casella selecció Select 2 (select2.min.css) */
-
 .select2-container--default .select2-selection--multiple {
   border: 1px solid #ced4da;
 }
@@ -80,8 +117,7 @@ a {
   font-size: small;
 }
 
-/* navbar empresarial */
-
+/*** NAVBAR EMPRESARIAL ***/
 :root {
   --offcanvas-width: 270px;
   --topNavbarHeight: 56px;
@@ -109,17 +145,19 @@ a {
     overflow: auto !important;
   }
 
+  /* Desplaçar els contenidors que comparteixen espai amb el navbar empresarial */
   @media (min-width: 993px) and (max-width: 1860px) {
-    body {
+    #move-content {
       margin: 0px 0px 0px 282px;
     }
   }
 
+  /* estil offcanvas del navbar */
   main {
     margin-left: var(--offcanvas-width);
   }
 
-  /* this is to remove the backdrop */
+  /* ocultar el backdrop */
   .offcanvas-backdrop::before {
     display: none;
   }
@@ -140,7 +178,6 @@ a {
 }
 
 /* profile */
-
 .sidebar-nav .profile-details {
   position: fixed;
   bottom: 0;
@@ -181,7 +218,6 @@ a {
 
 .sidebar-nav .profile-details .profile_name,
 .sidebar-nav .profile-details .job {
-  color: #fff;
   font-size: 18px;
   font-weight: 500;
   white-space: nowrap;
@@ -197,9 +233,41 @@ a {
   font-size: 12px;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+  color: #dedede;
+}
+
+.text-highlight {
+  color: #3d95ee;
+}
+
+li .nav-link:hover {
+  background-color: #f8f9fa;
+  color: #282828 !important;
+  font-weight: bold;
+  border-radius: 25px;
+  margin-left: 20px;
+  margin-right: 20px;
+  transition: 0.7s;
+}
+
 .exit-icon {
-  color: #fff;
+  color: #f8f9fa;
   font-size: 25px;
   margin: 0 15px;
   cursor: pointer;
+}
+
+.exit-icon:hover {
+  color: #3d95ee;
+  transition: 0.7s;
+}
+
+.name-job a {
+  color: #f8f9fa;
+}
+
+.name-job a:hover {
+  color: #3d95ee;
+  transition: 0.7s;
 }

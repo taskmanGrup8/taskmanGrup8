@@ -33,6 +33,18 @@ $(document).ready(function () {
   });
 });
 
+/* Mostrar & ocultar canvi de clau */
+
+$(document).ready(function () {
+  $("#btn-canvi-clau").click(function () {
+    if ($("#mostrar-canvi-clau").css('display') === 'none') {
+      $("#mostrar-canvi-clau").css('display', 'block');
+    } else {
+      $("#mostrar-canvi-clau").css('display', 'none');
+    }
+  });
+});
+
 /* Funció per poder fer servir el plugin Poppin */
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

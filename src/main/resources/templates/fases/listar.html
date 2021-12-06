@@ -11,7 +11,7 @@
 		fer una cerca de la fase per l'àlies o el nom
 	-->
 	<div th:replace="generic/main :: navbar-empresa"></div>
-	<div class="container mt-5 pt-5">
+	<div class="container mt-5 pt-5" id="move-content">
 		<div th:replace="generic/main :: mensajes"></div>
 		<div class="pb-5">
 			<h3 class="float-start">Llistat de fases</h3>
@@ -44,9 +44,9 @@
 						<tr>
 							<!-- Titols -->
 							<th class="text-center" scope="col">#</th>
-							<th class="text-center" width="15%" scope="col">Àlies</th>
-							<th width="85%" scope="col">Nom</th>
-							<th class="text-center" scope="col">Departament</th>
+							<th class="text-center" scope="col">Àlies</th>
+							<th scope="col">Nom</th>
+							<th scope="col" width="55%">Departament</th>
 							<th class="text-center" scope="col">Editar</th>
 							<th class="text-center" scope="col">Eliminar</th>
 						</tr>

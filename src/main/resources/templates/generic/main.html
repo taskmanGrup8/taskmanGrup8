@@ -38,11 +38,7 @@
 <footer th:fragment="footer">
   <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
-  <!-- <script th:src="@{/js/bootstrap.min.js}"></script>  -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-    crossorigin="anonymous"></script>
-
+  <script th:src="@{/js/bootstrap.min.js}"></script>
   <script th:src="@{/plugins/select2/dist/js/select2.min.js}"></script>
   <script th:src="@{/plugins/font-awesome-5/js/all.min.js}"></script>
   <script th:src="@{/js/js-main.js}"></script>
@@ -96,7 +92,7 @@
 </body>
 
 <!-- cabecera genérica -->
-<div th:fragment="navbar-generic" class="bg-dark text-white">
+<div th:fragment="navbar-generic" class="bg-dark text-white" id="navbar-generic">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container mr-5">
       <a class="navbar-brand fs-1">
@@ -115,7 +111,7 @@
           <li class="nav-item"><a class="nav-link active fst-italic" aria-current="page">Gestor de tasques</a></li>
           <li th:if="${usuariAutenticat}" class="nav-item">
             <p sec:authorize="isAuthenticated()">
-              Usuari: <span th:text="${usuariAutenticat.nombre} + ' ' + ${usuariAutenticat.apellidos}"></span> | Rol:
+              <span th:text="${usuariAutenticat.nombre}"></span> |
               <span th:text="${usuariAutenticat.rol.nombre}"></span>
             </p>
           </li>
@@ -141,12 +137,12 @@
 <div th:fragment="navbar-empresa" class="bg-dark text-white">
   <!-- navbar horitzontal -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
+    <div class="container mr-5">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
         aria-controls="offcanvasExample">
         <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
       </button>
-      <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold">
+      <a class="navbar-brand fs-4 me-auto ms-lg-0 ms-3 text-uppercase fw-bold">
         <!-- Logo -->
         <img th:if="${#strings.length(empresa.logo)>0}" th:src="@{'/uploads/' + ${empresa.logo}}"
           th:alt="${empresa.logo}" alt="" width="36" height="32" class="d-inline-block align-text-top">
@@ -156,12 +152,33 @@
     </div>
   </nav>
   <!-- navbar vertical -->
-  <div class="offcanvas offcanvas-start sidebar-nav bg-dark pt-5" tabindex="-1" id="sidebar">
+  <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="sidebar">
     <div class="offcanvas-body p-0">
       <nav class="navbar-dark">
         <ul class="navbar-nav">
+          <!-- profile -->
+          <li sec:authorize="isAuthenticated()" class="nav-item">
+            <div class="profile-details">
+              <div class="profile-content">
+                <img th:src="@{'/uploads/' + ${usuariAutenticat.foto}}" alt="profileImg"> <!-- th:src="@{/img/img-profile-default.png}"-->
+              </div>
+              <div class="name-job" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Perfil d'usuari">
+                <a th:href="@{/usuaris/modificar_perfil}">
+                  <div class="profile_name" th:text="${usuariAutenticat.username}"></div>
+                  <div class="job" th:text="${usuariAutenticat.rol.nombre}"></div>
+                </a>
+              </div>
+              <form id="logoutForm" th:action="@{/logout}" method="post" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" title="Tancar sessió">
+                <i class="fas fa-sign-out-alt exit-icon" onclick="document.getElementById('logoutForm').submit();"
+                  type="submit"></i>
+              </form>
+            </div>
+          </li>
+          
+          <hr class="dropdown-divider bg-light" />
           <li>
-            <a th:href="@{/perfil}" class="nav-link px-3">
+            <a th:href="@{/perfil}" class="nav-link px-3 mb-0 ">
               <span class="me-2"><i class="fas fa-tachometer-alt"></i></span>
               <span>Dashboard</span>
             </a>
@@ -173,7 +190,7 @@
           </li>
           <!-- tasques-->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="text-muted small fw-bold text-uppercase px-3 mb-3"><i class="fab fa-buffer"></i>
+            <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fab fa-buffer"></i>
               Tasques
             </div>
           </li>
@@ -196,7 +213,7 @@
           </li>
           <!-- fases-->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="text-muted small fw-bold text-uppercase px-3 mb-3"><i class="fas fa-bookmark"></i>
+            <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-bookmark"></i>
               Fases
             </div>
           </li>
@@ -220,7 +237,7 @@
 
           <!-- dept-->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="text-muted small fw-bold text-uppercase px-3 mb-3"><i class="fas fa-user-friends"></i>
+            <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-user-friends"></i>
               Departaments
             </div>
           </li>
@@ -243,7 +260,7 @@
           </li>
           <!-- usuaris -->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="text-muted small fw-bold text-uppercase px-3 mb-3"><i class="fas fa-user"></i>
+            <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-user"></i>
               Usuaris
             </div>
           </li>
@@ -266,36 +283,17 @@
           </li>
           <!-- empresa -->
           <li sec:authorize="hasRole('ROLE_SUPER')">
-            <div class="text-muted small fw-bold text-uppercase px-3 mb-3"><i class="fas fa-briefcase"></i>
+            <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-briefcase"></i>
               Empresa
             </div>
           </li>
           <li sec:authorize="hasRole('ROLE_SUPER')">
-            <a class="nav-link px-3 sidebar-link" th:href="@{/empreses/actualizar}">
+            <a class="nav-link px-3 sidebar-link mb-2" th:href="@{/empreses/actualizar}">
               <span class="me-2"><i class="fas fa-edit"></i></span>
               <span>Modificar dades</span>
             </a>
           </li>
 
-          <!-- profile -->
-
-          <li sec:authorize="isAuthenticated()" class="nav-item">
-            <div class="profile-details">
-              <div class="profile-content">
-                <img th:src="@{'/uploads/' + ${usuariAutenticat.foto}}" alt="profileImg"> <!-- pendent ruta -->
-              </div>
-              <div class="name-job">
-                <a class="nav-link" th:href="@{/usuaris/modificar_perfil}">
-                  <div class="profile_name" th:text="${usuariAutenticat.username}"></div>
-                </a>
-                <div class="job" th:text="${usuariAutenticat.rol.nombre}"></div>
-              </div>
-              <form id="logoutForm" th:action="@{/logout}" method="post">
-                <i class="fas fa-sign-out-alt exit-icon" onclick="document.getElementById('logoutForm').submit();"
-                  type="submit"></i>
-              </form>
-            </div>
-          </li>
         </ul>
       </nav>
     </div>

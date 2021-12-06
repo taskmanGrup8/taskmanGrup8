@@ -9,7 +9,7 @@
 		S'han d'omplir tots els camps menys el de departaments, ja que un usuari pot no tenir cap departament assignat
 	-->
   <div th:replace="generic/main :: navbar-empresa"></div>
-  <div class="container mt-5 pt-5">
+  <div class="container mt-5 pt-5" id="move-content">
     <div th:replace="generic/main :: mensajes"></div>
     <div class="pb-4">
       <h3 th:text="${titol}"></h3>
@@ -17,24 +17,22 @@
 
     <div>
       <form th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post" enctype="multipart/form-data">
-        <!-- Nom -->
+
         <div class="row">
+          <!-- Nom -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="nom" class="form-label">Nom</label>
             <input type="text" class="form-control" id="nom" maxlength="255" th:field="*{nombre}" disabled>
-            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="my-2 alert alert-danger"></div>
           </div>
           <!-- Cognoms -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="cognoms" class="form-label">Cognoms</label>
             <input type="text" class="form-control" id="cognoms" maxlength="255" th:field="*{apellidos}" disabled>
-            <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="my-2 alert alert-danger">
-            </div>
           </div>
         </div>
 
-        <!-- Nickname -->
         <div class="row pt-3">
+          <!-- Nickname -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="username" class="form-label">Nickname</label>
             <input type="text" class="form-control" id="username" maxlength="255" th:field="*{username}">
@@ -44,8 +42,7 @@
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="dni" class="form-label">DNI</label>
             <input type="text" class="form-control" id="dni" maxlength="9" th:field="*{dni}" disabled>
-            <div th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="my-2 alert alert-danger">
-            </div>
+            <div th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="my-2 alert alert-danger"></div>
           </div>
         </div>
 
@@ -67,19 +64,13 @@
         </div>
 
         <div class="row pt-3">
-
           <!-- Rol -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="rol" class="form-label">Rol</label>
-            <select id="rol" class="form-select" th:field="*{rol}" disabled>
-              <option value="">Selecciona un rol</option>
-              <option th:each="rol: ${listaRoles}" th:text="${rol.nombre}" th:value="${rol.id}"></option>
-
-            </select>
-            <div th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}" class="alert alert-danger"></div>
+            <input type="text" class="form-control" id="rol" th:field="${usuari.rol.nombre}" disabled>
           </div>
         </div>
-
+        <!-- Foto perfil -->
         <div class="row pt-3">
           <div class="col-12 col-sm-8 col-md-8 col-lg-5 col-xl-5">
             <img class="img-thumbnail img-fluid" style="max-width: 15%;"
@@ -97,7 +88,44 @@
           <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
             title="Modificar perfil" th:value="${titolBoto}" />
         </div>
+      </form>
+    </div>
+    <div class="mt-5">
+      <div class="pb-4">
+        <h5>Canviar contrasenya</h5>
+      </div>
+      <p>Si desitges canviar la contrasenya que tens actualment per iniciar sessió, fes clic &nbsp;<button type="button"
+          id="btn-canvi-clau" class="btn btn-warning btn-sm"><strong>aquí</strong></button></p>
+    </div>
 
+    <div id="mostrar-canvi-clau">
+      <form th:action="@{/usuaris/guardarContrasenya}" th:object="${canviContrasenya}" method="post">
+
+        <!-- Contrasenya actual -->
+        <div class="row pt-3">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="oldPassword" class="form-label">Contrasenya actual <span class="text-muted">*</span></label>
+            <input type="password" class="form-control" id="oldPassword" />
+            <!-- th:field="*{oldPassword}" => no funciona -->
+            <!-- <div th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}" class="my-2 alert alert-danger"></div> -->
+          </div>
+        </div>
+        <!-- Nova contrasenya -->
+        <div class="row pt-3">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="nouPassword" class="form-label">Nova contrasenya <span class="text-muted">*</span></label>
+            <input type="password" class="form-control" id="nouPassword" />
+            <!-- th:field="*{newPassword}" => no funciona -->
+          </div>
+        </div>
+        <div class="row pt-3">
+          <p class="text-muted">* Aquests camps són obligatoris</p>
+        </div>
+        <!-- Botó -->
+        <div class="mb-2">
+          <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Canviar contrasenya" th:value="${titolBoto}" />
+        </div>
       </form>
     </div>
   </div>

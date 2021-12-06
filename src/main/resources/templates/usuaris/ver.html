@@ -9,7 +9,7 @@
 		A sota d'aquests camps d'informació, es poden mostrar u ocultar els departaments als quals pertany aquest usuari
 	-->
 	<div th:replace="generic/main :: navbar-empresa"></div>
-	<div class="container mt-5 pt-5">
+	<div class="container mt-5 pt-5" id="move-content">
 		<div class="pb-4">
 			<h3 th:text="${usuari.nombre} + ' ' + ${usuari.apellidos}"></h3>
 		</div>

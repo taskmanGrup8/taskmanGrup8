@@ -12,7 +12,7 @@
   <div th:replace="generic/main :: navbar-empresa"></div>
   <div class="container mt-5 pt-5">
     <div th:replace="generic/main :: mensajes"></div>
-    <!-- T�tol -->
+    <!-- Títol -->
     <div class="pb-4">
       <h3 th:text="${titol}"></h3>
     </div>
@@ -53,8 +53,8 @@
 
 
 
-        <p class="pt-4 text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps s�n obligatoris</p>
-        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'Àlies ha de tenir com a màxim 3 car�cters</p>
+        <p class="pt-4 text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
+        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'Àlies ha de tenir com a màxim 3 caràcters</p>
         <!-- Botó per crear la fase -->
         <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
           title="Crear nova fase" th:value="${titolBoto}" />
