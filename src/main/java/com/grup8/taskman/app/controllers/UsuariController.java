@@ -29,7 +29,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.grup8.taskman.app.domain.departaments.Departament;
 import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.usuaris.FiltreUsuaris;
-import com.grup8.taskman.app.domain.usuaris.Permiso;
 import com.grup8.taskman.app.domain.usuaris.Rol;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.security.PasswordChange;
@@ -44,7 +43,7 @@ import com.grup8.taskman.app.util.PageRender;
  * Classe que controla el mòdul d'usuaris.
  * Rebra les sol.licituts a partir de la url "/usuaris" i tindrà
  * les funcionalitats de crear, actualitzar, guardar, llistar, veure detall de l'usuari sel.leccionat,
- * canviar les dades personals i la contrasnya de l'usuari autenticat.
+ * canviar les dades personals i la contraesnya de l'usuari autenticat.
  * 
  *  Cada mètode referent a url estarà anotat amb @secured i el rol mínim de l'usuari que el pot utilitzar.
  *  
@@ -142,15 +141,19 @@ public class UsuariController {
 	@ModelAttribute("listaRoles")
 	public List<Rol> listaRoles() {
 
+		// Busquem tots els rols
 		List<Rol> listaRoles=rolService.findAll();
 		
-		if(Usuari.USUARIAUTENTICAT.getRol().getId()!=Rol.TASKMAN) {
+		// Si l'usuari no és Taskman llavors treiem els rols que tenen id superior a 2 perquè 1 i 2 son usuari i administrador
+		if(Usuari.USUARIAUTENTICAT.getRol().getId()!=Rol.TASKMAN) {			
 			
 			for(int i=listaRoles.size()-1; i>-1; i--) {
 				
 				if(listaRoles.get(i).getId()>2)listaRoles.remove(i);
 			}
 		}
+		
+		// Retornem la llista de rols
 		return listaRoles;
 	}
 
@@ -170,7 +173,7 @@ public class UsuariController {
 	 * @param model És el model que passem a la vista
 	 * @param foto És l'arxiu d'imatge de perfil carregada a la vista per l'usuari
 	 * @param flash Variable utilitzada per passar missatges a la vista.
-	 * @param status Variable que controla l'estat en aquest cas de la variable departament.
+	 * @param status Variable que controla l'estat en aquest cas de la variable usuari.
 	 * @return Redirecciona a diferents urls segons de quina funció provingui la crida.
 	 */
 	@PostMapping("/guardar")
@@ -298,9 +301,8 @@ public class UsuariController {
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null) {
 						
-			return "redirect:/";	
-		}
-		
+			return "redirect:/";
+		}		
 		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
 		Pageable pageRequest = PageRequest.of(page, 8, sortByIdAsc());
@@ -455,14 +457,12 @@ public class UsuariController {
 
 			flash.addFlashAttribute("error", "L'ID de l'usuari no pot ser 0");
 			return "redirect:/usuaris/listar";
-		}
+		}		
 		
-		List<Permiso> permisos=usuari.getPermisos();
-		
-		for(Permiso p: permisos)System.out.println(p.getAuthority());
-		// Passem al model els atributs necessaris
 		titolBoto = "Modificar Usuari";	
-		titol = "Modificar usuari";		
+		titol = "Modificar usuari";
+		
+		// Passem al model els atributs necessaris
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);
@@ -489,13 +489,17 @@ public class UsuariController {
 		if(empresa==null)return "redirect:/";	
 		
 		// L'usuari correspon a l'usuari autenticat però el busquem per si tinguès qualsevol canvi pendent.
-		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());			
+		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());	
+		PasswordChange passwordChange=new PasswordChange();
+		// Assignem a la variable passwordChage l'id de l'usuari autenticat que serà a quí canviarem la contrasenya
+		passwordChange.setId(Usuari.USUARIAUTENTICAT.getId());
 		titol = "Actualitzar perfil";
 		titolBoto = "Enviar dades";		
 		model.addAttribute("titol", titol);			
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);		
 		model.addAttribute("usuari", usuari);
+		model.addAttribute("canviContrasenya", passwordChange);
 		
 		return "usuaris/modificar_perfil";
 	}
@@ -505,32 +509,7 @@ public class UsuariController {
 	 * @param model Model passat a la vista
 	 * @return Crida a la vista cambiar_password si existeix l'empresa, en cas contrari redirecciona a home
 	 */
-	@Secured("ROLE_USER")
-	@GetMapping("/canvi_password")
-	public String cambiarPassword(Model model) {
-		
-		funcion=CAMBIAR_CONTRASEÑA;
-		// Si la variable empresa encara és igual a null la cerquem
-		if(empresa==null)empresa=empresaService.findById(1);
-		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";
-		
-		titol = "Canviar contrasenya";
-		titolBoto = "Enviar dades";				
-		PasswordChange passwordChange=new PasswordChange();
-		// Assignem a la variable passwordChage l'id de l'usuari autenticat que serà a quí canviarem la contrasenya
-		passwordChange.setId(Usuari.USUARIAUTENTICAT.getId());
-		
-		// Passem al model els atributs necessaris
-		model.addAttribute("titol", titol);			
-		model.addAttribute("titolBoto", titolBoto);
-		model.addAttribute("empresa", empresa);		
-		model.addAttribute("canviContrasenya", passwordChange);
-		
-		// cridem a la vista cambiar_password
-		return "usuaris/cambiar_password";		
-		
-	}
+
 	
 	/**
 	 * Funció que guarda la contrasenya nova de un usuari després d'assegurar-se que sap l'antiga
@@ -538,7 +517,7 @@ public class UsuariController {
 	 * @param result Variable que conté els errors de la validació.
 	 * @param model Model que passem a la vista
 	 * @param flash Parámetre que utilitzarem per enviar missatges a la vista
-	 * @return Si no hi ha cap error redirecciona a home, en cas contrari torna a cridar la vista cambiar_password
+	 * @return Si no hi ha cap error redirecciona a home, en cas contrari torna a cridar la vista modificar_perfil
 	 */
 	@PostMapping("/guardarContrasenya")
 	public String guardarPassword(@Valid PasswordChange passwordChange, BindingResult result, Model model,
@@ -557,7 +536,7 @@ public class UsuariController {
 		// Si result conté errors enviem un missatge d'error i tornem a cridar la vista cambiar_password
 		if (result.hasErrors()) {
 			flash.addFlashAttribute("error", "No ha estat possible guardar les dades");		
-			return "usuaris/cambiar_password";		
+			return "usuaris/modificar_perfil";		
 		}
 		
 		// Si tot es correcte busquem l'usuari
@@ -578,9 +557,7 @@ public class UsuariController {
 		
 		// Redireccionem a home
 		return "redirect:/";
-	}
-		
-	
+	}	
 	
 
 	/**
@@ -607,11 +584,16 @@ public class UsuariController {
 		return result;
 	}
 	
+	/**
+	 * Mètode que comproba si l'username d'usuario ja existeix a la base de dades
+	 * @param usuario Usuari de qui volem comprobar l'username
+	 * @return Retorna true si l'username no existeix i false en cas contrari.
+	 */
 	private boolean comprobacionUsername(Usuari usuario) {
 
 		// Inicialitzem a true el resultat
 		boolean result = true;
-		// Busquem l'usuari mitjançant el dni
+		// Busquem l'usuari mitjançant l'username
 		Usuari usuariPerUsername = usuariService.findByUsername(usuario.getUsername());
 		// Si el trobem
 		if (usuariPerUsername != null) {
@@ -628,18 +610,23 @@ public class UsuariController {
 		return result;
 	}
 	
+	/**
+	 * Mètode que comprova si el password contingut a l'atribut oldPassword de PasswordChange coincideix amb el password de l'usuari.
+	 * @param passwordChange Instancia que conté l'id de l'usuari i el password introduit al formulari
+	 * @return Retorna true si coincideix, en cas contrari false.
+	 */
 	private boolean comprobarPassword(PasswordChange passwordChange) {
 		
-		boolean result=false;		
+		boolean result=false;	
+		// Busquem l'usuari (Sabem que existeix per tant no fem comprobació).
 		Usuari usuario=usuariService.findById(passwordChange.getId());
+		// Si coincideix retornem true
 		if(passwordEncoder.matches(passwordChange.getOldPassword(), usuario.getPassword())) {
 			
 			result=true;
 		}
 		
-		
-		
-		
+		// Si no coincideix retornem false		
 		return result;
 	}
 	
