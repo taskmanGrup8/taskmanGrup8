@@ -54,6 +54,12 @@
             <option th:each="fase: ${listaFases}" th:text="${fase.nombre}" th:value="${fase.id}"></option>
           </select>
         </div>
+        
+         <!-- Cíclica -->
+        <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
+          <label for="ciclica" class="form-label" th:text="'Cíclica'"> <span class="text-muted">*</span></label>
+          <input type="checkbox" id="ciclica" th:field="*{ciclica}" />         
+        </div>
 
         <p class="pt-4 text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
         <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters
