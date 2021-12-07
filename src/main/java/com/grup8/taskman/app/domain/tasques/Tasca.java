@@ -52,6 +52,12 @@ public class Tasca implements Serializable {
 	@Column(name="tiempo", nullable=false)
 	private int tiempoEstimado;
 	
+	@Column(name="ciclica", nullable=false)
+	private boolean ciclica=false;
+	
+	@Column(name="tiempoCiclo", nullable=false)
+	private int tiempoCiclo=-1;
+	
 	@OneToMany(mappedBy="tasca", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<FaseConTiempo> fasesConTiempo;
 	
@@ -116,6 +122,24 @@ public class Tasca implements Serializable {
 
 	public void setFases(List<Fase> fases) {
 		this.fases = fases;
+	}
+	
+	
+
+	public boolean isCiclica() {
+		return ciclica;
+	}
+
+	public void setCiclica(boolean ciclica) {
+		this.ciclica = ciclica;
+	}
+
+	public int getTiempoCiclo() {
+		return tiempoCiclo;
+	}
+
+	public void setTiempoCiclo(int tiempoCiclo) {
+		this.tiempoCiclo = tiempoCiclo;
 	}
 
 	public void calcularTiempoEstimado() {
