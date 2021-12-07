@@ -47,6 +47,7 @@ public class EmpresaController {
 	
 	private String titolBoto;
 	private String titol;
+	private boolean crear; // Aquest mètode serveix perquè la vista sapigui si estem creant o actualitzant
 	
 	
 	// MÈTODES
@@ -62,6 +63,7 @@ public class EmpresaController {
 				
 		titol="Dona d'alta la teva empresa a Taskman!";
 		titolBoto="Enviar dades";
+		crear=true;
 		
 		
 		// Passem les dades al model per poder tenir-los a la vista
@@ -69,7 +71,7 @@ public class EmpresaController {
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("alerta", "És necessari que et donis d'alta per continuar");
 		model.addAttribute("empresa", new Empresa());
-		
+		model.addAttribute("crear", crear);
 		
 		
 		return "empresas/crear"; // Cridem a la vista que conté el formulari per crear empreses.
@@ -91,6 +93,7 @@ public class EmpresaController {
 	@PostMapping("/result")
 	public String guardar(@Valid Empresa empresa, BindingResult result, Model model, @RequestParam("file") MultipartFile logo, 
 			RedirectAttributes flash, SessionStatus status) {
+		
 		
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
@@ -161,12 +164,15 @@ public class EmpresaController {
 		Empresa empresa=empresaService.findById(1);
 		if(empresa==null)return "redirect:crear";
 		
+		crear=false;
+		
 		// Passem els elements necessaris al model
 		titol="Actualitzar empresa";
 		titolBoto="Enviar dades";		
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
-		model.addAttribute("empresa", empresa);		
+		model.addAttribute("empresa", empresa);	
+		model.addAttribute("crear", crear);
 		
 		// Cridem a la vista crear
 		
