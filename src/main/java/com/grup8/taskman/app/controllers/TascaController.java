@@ -45,6 +45,7 @@ public class TascaController {
 		@Autowired
 		IFaseService faseService;	
 		
+		// Injectem el servei de fases amb temps per poder realitzar accions a la taula fases amb temps.
 		@Autowired
 		IFaseConTiempoService faseConTiempoService;
 		
@@ -62,9 +63,9 @@ public class TascaController {
 		
 		
 		/**
-		 * Funció que crida a la vista crear que conté el formulari per crear un departament
+		 * Funció que crida a la vista crear que conté el formulari per crear una tasca
 		 * @param model És el model que passem a la vista
-		 * @return Crida a la vista "departaments/crear" si l'atribut empresa no és null, en cas contrari redirecciona 
+		 * @return Crida a la vista "tasques/crear" si l'atribut empresa no és null, en cas contrari redirecciona 
 		 * a home.
 		 */
 		@Secured("ROLE_ADMIN")
@@ -92,18 +93,16 @@ public class TascaController {
 		
 		/**
 		 * Funció que es crida des de la vista crear i que rep les dades del formulari emplenat per l'usuari, valida les
-		 * dades i les guarda a la base de dades si tot és correcte. Si el formulari no ha estat emplenat correctament i 
+		 * dades i crida a configurar si tot és correcte. Si el formulari no ha estat emplenat correctament i 
 		 * conté errors llavors torna a cridar a la vista crear.
-		 * @param departament Instancia de departament amb el contingut del formulari
+		 * @param tasca Instancia de Tasca amb el contingut del formulari
 		 * @param result Instancia que conté els errors que han hagut al formulari.
 		 * @param model És el model que passem a la vista
-		 * @param flash Variable utilitzada per passar missatges a la vista.
-		 * @param status Variable que controla l'estat en aquest cas de la variable departament.
-		 * @return Redirecciona a llistar departaments si tot és correcte, en cas contrari crida a la vista crear.
+		 * @param flash Variable utilitzada per passar missatges a la vista.		 
+		 * @return Redirecciona a configurar tasques si tot és correcte, en cas contrari crida a la vista crear.
 		 */
 		@PostMapping("/result")
-		public String guardar(@Valid Tasca tasca, BindingResult result, Model model, 
-				RedirectAttributes flash, SessionStatus status) {
+		public String guardar(@Valid Tasca tasca, BindingResult result, Model model, RedirectAttributes flash) {
 			
 			// Afegim el titol, el text del botó i l'empresa abans de gestionar res més perquè ens fa falta per qualsevol dels casos.
 			model.addAttribute("titol", titol);
@@ -111,7 +110,7 @@ public class TascaController {
 			model.addAttribute("empresa", empresa);
 			model.addAttribute("tasca", tasca);
 			
-			// Volem que tant el codi com el nom de la fase no es puguin repetir a la base de dades
+			// Volem que tant el codi com el nom de la tasca no es puguin repetir a la base de dades
 			// i encara que ho podriem fer amb try catch en guardar m'estimo més fer la comprobació a priori.
 			// En cas que existeixin afegeixo els errors a la variable result indicant el seu missatge.
 			if (!comprobacionCodigo(tasca))
@@ -131,29 +130,22 @@ public class TascaController {
 				return "tasques/crear";
 			}		
 			
-			
+			// Posem el temps estimat a 0.
 			tasca.setTiempoEstimado(0);
+			// Generem les fases amb temps a partir de les fases i les afegim a la tasca
 			List<FaseConTiempo> fasesConTiempo=FaseConTiempo.generarLista(tasca.getFases());
 			tasca.setFasesConTiempo(fasesConTiempo);			
 			
-	/*		// Guardem el registre	
-			if(tascaService.save(tasca)!=null) {
-			
-				// Afegim al model el missatge que s'ha guardat correctament 
-				flash.addFlashAttribute("success", "Registre guardat amb èxit");
-			}else {
-				
-				// Afegim al model el missatge que no s'ha guardat correctament 
-				flash.addFlashAttribute("errors", "El registre no s'ha pogut guardar a la base de dades");
-			}
-			
-			// Confimem que s'ha completat tot el procès i que ja no cal que guardi les dades de departament.
-			status.setComplete();*/
-			// Redireccionem a llistar
+			// Redireccionem a configurar les tasques
 			return "tasques/configurar";
 		}
 		
-		
+		/**
+		 * Mètode que crida a la vista listar on podem veure totes les tasques de la base de dades que poden estar filtrades per nom i codi.
+		 * @param model Model que passem a la vista
+		 * @param keyword Paràmetre que fem servir per filtrar la llista
+		 * @return Crida a la vista listar de tasques si existeix l'empresa, en cas contrari redirecciona a home.
+		 */
 		@Secured("ROLE_ADMIN")
 		@GetMapping("/listar")
 		public String listar(Model model, String keyword) {
@@ -192,6 +184,12 @@ public class TascaController {
 			return "tasques/listar";
 		}
 		
+		/**
+		 * Mètode que elimina de la base de dades la tasca amb l'id rebut per paràmetre
+		 * @param id Id de la tasca que volem eliminar
+		 * @param flash  Variable utilitzada per passar missatges a la vista.
+		 * @return Crida a la vista listar de tasques si la empresa existeix i trobem, en cas contrari redireccionem a home.
+		 */
 		@Secured("ROLE_ADMIN")
 		@GetMapping("/eliminar/{id}")
 		public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
@@ -204,12 +202,12 @@ public class TascaController {
 			// per tant ens assegurem que sigui més gran que 0.
 			if (id > 0) {
 
-				// Busquem la fase a la base de dades
+				// Busquem la tasca a la base de dades
 				Tasca tasca = tascaService.findById(id);
 				
-				// Si el trobem l'eliminem
+				// Si la trobem l'eliminem
 				if(tasca!=null) {
-					// Eliminem la fase a la base de dades
+					// Eliminem la tasca a la base de dades
 					tascaService.delete(tasca);
 					
 					// Per saber si hem eliminat el registre, si no el trobem enviem un missatge com que s'he eliminat
@@ -230,9 +228,9 @@ public class TascaController {
 		}
 		
 		/**
-		 * Mètode que crida a la vista crear passant-li les dades del departament que tè per id el rebut per paràmetre per
+		 * Mètode que crida a la vista crear passant-li les dades de la tasca que tè per id el rebut per paràmetre per
 		 * poder ser modificat.
-		 * @param id Id del departament que volem editar
+		 * @param id Id de la tasca que volem editar
 		 * @param model És el model que passem a la vista
 		 * @param flash Variable que fem servir per enviar missatges a les vistes.
 		 * @return Si l'atribut empresa és null redireccionem a home, en cas contrari redireccionem a listar si l'id no
@@ -283,12 +281,12 @@ public class TascaController {
 		
 		
 		/**
-		 * Funció que crida la vista ver amb el detall de la fase rebuda per paràmetre
-		 * @param id És l'identificador de la fase de la qual volem veure el detall
+		 * Funció que crida la vista ver amb el detall de la tasca rebuda per paràmetre
+		 * @param id És l'identificador de la tasca de la qual volem veure el detall
 		 * @param model És el model que passem a la vista
-		 * @return Crida a la vista fases/ver si l'atribut empresa  no és null i la fase passada
+		 * @return Crida a la vista tasques/ver si l'atribut empresa  no és null i la tasca passada
 		 * per paràmetre es troba a la base de dades, si no existeix la empresa redirecciona a home i si no existeix la 
-		 * fase redirecciona a llistar. 
+		 * tasca redirecciona a llistar. 
 		 */
 		@Secured("ROLE_ADMIN")
 		@GetMapping("/ver/{id}")
@@ -299,11 +297,11 @@ public class TascaController {
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
 			if(empresa==null)return "redirect:/";	
 			
-			// Busquem la fase demanada per paràmetre, si no es troba a la base de dades redireccionem a llistar.
+			// Busquem la tasca demanada per paràmetre, si no es troba a la base de dades redireccionem a llistar.
 			Tasca tasca=tascaService.findById(id);
 			if(tasca==null)return "redirect:listar";		
 			
-			// Afegim a la vista la fase trobada, els usuaris que conté, un títol per la vista i el text del bóto,
+			// Afegim a la vista la tasca trobada, les fases que conté i un títol per la vista,
 			// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
 			model.addAttribute("tasca", tasca);
 			model.addAttribute("titol", "Detall tasca " + tasca.getNombre());			
@@ -316,28 +314,40 @@ public class TascaController {
 		
 		
 		@PostMapping("/configurar")
-		public String configurar(@Valid Tasca tasca, BindingResult result, Model model, 
-		RedirectAttributes flash, SessionStatus status){
+		public String configurar(Tasca tasca, Model model,	RedirectAttributes flash, SessionStatus status){
 			
+			// Afegim el titol, el text del botó i l'empresa abans de gestionar res més perquè ens fa falta per qualsevol dels casos.
+						model.addAttribute("titol", titol);
+						model.addAttribute("titolBoto", titolBoto);
+						model.addAttribute("empresa", empresa);
+						model.addAttribute("tasca", tasca);
 						
-									
-			// L'anotacio @Valid ha validat les dades de fase a partir de les anotacions fetes a la classe
-			// fase i els errors que ha trobat els ha passat a result amb els missatges asociats.
-			// Si la variable result conté qualsevol error llavors passem l'informació de que no s'ha pogut
-			// guardar el registre i redireccionem a crear. Implicitament result assigna al model el camp errors
-			// que gestionarem amb thymeleaf per coneixer quins errors han hagut. Cridem de nou a la vista crear.
-			
+			// Si la fase és cíclica el temps del cicle ha de ser més gran que cero
+			if(tasca.isCiclica() && tasca.getTiempoCiclo()<1) {
 				
-			
+				flash.addAttribute("error", "Tasca.TiempoCicloNegativo");
+				return "tasques/cofigurar";
+			}			
+				
+			// Els temps estimats de les fases ha de ser superior a cero.
 			for(FaseConTiempo fase: tasca.getFasesConTiempo()) {
-				System.out.println(fase.getFase().getNombre());
+				
+				if(fase.getTiempoEstimado()<1) {
+					
+					flash.addAttribute("error", "Tasca.TiempoFaseNegativo");
+					return "tasques/cofigurar";
+					
+				}
 			}
+			
+			// Calculem el temps de la tasca
 			tasca.calcularTiempoEstimado();
 			
 			
 			// Guardem el registre	
 			if(tascaService.save(tasca)!=null) {
 				
+				// Guardem les fases amb temps amb el nou temps estimat
 				guardarFasesConTiempo(tascaService.findByCodigo(tasca.getCodigo()));
 			
 				// Afegim al model el missatge que s'ha guardat correctament 
@@ -348,22 +358,27 @@ public class TascaController {
 				flash.addFlashAttribute("errors", "El registre no s'ha pogut guardar a la base de dades");
 			}
 			
-			// Confimem que s'ha completat tot el procès i que ja no cal que guardi les dades de departament.
+			// Confimem que s'ha completat tot el procès i que ja no cal que guardi les dades de tasca.
 			status.setComplete();			
 			return "redirect:listar";
 		}
 		
+		/**
+		 * Mètode que comproba que el codi posat a la tasca passada per paràmetre no existeixi a la base de dades
+		 * @param tasca Tasca de la qual volem comprobar el codi
+		 * @return Retorna true si no existeix i false en cas contrari
+		 */
 		private boolean comprobacionCodigo(Tasca tasca) {
 
 			// Inicialitzem result a true. Nomès el canviarem si existeix a la base de dades
 			boolean result = true;
 			
-			// Busquem la fase per codi a la base de dades. Passen el contingut del codi de fase
+			// Busquem la tasca per codi a la base de dades. Passen el contingut del codi de tasca
 			// a majúscules perquè quan guardem el codi a la base dades ho fem en majúscules.
 			Tasca tascaPerCodi=tascaService.findByCodigo(tasca.getCodigo().toUpperCase());
 			
-			// Si no el trobem vol dir que aquest codi existeix a la base de dades. Com podriem estar fent una
-			// actulització això es podria donar i ser valid, en cas de que siguès una actualització l'id de la fase
+			// Si el trobem vol dir que aquest codi existeix a la base de dades. Com podriem estar fent una
+			// actulització això es podria donar i ser valid, en cas de que siguès una actualització l'id de la tasca
 			// passat per paràmetre i l'id de la fase trobat serien iguals. En cas contrari llavors vol dir
 			// que ja existeix a la base de dades, per tant com és únic donaria error en fer save. Pasem result a false.
 			if(tascaPerCodi!=null) {
@@ -378,6 +393,11 @@ public class TascaController {
 			return result;
 		}
 		
+		/**
+		 * Mètode que comproba que el nom posat a la tasca no existixi a la base de dades
+		 * @param tasca Tasca que volem comprobar
+		 * @return Retorna true si no existeix a la base de dades i false en cas contrari
+		 */
 		private boolean comprobacionNombre(Tasca tasca) {
 			
 			// Mateix criteri que a comprobacionCodigo.
@@ -396,11 +416,16 @@ public class TascaController {
 			return result;
 		}
 		
+		/**
+		 * Mètode que guarda a la base de dades les fases amb temps pertanyents a la tasca pasada per paràmetre
+		 * @param tasca Tasca de la qual volem guardar les fases amb temps
+		 */
 		private void guardarFasesConTiempo(Tasca tasca) {
 			
 			for(FaseConTiempo fase: tasca.getFasesConTiempo()) {
-				
+				// Afegim la tasca a la fase amb temps
 				fase.setTasca(tasca);
+				// Guardem la fase amb temps
 				faseConTiempoService.save(fase);
 			}
 			
@@ -416,8 +441,6 @@ public class TascaController {
 		public List<Fase> getFases(){
 			
 			return faseService.findAll();
-		}
-
-		
+		}		
 
 }
