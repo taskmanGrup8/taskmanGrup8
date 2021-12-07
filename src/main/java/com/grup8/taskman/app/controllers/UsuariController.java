@@ -128,6 +128,7 @@ public class UsuariController {
 		usuari.setPrivacidadFirmada(false); // Per defecte l'usuari no ha signat la privacitat
 		usuari.setActivo(true); // Per defecte l'usuari pertany a l'empresa					
 		usuari.setPassword("1234"); // Password per defecte, més endavant el pot canviar
+		usuari.setFoto(Usuari.DEFAULT_IMG_PROFILE);
 		model.addAttribute("titol", titol);
 		model.addAttribute("usuari", usuari);
 		model.addAttribute("titolBoto", titolBoto);
@@ -223,8 +224,8 @@ public class UsuariController {
 			// existeix i que té una foto pujada.
 			if(usuari.getId()!=null && usuari.getId()>0 && usuari.getFoto()!=null && usuari.getFoto().length()>0) {
 				
-				// Esborrem el logo anterior.
-				imatgesService.delete(usuari.getFoto());
+				// Esborrem la foto anterior si no és la foto per defecte.
+				if(!usuari.getFoto().equalsIgnoreCase(Usuari.DEFAULT_IMG_PROFILE))imatgesService.delete(usuari.getFoto());
 			}
 			
 			// Intentem guardar la imatge i informarem del resultat
