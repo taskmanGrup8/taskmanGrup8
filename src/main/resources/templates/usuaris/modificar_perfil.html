@@ -101,21 +101,20 @@
     <div id="mostrar-canvi-clau">
       <form th:action="@{/usuaris/guardarContrasenya}" th:object="${canviContrasenya}" method="post">
 
+		<input type="hidden" id="id" th:field="*{id}" />
         <!-- Contrasenya actual -->
         <div class="row pt-3">
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="oldPassword" class="form-label">Contrasenya actual <span class="text-muted">*</span></label>
-            <input type="password" class="form-control" id="oldPassword" />
-            <!-- th:field="*{oldPassword}" => no funciona -->
-            <!-- <div th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}" class="my-2 alert alert-danger"></div> -->
+            <input type="password" class="form-control" id="oldPassword"  th:field="*{oldPassword}" />             
+            <div th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}" class="my-2 alert alert-danger"></div>
           </div>
         </div>
         <!-- Nova contrasenya -->
         <div class="row pt-3">
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="nouPassword" class="form-label">Nova contrasenya <span class="text-muted">*</span></label>
-            <input type="password" class="form-control" id="nouPassword" />
-            <!-- th:field="*{newPassword}" => no funciona -->
+            <input type="password" class="form-control" id="nouPassword" th:field="*{newPassword}" />            
           </div>
         </div>
         <div class="row pt-3">
