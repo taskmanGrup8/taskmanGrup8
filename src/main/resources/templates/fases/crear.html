@@ -40,13 +40,13 @@
         <!-- Descripció -->
         <div class="mb-4 col-8 col-sm-8 col-md-8 col-lg-6 col-xl-6">
           <label for="descripcio" class="form-label">Descripció <span class="text-muted">*</span></label>
-          <textarea class="form-control" id="descripcio" maxlength="255" th:field="*{descripcion}" placeholder="Descripció de la fase. Màxim 255 caràcters."
-            style="height: 100px"></textarea>
+          <textarea class="form-control" id="descripcio" maxlength="255" th:field="*{descripcion}"
+            placeholder="Descripció de la fase. Màxim 255 caràcters." style="height: 100px"></textarea>
           <!-- Alerta d'error -->
           <div th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"
             class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
         </div>
-       
+
 
         <!-- Departaments -->
         <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
@@ -62,7 +62,8 @@
 
 
         <p class="pt-4 text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
-        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters</p>
+        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters
+        </p>
         <!-- Bot� per crear la fase -->
         <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
           title="Crear nova fase" th:value="${titolBoto}" />

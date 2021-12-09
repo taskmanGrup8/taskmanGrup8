@@ -5,45 +5,46 @@
 </head>
 
 <body>
-    <!-- 
+  <!-- 
 		Vista per crear nous departaments.
 		Requereix el camp de l'àlies i el nom
 	-->
-    <div th:replace="generic/main :: navbar-empresa"></div>
-    <div class="container mt-5 pt-5" id="move-content">
-        <div th:replace="generic/main :: mensajes"></div>
-        <!-- Títol -->
-        <div class="pb-4">
-            <h3 th:text="${titol}"></h3>
-        </div>
-        
-        <div class="row">
-            <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
-                <!-- Àlies -->
-                <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-                    <label for="nom-alias" class="form-label">Àlies <span class="text-muted">**</span></label>
-                    <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{codigo}" />
-                </div>
-                <!-- Alerta d'error -->
-                <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
-                    class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
-                <!-- Nom-->
-                <div class="mb-3 col-10 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                    <label for="nom-departament" class="form-label">Nom del departament <span class="text-muted">*</span></label>
-                    <input type="text" class="form-control" maxlength="20" id="nom-departament" th:field="*{nombre}" />
-                    <!-- Alerta d'error -->
-                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2">
-                    </div>
-                </div>
-                <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
-                <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters</p>
-                <!-- Botó per crear el departament -->
-                <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Crear nou departament" th:value="${titolBoto}" />
-            </form>
-        </div>
+  <div th:replace="generic/main :: navbar-empresa"></div>
+  <div class="container mt-5 pt-5" id="move-content">
+    <div th:replace="generic/main :: mensajes"></div>
+    <!-- Títol -->
+    <div class="pb-4">
+      <h3 th:text="${titol}"></h3>
     </div>
-    <footer th:replace="generic/main :: footer"></footer>
+
+    <div class="row">
+      <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
+        <!-- Àlies -->
+        <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+          <label for="nom-alias" class="form-label">Àlies <span class="text-muted">**</span></label>
+          <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{codigo}" />
+        </div>
+        <!-- Alerta d'error -->
+        <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
+          class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
+        <!-- Nom-->
+        <div class="mb-3 col-10 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+          <label for="nom-departament" class="form-label">Nom del departament <span class="text-muted">*</span></label>
+          <input type="text" class="form-control" maxlength="20" id="nom-departament" th:field="*{nombre}" />
+          <!-- Alerta d'error -->
+          <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2">
+          </div>
+        </div>
+        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
+        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters
+        </p>
+        <!-- Botó per crear el departament -->
+        <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Crear nou departament" th:value="${titolBoto}" />
+      </form>
+    </div>
+  </div>
+  <footer th:replace="generic/main :: footer"></footer>
 </body>
 
 </html>

@@ -224,6 +224,8 @@ public class UsuariController {
 			// existeix i que té una foto pujada.
 			if(usuari.getId()!=null && usuari.getId()>0 && usuari.getFoto()!=null && usuari.getFoto().length()>0) {
 				
+				// Esborrem el logo anterior.
+				imatgesService.delete(usuari.getFoto());
 				// Esborrem la foto anterior si no és la foto per defecte.
 				if(!usuari.getFoto().equalsIgnoreCase(Usuari.DEFAULT_IMG_PROFILE))imatgesService.delete(usuari.getFoto());
 			}

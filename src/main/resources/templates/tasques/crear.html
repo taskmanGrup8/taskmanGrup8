@@ -39,7 +39,8 @@
         <!-- Descripció -->
         <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-6 col-xl-6">
           <label for="descripcio" class="form-label">Descripció <span class="text-muted">*</span></label>
-          <textarea class="form-control" id="descripcio" maxlength="255" th:field="*{descripcion}" placeholder="Descripció de la tasca. Màxim 255 caràcters." style="height: 100px"></textarea>
+          <textarea class="form-control" id="descripcio" maxlength="255" th:field="*{descripcion}"
+            placeholder="Descripció de la tasca. Màxim 255 caràcters." style="height: 100px"></textarea>
           <!-- Alerta d'error -->
           <div th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"
             class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
@@ -54,11 +55,11 @@
             <option th:each="fase: ${listaFases}" th:text="${fase.nombre}" th:value="${fase.id}"></option>
           </select>
         </div>
-        
-         <!-- Cíclica -->
-        <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
+
+        <!-- Cíclica -->
+        <div class="mt-4 col-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
           <label for="ciclica" class="form-label" th:text="'Cíclica'"> <span class="text-muted">*</span></label>
-          <input type="checkbox" id="ciclica" th:field="*{ciclica}" />         
+          <input type="checkbox" id="ciclica" th:field="*{ciclica}" />
         </div>
 
         <p class="pt-4 text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>

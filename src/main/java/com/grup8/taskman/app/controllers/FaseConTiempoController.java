@@ -128,7 +128,7 @@ public class FaseConTiempoController {
 			// Canviem el titol i el text del bóto de la vista crear canviant els atributs
 			// corresponents
 			titol = "Actualitzar fase";
-			titolBoto = "Actualitzar fase";
+			titolBoto = "Enviar dades";
 
 			// passem la fase trobada, el titol, el text del botó i l'empresa a la vista.
 			model.addAttribute("titol", titol);

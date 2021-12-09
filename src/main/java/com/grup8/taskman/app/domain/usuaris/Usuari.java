@@ -39,6 +39,7 @@ public class Usuari implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+  public static String DEFAULT_IMG_PROFILE = null;
 	public static Usuari USUARIAUTENTICAT=null;
 	
 	// ATRIBUTS

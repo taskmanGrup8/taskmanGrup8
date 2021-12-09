@@ -20,42 +20,33 @@
     <div class="row">
       <form th:action="@{/fasesConTiempo/result}" th:object="${fase}" method="post">
         <!-- Àlies -->
-        
-        <div><input type="hidden" th:field="*{id}"   /></div>
-        <div><input type="hidden" th:field="*{fase}"   /></div>
-        <div><input type="hidden" th:field="*{tasca}"   /></div>
-        
+        <div><input type="hidden" th:field="*{id}" /></div>
+        <div><input type="hidden" th:field="*{fase}" /></div>
+        <div><input type="hidden" th:field="*{tasca}" /></div>
+
         <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-          <label for="nom-alias" class="form-label">Àlies <span class="text-muted">**</span></label>
-          <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{fase.codigo}" disabled/>
-         </div>
-         
+          <label for="nom-alias" class="form-label">Àlies</label>
+          <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{fase.codigo}" disabled />
+        </div>
 
         <!-- Nom fase -->
         <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
-          <label for="nom-fase" class="form-label">Nom de la fase <span class="text-muted">*</span></label>
+          <label for="nom-fase" class="form-label">Nom de la fase</label>
           <input type="text" class="form-control" maxlength="20" id="nom-fase" th:field="*{fase.nombre}" disabled />
-          <!-- Alerta d'error -->
-         
         </div>
 
         <!-- Temps estimat -->
-        <div class="mb-4 col-8 col-sm-8 col-md-8 col-lg-6 col-xl-6">
-          <label for="tiempoEstimado" class="form-label">Tiempo Estimado <span class="text-muted">*</span></label>
-          <input type="text" class="form-control" id="tiempoEstimado" th:field="*{tiempoEstimado}"/>
+        <div class="mb-4 col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
+          <label for="tiempoEstimado" class="form-label">Temps estimat <span class="text-muted">*</span></label>
+          <input type="text" class="form-control" id="tiempoEstimado" th:field="*{tiempoEstimado}"
+            placeholder="En minuts" />
           <!-- Alerta d'error -->
           <div th:if="${#fields.hasErrors('tiempoEstimado')}" th:errors="*{tiempoEstimado}"
             class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
         </div>
-       
 
-      
-
-
-
-        <p class="pt-4 text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
-        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'Àlies ha de tenir com a màxim 3 caràcters</p>
-        <!-- Botó per crear la fase -->
+        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
+        <!-- Botó -->
         <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
           title="Crear nova fase" th:value="${titolBoto}" />
       </form>
