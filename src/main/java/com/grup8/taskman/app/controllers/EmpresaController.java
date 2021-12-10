@@ -26,7 +26,8 @@ import com.grup8.taskman.app.services.imatges.IImatgesHandlerService;
  * Controlador que gestiona les dades de l'empresa. L'aplicació ha de tenir obligatoriament una empresa,
  * aquesta serà donada d'alta el primer cop que s'utilitzi. Aquesta empresa no podrà ser eliminada però
  * si editada.
- * @author seres
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.1
  *
  */
 

@@ -50,7 +50,7 @@ public class LoginController {
 		if(logout!=null) {
 			
 			
-			model.addAttribute("success", "Sesssió tancada correctament");
+			model.addAttribute("info", "Sesssió tancada correctament");
 			
 		}
 		

@@ -27,14 +27,7 @@ import com.grup8.taskman.app.util.Utilidades;
  *  * Classe que controla el mòdul de departaments.
  * Rebra les sol.licituts a partir de la url "/departaments" i tindrà
  * les funcionalitats de crear, actualitzar, guardar, llistar i veure detall de departament.
- * 
- *  De moment no s'està tenint en compte el rol de qui ho fa servir, mès endavant nomès els
- *  administrador i el súper administrador podràn fer servir aquesta èina.
- *  
- *  Des del menú del superadministrador s'accedeix a llistar i és el camí que ha de seguir
- *  el programa pel bon funcionament. Si algún crida a qualsevol de les url des del navegador
- *  abans de passar per llistar, l'atribut empresa serà null i es redireccionarà l'aplicació a home.
- *  
+ *   
  *  L'empresa ha de estar creada abans de fer servir aquesta funcionalitat.
  *  
  *  passarem la variable anomenada departament a SessionAttributes perquè guardi el valor de la mateixa 
@@ -314,8 +307,8 @@ public class DepartamentController {
 		}
 		
 		// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
-		titol="Modificar departament";
-		titolBoto="Enviar dades";
+		titol="Actualitzar departament";
+		titolBoto="Actualitzar departament";
 		
 		// passem el departament trobat, el titol, el text del botó i l'empresa a la vista.
 		model.addAttribute("titol", titol);

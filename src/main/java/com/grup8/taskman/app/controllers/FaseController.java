@@ -30,6 +30,13 @@ import com.grup8.taskman.app.services.tasques.IFaseService;
 import com.grup8.taskman.app.services.tasques.ITascaService;
 import com.grup8.taskman.app.util.Utilidades;
 
+/**
+ * Classe que gestiona les diferents fases de la aplicació. Podrem crear, editar, guardar, eliminar, veure el detall i listar
+ * les diferents fases.
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ */
+
 @Controller
 @RequestMapping("/fases")
 @SessionAttributes("fase")
@@ -49,9 +56,11 @@ public class FaseController {
 		@Autowired
 		IEmpresaService empresaService;	
 		
+		// Injectem el servei de fases amb temps per poder realitzar accions a la taula fases amb temps.	
 		@Autowired
 		IFaseConTiempoService faseConTiempoService;
 		
+		// Injectem el servei de tasques per poder realitzar accions a la taula tasques.	
 		@Autowired
 		ITascaService tascaService;
 			
@@ -61,9 +70,9 @@ public class FaseController {
 		
 		
 		/**
-		 * Funció que crida a la vista crear que conté el formulari per crear un departament
+		 * Funció que crida a la vista crear que conté el formulari per crear una fase
 		 * @param model És el model que passem a la vista
-		 * @return Crida a la vista "departaments/crear" si l'atribut empresa no és null, en cas contrari redirecciona 
+		 * @return Crida a la vista "fases/crear" si l'atribut empresa no és null, en cas contrari redirecciona 
 		 * a home.
 		 */
 		@Secured("ROLE_ADMIN")
@@ -79,7 +88,7 @@ public class FaseController {
 			titol="Crear nova fase";
 			titolBoto="Enviar dades";
 			
-			// Afegim al model el titol i el text del botó acceptar del formulari, un nou departament buït i l'atribut empresa.
+			// Afegim al model el titol i el text del botó acceptar del formulari, una nova fase buida i l'atribut empresa.
 			model.addAttribute("titol", titol);
 			model.addAttribute("fase", new Fase());
 			model.addAttribute("titolBoto", titolBoto);
@@ -93,12 +102,12 @@ public class FaseController {
 		 * Funció que es crida des de la vista crear i que rep les dades del formulari emplenat per l'usuari, valida les
 		 * dades i les guarda a la base de dades si tot és correcte. Si el formulari no ha estat emplenat correctament i 
 		 * conté errors llavors torna a cridar a la vista crear.
-		 * @param departament Instancia de departament amb el contingut del formulari
+		 * @param fase Instancia de Fase amb el contingut del formulari
 		 * @param result Instancia que conté els errors que han hagut al formulari.
 		 * @param model És el model que passem a la vista
 		 * @param flash Variable utilitzada per passar missatges a la vista.
-		 * @param status Variable que controla l'estat en aquest cas de la variable departament.
-		 * @return Redirecciona a llistar departaments si tot és correcte, en cas contrari crida a la vista crear.
+		 * @param status Variable que controla l'estat en aquest cas de la variable fase.
+		 * @return Redirecciona a llistar fases si tot és correcte, en cas contrari crida a la vista crear.
 		 */
 		@PostMapping("/result")
 		public String guardar(@Valid Fase fase, BindingResult result, Model model, 
@@ -147,7 +156,12 @@ public class FaseController {
 			return "redirect:listar";
 		}
 		
-		
+		/**
+		 * Mètode que crida a la vista listar de fases que mostrarà un llistat de totes les fases de la base de dades. 
+		 * @param model Model que passem a la vista.
+		 * @param keyword Paràmetre utilitzat per realitzar filtres.
+		 * @return Si la empresa existeix crida a la vista listar en cas contrari redirecciona a home.
+		 */
 		@Secured("ROLE_ADMIN")
 		@GetMapping("/listar")
 		public String listar(Model model, String keyword) {
@@ -155,12 +169,13 @@ public class FaseController {
 			// Comprobem que la empresa existeixi, si no existeix a la base de dades redireccionem a home.
 			if(empresa==null)empresa=empresaService.findById(1);
 			if(empresa==null)return "redirect:/";
-					
+			
+			// Variable que passarem a la vista amb el llistat de fases.
 			List<Fase> fases=new ArrayList<>();
 			// Variable que passarem a la vista perquè aquesta sapigui si hi ha filtre o no.
 			boolean filtrado;
 			
-			// Si no s'ha escrit res al cercador omplim la llista de departaments amb totls els que hi ha a la base de dades
+			// Si no s'ha escrit res al cercador omplim la llista de departaments amb tots els que hi ha a la base de dades
 			// i marquem filtrado com false.
 			if(keyword==null) {
 				
@@ -176,7 +191,7 @@ public class FaseController {
 				filtrado=true;
 			}		
 			
-			// Afegirm al model el títol, la llista de departaments, si està filtrat o no i la empresa.
+			// Afegirm al model el títol, la llista de fases, si està filtrat o no i la empresa.
 			model.addAttribute("titol", "Llistat de fases");
 			model.addAttribute("fases", fases);
 			model.addAttribute("filtrado", filtrado);
@@ -186,6 +201,12 @@ public class FaseController {
 			return "fases/listar";
 		}
 		
+		/**
+		 * Mètode que rep per paràmetre un id de una fase i l'elimina del sistema
+		 * @param id Id de la fase que volem eliminar.
+		 * @param flash Variable utilitzada per passar missatges a la vista.
+		 * @return Si la empresa existeix crida la vista listar, en cas contrari redirecciona a home.
+		 */
 		@Secured("ROLE_ADMIN")
 		@GetMapping("/eliminar/{id}")
 		public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
@@ -203,13 +224,18 @@ public class FaseController {
 				
 				// Si el trobem l'eliminem
 				if(fase!=null) {
-					// Eliminem la fase a la base de dades
-					List<FaseConTiempo> lista= faseConTiempoService.findByFase(fase.getId());					
+
+					// Si les trobem eliminarem totes les tasques que continguin una fase amb temps asociada a la fase que
+					// volem eliminar, això farà que també s'esborrin aquestes fases amb temps
+					// Busquem totes les fases amb temps que continguin la fase
+					List<FaseConTiempo> lista= faseConTiempoService.findByFase(fase.getId());
+					// Per cada fase amb temps eliminem la tasca.
 					for(FaseConTiempo f: lista) {
 						
 						tascaService.delete(f.getTasca());
 					}					
 					
+					// Eliminem la fase.
 					faseService.delete(fase);
 					
 					// Per saber si hem eliminat el registre, si no el trobem enviem un missatge com que s'he eliminat
@@ -230,9 +256,9 @@ public class FaseController {
 		}
 		
 		/**
-		 * Mètode que crida a la vista crear passant-li les dades del departament que tè per id el rebut per paràmetre per
+		 * Mètode que crida a la vista crear passant-li les dades de la fase que tè per id el rebut per paràmetre per
 		 * poder ser modificat.
-		 * @param id Id del departament que volem editar
+		 * @param id Id de la fase que volem editar
 		 * @param model És el model que passem a la vista
 		 * @param flash Variable que fem servir per enviar missatges a les vistes.
 		 * @return Si l'atribut empresa és null redireccionem a home, en cas contrari redireccionem a listar si l'id no
@@ -269,7 +295,7 @@ public class FaseController {
 			
 			// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
 			titol="Actualitzar fase";
-			titolBoto="Enviar dades";
+			titolBoto="Actualitzar fase";
 			
 			// passem la fase trobada, el titol, el text del botó i l'empresa a la vista.
 			model.addAttribute("titol", titol);

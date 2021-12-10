@@ -22,6 +22,13 @@ import com.grup8.taskman.app.services.tasques.IFaseConTiempoService;
 import com.grup8.taskman.app.services.tasques.IFaseService;
 import com.grup8.taskman.app.services.tasques.ITascaService;
 
+/**
+ * Classe que gestiona les diferents fases amb temps de l'aplicació. Podem editar, guardar, eliminar i veure les fases amb temps.
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ *
+ */
+
 @Controller
 @RequestMapping("/fasesConTiempo")
 @SessionAttributes("fase")
@@ -52,6 +59,13 @@ public class FaseConTiempoController {
 	private String titol;
 	private Empresa empresa;
 
+	/**
+	 * Mètode que elimina la fase amb temps rebuda per paràmetre
+	 * @param id Id de la fase amb temps que volem eliminar.
+	 * @param flash Instància que ens permet passar missatges al model
+	 * @return Redirecciona a home si no hi ha empresa. Si hi ha algun tipus d'error redirecciona a tasques/listar
+	 * i en cas contrari redirecciona a tasques/ver amb l'id de la tasca asociada.
+	 */
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
@@ -63,26 +77,25 @@ public class FaseConTiempoController {
 		if (empresa == null)
 			return "redirect:/";
 		// Si ja s'ha passat per llistar i el mètode és cridat des del navegador amb un
-		// número negatiu no ha de fer res
-		// per tant ens assegurem que sigui més gran que 0.
+		// número negatiu no ha de fer res per tant ens assegurem que sigui més gran que 0.
 		if (id > 0) {
 
 			// Busquem la fase a la base de dades
 			FaseConTiempo fase = faseConTiempoService.findById(id);
 
-			// Si el trobem l'eliminem
+			// Si la trobem l'eliminem
 			if (fase != null) {
 
 				faseConTiempoService.delete(fase);
+				// Actualitzem el temps estimat de la tasca asociada perquè ja no conté aquesta fase
 				Tasca tasca = fase.getTasca();
 				tasca.setTiempoEstimado(tasca.getTiempoEstimado() - fase.getTiempoEstimado());
-				System.out.println(tasca.getTiempoEstimado());
+				// Guardem la tasca
 				tascaService.save(tasca);
 			}
 
 			// Per saber si hem eliminat el registre, si no el trobem enviem un missatge com
-			// que s'he eliminat
-			// correctament, en cas contrari enviem un missatge d'error
+			// que s'he eliminat correctament, en cas contrari enviem un missatge d'error
 			if (faseConTiempoService.findById(id) != null) {
 
 				flash.addAttribute("success", "Fase " + fase.getFase().getNombre() + " esborrada amb èxit");
@@ -91,6 +104,7 @@ public class FaseConTiempoController {
 				flash.addAttribute("error", "La fase " + fase.getFase().getNombre() + " no s'ha pogut eliminar");
 			}
 
+			// Redireccionem al mètode ver de tasques amb l'id de la tasca asociada.
 			return "redirect:/tasques/ver/" + fase.getTasca().getId();
 
 		}
@@ -98,7 +112,15 @@ public class FaseConTiempoController {
 		// Redireccionem a la vista listar
 		return "redirect:/tasques/listar/";
 	}
-
+	
+	/**
+	 * Mètode que crida a la vista fasesConTiempo/editar que permet editar una fase amb temps
+	 * @param id Id de la fase que volem editar
+	 * @param model Model que passem a la vista
+	 * @param flash Instància per poder passar missatges a la vista
+	 * @return Si la empresa no existeix redirecciona a home, si la fase no existeix redirecciona al
+	 * mètode listar de tasques i si la troba crida a la vista "fasesConTiempo/editar".	 * 
+	 */
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/actualizar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
@@ -128,7 +150,7 @@ public class FaseConTiempoController {
 			// Canviem el titol i el text del bóto de la vista crear canviant els atributs
 			// corresponents
 			titol = "Actualitzar fase";
-			titolBoto = "Enviar dades";
+			titolBoto = "Actualitzar fase";
 
 			// passem la fase trobada, el titol, el text del botó i l'empresa a la vista.
 			model.addAttribute("titol", titol);
@@ -148,6 +170,14 @@ public class FaseConTiempoController {
 		
 	}
 
+	/**
+	 * Mètode que rep per paràmetre l'id d'una fase amb temps i crida a la vista que mostra el detall d'aquesta fase.
+	 * @param id Id de la fase amb temps que volem veure
+	 * @param model Model que passem a la vista
+	 * @return Si la empresa no existeix torna a home, si la fase no existeix crida a la vista listar fases amb temps i si 
+	 * existeix crida a la vista ver passant la fase amb temps sel.leccionada.
+	 */
+	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/ver/{id}")
 	public String ver(@PathVariable Long id, Model model) {
@@ -166,8 +196,7 @@ public class FaseConTiempoController {
 			return "redirect:/tasques/listar";
 
 		// Afegim a la vista la fase trobada, els usuaris que conté, un títol per la
-		// vista i el text del bóto,
-		// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
+		// vista i el text del bóto, a més passem l'atribut empresa per que la vista pugui crear la capçalera.
 		model.addAttribute("fase", fase);
 		model.addAttribute("titol", "Detall fase " + fase.getFase().getNombre());
 		model.addAttribute("empresa", empresa);
@@ -175,7 +204,16 @@ public class FaseConTiempoController {
 		// Cridem a la vista ver.
 		return "fasesConTiempo/ver";
 	}
-
+	
+	
+	/**
+	 * Mètode que guarda a la base de dades la fase amb temps rebuda per paràmetre.
+	 * @param fase Fasse amb temps que volem guardar
+	 * @param model Model que passem a la vista
+	 * @param flash Instància per poder passar missatges a la vista
+	 * @param status Instancia que ens permet canviar l'status de les variables passades a SessionAttributes
+	 * @return Redirecciona a la vista ver de la tasca a qui pertany aquesta fase amb temps.
+	 */
 	@PostMapping("/result")
 	public String guardar(FaseConTiempo fase, Model model, RedirectAttributes flash,
 			SessionStatus status) {
@@ -185,12 +223,12 @@ public class FaseConTiempoController {
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);		
-		
-		if(fase.getFase()==null)System.out.println("Es null");
+				
 
 		// Guardem el registre
 		if (faseConTiempoService.save(fase) != null) {
 
+			// Si el registre s'ha guardat amb exit actualitzem el camp tiempoEstimado de la seva tasca i el guardem
 			fase.getTasca().calcularTiempoEstimado();
 			tascaService.save(fase.getTasca());
 
@@ -204,12 +242,16 @@ public class FaseConTiempoController {
 		}
 
 		// Confimem que s'ha completat tot el procès i que ja no cal que guardi les
-		// dades de departament.
+		// dades de fase.
 		status.setComplete();
-		// Redireccionem a llistar
+		// Redireccionem a /tasques/ver amb l'id de la tasca on pertany la fase.
 		return "redirect:/tasques/ver/" + fase.getTasca().getId();
 	}
 
+	/**
+	 * Mètode que afegeix l'usuari autenticat al model
+	 * @return Retorna l'usuari autenticat
+	 */
 	@ModelAttribute("usuariAutenticat")
 	public Usuari getUsuariAuthenticat() {
 

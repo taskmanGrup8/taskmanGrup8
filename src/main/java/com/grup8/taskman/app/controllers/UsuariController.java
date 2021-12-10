@@ -43,7 +43,7 @@ import com.grup8.taskman.app.util.PageRender;
  * Classe que controla el mòdul d'usuaris.
  * Rebra les sol.licituts a partir de la url "/usuaris" i tindrà
  * les funcionalitats de crear, actualitzar, guardar, llistar, veure detall de l'usuari sel.leccionat,
- * canviar les dades personals i la contraesnya de l'usuari autenticat.
+ * canviar les dades personals i la contrasenya de l'usuari autenticat.
  * 
  *  Cada mètode referent a url estarà anotat amb @secured i el rol mínim de l'usuari que el pot utilitzar.
  *  
@@ -224,8 +224,6 @@ public class UsuariController {
 			// existeix i que té una foto pujada.
 			if(usuari.getId()!=null && usuari.getId()>0 && usuari.getFoto()!=null && usuari.getFoto().length()>0) {
 				
-				// Esborrem el logo anterior.
-				imatgesService.delete(usuari.getFoto());
 				// Esborrem la foto anterior si no és la foto per defecte.
 				if(!usuari.getFoto().equalsIgnoreCase(Usuari.DEFAULT_IMG_PROFILE))imatgesService.delete(usuari.getFoto());
 			}

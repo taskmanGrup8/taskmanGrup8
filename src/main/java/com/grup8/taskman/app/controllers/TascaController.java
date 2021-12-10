@@ -30,6 +30,12 @@ import com.grup8.taskman.app.services.tasques.IFaseService;
 import com.grup8.taskman.app.services.tasques.ITascaService;
 import com.grup8.taskman.app.util.Utilidades;
 
+/**
+ * Classe que gestiona les diferents tasques de l'aplicació. Podem crear, editar, guardar, eliminar, veure i llistar les diferents tasques.
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ *
+ */
 @Controller
 @RequestMapping("/tasques")
 @SessionAttributes("tasca")
@@ -267,7 +273,7 @@ public class TascaController {
 			
 			// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
 			titol="Actualitzar tasca";
-			titolBoto="Enviar dades";
+			titolBoto="Actualitzar tasca";
 			
 			// passem la fase trobada, el titol, el text del botó i l'empresa a la vista.
 			model.addAttribute("titol", titol);
