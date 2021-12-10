@@ -26,6 +26,10 @@ import com.grup8.taskman.app.repository.usuari.IUsuariDao;
  * posteriorment. Els diferents mètodes estan anotats amb @Transactional per
  * indicar que fan accions sobre la base de dades. Les que tenen l'atribut
  * readOnly=true indiquen que nomès són de consulta.
+ * Cadascú dels mètodes que fa una consulta sense rol ha de tenir cura si 
+ * qui fa la comanda té el rol taskman o no perquè quan per exemple fa una consulta de
+ * tots els usuaris, si no tens rol taskman llavors no pots veure els que tenen
+ * rol superior a administrador.
  * 
  * També implementa l'interface UserDetailsService necessària pel login
  * 
