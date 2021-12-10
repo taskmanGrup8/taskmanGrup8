@@ -167,9 +167,7 @@ public class Departament implements Serializable {
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 		
-	}
-	
-	
+	}	
 	
 }
 
