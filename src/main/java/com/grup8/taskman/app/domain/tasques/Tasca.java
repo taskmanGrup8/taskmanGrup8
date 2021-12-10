@@ -15,7 +15,13 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
-
+/**
+ * Classe que representa una plantilla de una tasca que posteriorment serà utilitzada per crear ordres d'execució.
+ * Està relacionada amb la taula tasques de la base de dades. 
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ *
+ */
 @Entity
 @Table(name="tasques")
 public class Tasca implements Serializable {
@@ -24,6 +30,8 @@ public class Tasca implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	// ATRIBUTS
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -42,7 +50,7 @@ public class Tasca implements Serializable {
 	@Column(name="nombre", unique=true, length=40, nullable=false)
 	private String nombre;	
 	
-	// Indiquem que nombre no pot ser null i que és únic a la base de dades. també indiquem que la validació no pot ser ni nul 
+	// Indiquem que descripció no pot ser null a la base de dades. també indiquem que la validació no pot ser ni nul 
 	// ni espais en blanc.
 	@NotBlank
 	@Column(name="descripcion", nullable=false)
@@ -52,21 +60,29 @@ public class Tasca implements Serializable {
 	@Column(name="tiempo", nullable=false)
 	private int tiempoEstimado;
 	
+	// Indiquem que cíclica no pot ser null a la base de dades., Per defecte és false
 	@Column(name="ciclica", nullable=false)
 	private boolean ciclica=false;
 	
+	// Indiquem que temps no pot ser null a la base de dades, mentre cíclica sigui false el valor estarà establit a -1
 	@Column(name="tiempoCiclo", nullable=false)
-	private int tiempoCiclo=-1;
+	private int tiempoCiclo;
 	
+	// Establim la relació one to many amb FaseConTiempo i la mapejem a l'atribut tasca.
 	@OneToMany(mappedBy="tasca", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<FaseConTiempo> fasesConTiempo;
 	
+	// Anotem amb transient perque hibernate ignori aquest camp en crear la base de dades.
 	@Transient
 	private List<Fase> fases;
 
+	// CONSTRUCTOR
+	
 	public Tasca() {
 		
 	}
+	
+	// SETTERS I GETTERS
 
 	public Long getId() {
 		return id;
@@ -124,7 +140,6 @@ public class Tasca implements Serializable {
 		this.fases = fases;
 	}
 	
-	
 
 	public boolean isCiclica() {
 		return ciclica;
@@ -142,6 +157,11 @@ public class Tasca implements Serializable {
 		this.tiempoCiclo = tiempoCiclo;
 	}
 
+	// MÈTODES
+	
+	/**
+	 * Mètode que calcula el temps estimat de la tasca a partir de les fases amb temps.
+	 */
 	public void calcularTiempoEstimado() {
 		
 		int tiempo=0;
@@ -153,6 +173,9 @@ public class Tasca implements Serializable {
 		this.setTiempoEstimado(tiempo);
 	}
 	
+	/**
+	 * Mètode que converteix el contingut de l'atribut codigo a majúscules abans de guardar a la base de dades
+	 */
 	@PrePersist
 	public void prePersist() {
 		

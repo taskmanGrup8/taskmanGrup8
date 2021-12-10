@@ -16,6 +16,14 @@ import javax.validation.constraints.NotNull;
 
 import com.grup8.taskman.app.domain.departaments.Departament;
 
+/**
+ * Classe que representa una fase d'una tasca a realitzar. Cada fase pertany a un departament.
+ * Està relacionada amb la taula fases de la base de dades
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ *
+ */
+
 @Entity
 @Table(name="fases")
 public class Fase implements Serializable{
@@ -25,37 +33,44 @@ public class Fase implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	// ATRIBUTS
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
 	
-	// Indiquem que codigo no pot ser null i que és únic a la base de dades. també indiquem que la validació no pot ser ni nul 
+	// Indiquem que codigo no pot ser null i que és únic a la base de dades i té tamany 3. també indiquem que la validació no pot ser ni null 
 	// ni espais en blanc.
 	@NotBlank
-	@Column(name="codigo", length=3, nullable=false)
+	@Column(name="codigo", length=3, unique=true, nullable=false)
 	private String codigo;
 	
-	// Indiquem que nombre no pot ser null i que és únic a la base de dades. també indiquem que la validació no pot ser ni nul 
+	// Indiquem que nombre no pot ser null i és únic a la base de dades i té tamany 40. També indiquem que la validació no pot ser ni null 
 	// ni espais en blanc.
 	@NotBlank
-	@Column(name="nombre", length=40, nullable=false)
+	@Column(name="nombre", length=40, unique=true, nullable=false)
 	private String nombre;	
 	
-	// Indiquem que nombre no pot ser null i que és únic a la base de dades. també indiquem que la validació no pot ser ni nul 
+	// Indiquem que descripció no pot ser null a la base de dades. També indiquem que la validació no pot ser ni null
 	// ni espais en blanc.
 	@NotBlank
 	@Column(name="descripcion", nullable=false)
 	private String descripcion;		
 	
+	// Associem a la base de dades la taula fases amb departaments. També indiquem que la validació no pot ser null
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_departament")
 	private Departament departament;
 
+	// CONSTRUCTOR
+	
 	public Fase() {
 	
 	}
+	
+	// SETTERS I GETTERS
 
 	public Long getId() {
 		return id;
@@ -98,6 +113,9 @@ public class Fase implements Serializable{
 		this.departament = departament;
 	}
 	
+	// MÈTODES
+	
+	// Abans de de guardar a la base de dades convertim el contingut de codigo a majúscules.
 	@PrePersist
 	public void prePersist() {
 		
