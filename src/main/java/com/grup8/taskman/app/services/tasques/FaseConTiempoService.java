@@ -8,18 +8,37 @@ import org.springframework.transaction.annotation.Transactional;
 import com.grup8.taskman.app.domain.tasques.FaseConTiempo;
 import com.grup8.taskman.app.repository.tasques.IFaseConTiempoDao;
 
+/**
+ * Classe que implementa la interficie IFaseConTiempoService i que retorna els resultats del DAO.
+ * Està marcada com Service per poder ser injectada posteriorment. Els diferents mètodes estan
+ * anotats amb @Transactional per indicar que fan accions sobre la base de dades. Les que tenen 
+ * l'atribut readOnly=true indiquen que nomès són de consulta.
+ * 
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ *
+ */
 @Service
 public class FaseConTiempoService implements IFaseConTiempoService{
 
+	// Injectem la interfície del repository
 	@Autowired
 	IFaseConTiempoDao faseDao;
 	
+	/**
+	 * Mètode que guarda/actualitza els elements a la base de dades.
+	 * @return Retorna l'element guardat o null si no ho ha pogut realitzar.
+	 */
 	@Override
 	@Transactional
 	public FaseConTiempo save(FaseConTiempo fase) {
 		return faseDao.save(fase);
 	}
 
+	/**
+	 * Mètode que busca la llista completa d'elements de la taula fases amb temps
+	 * @return Retorna la llista trobada
+	 */
 	@Override
 	@Transactional(readOnly=true)
 	public List<FaseConTiempo> findAll() {
@@ -27,6 +46,10 @@ public class FaseConTiempoService implements IFaseConTiempoService{
 		return (List<FaseConTiempo>) faseDao.findAll();
 	}
 
+	/**
+	 * Mètode que busca la fase amb temps  amb l'id indicat
+	 * @return Retorna la fase trobada o null si no ha trobat cap
+	 */
 	@Override
 	@Transactional(readOnly=true)
 	public FaseConTiempo findById(Long id) {
@@ -34,6 +57,9 @@ public class FaseConTiempoService implements IFaseConTiempoService{
 		return faseDao.findById(id).orElse(null);
 	}	
 
+	/**
+	 * Mètode que elimina la fase amb temps passada per paràmetre
+	 */
 	@Override
 	@Transactional
 	public void delete(FaseConTiempo fase) {
@@ -42,6 +68,10 @@ public class FaseConTiempoService implements IFaseConTiempoService{
 		
 	}
 
+	/**
+	 * Mètode que busca la llista de fases amb temps que l'id de la fase associada coincideixi amb l'indicat
+	 * @return Retorna la llista de fases amb temps trobades.
+	 */
 	@Override
 	@Transactional
 	public List<FaseConTiempo> findByFase(Long id) {
