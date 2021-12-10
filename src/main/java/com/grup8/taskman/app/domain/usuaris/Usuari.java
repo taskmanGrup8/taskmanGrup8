@@ -27,7 +27,7 @@ import com.grup8.taskman.app.domain.departaments.Departament;
  * Classe que mapejem als camps de la taula usuaris i que anotarem amb les validacions que han de tenir als 
  * formularis. Està implementada amb JPA i anotada amb javax.Validation
  * @author Sergio Estebam Gutiérrez
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 
@@ -38,12 +38,14 @@ public class Usuari implements Serializable {
 	/**
 	 * 
 	 */
+	
+	// CONSTANTS 
+	
 	private static final long serialVersionUID = 1L;
-  public static String DEFAULT_IMG_PROFILE = null;
 	public static Usuari USUARIAUTENTICAT=null;
+	public static final String DEFAULT_IMG_PROFILE="img-profile-default.png";
 	
-	// ATRIBUTS
-	
+	// ATRIBUTS	
 	
 	// Attribut que s'autogenerarà i que marquem con id a la base de dades
 	@Id
@@ -76,9 +78,9 @@ public class Usuari implements Serializable {
 	@Column(name="telefono", length=9)
 	private String telefono;
 	
-	// Indiquem que password no pot ser null a la base de dades. també indiquem que la validació no pot ser ni null 
+	// Indiquem que password no pot ser null a la base de dades i té un màxim de 60 caracters. també indiquem que la validació no pot ser ni null 
 	// ni espais en blanc.
-	@NotBlank()	
+	@NotBlank	
 	@Column(name="password", length=60, nullable=false)
 	private String password;
 		
@@ -110,18 +112,18 @@ public class Usuari implements Serializable {
 	
 	// Indiquem la relació que té usuaris amb Permiso. Un usuari pot tenir molts permissos. Fem cascade all perquè si
 	// esborrem un usuari volem que s'eliminin els seus permisos.
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private List<Permiso> permisos;
 	
 	/* Indiquem la relació que té usuaris amb departaments. En aquest cas un usuari pot tenir molts departaments i un departament
-	* pot tenir molts usuaris per tant es many to many. Aquesta part la fem EAGER perque un usuari no tindrà molts departaments.
+	* pot tenir molts usuaris per tant es many to many. 
 	* No pot ser cascade all perque no volem que quan s'esborri un departament s'esborri també l'usuari.
 	* Unim les tables departaments i usuaris mitjançant una nova taula que es dirà usuari_departament i que contindrà
 	* l'id de l'usuari i l'id del departament.
 	*/
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="usuari_departament",
 			joinColumns=@JoinColumn(name="id_usuario"),
@@ -129,6 +131,7 @@ public class Usuari implements Serializable {
 			)
 	private List<Departament> departaments;
 	
+	// Camp que contindrà el path de la foto de perfil de l'usuari
 	@Column(name="foto")
 	private String foto="";
 
@@ -256,6 +259,8 @@ public class Usuari implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	// MÊTODES
 
 	// Modifiquem equals perquè ho faci amb el dni que és unic per cada usuari
 	@Override
@@ -274,7 +279,8 @@ public class Usuari implements Serializable {
 		}
 		
 		return true;
-	}
+	}	
+	
 
 	// Modifiquem hashcode perquè ho faci amb el dni que és unic per cada usuari
 	@Override
@@ -300,27 +306,43 @@ public class Usuari implements Serializable {
 	 */
 	public void assignarPermissos() {		
 		
+		// Creem els permisos posibles
 		Permiso permisUsuari=new Permiso();
 		permisUsuari.setAuthority("ROLE_USER");		
 		Permiso permisAdministrador=new Permiso();
 		permisAdministrador.setAuthority("ROLE_ADMIN");
 		Permiso permisSuperAdministrador=new Permiso();
 		permisSuperAdministrador.setAuthority("ROLE_SUPER");
+		Permiso permisTaskman=new Permiso();
+		permisTaskman.setAuthority("ROLE_TASKMAN");
 		
+		// Fem switch case del id de rol
 		switch(Math.toIntExact(rol.getId())) {
 		
+		// Segons el cas afegim els permisos adequats
 		case Rol.ADMINISTRADOR:			
 			permisos.add(permisUsuari);
 			permisos.add(permisAdministrador);
 			break;
+			
 		case Rol.USUARI:
 			permisos.add(permisUsuari);
 			break;
+			
 		case Rol.SUPERADMINISTRADOR:
 			permisos.add(permisUsuari);
 			permisos.add(permisAdministrador);
 			permisos.add(permisSuperAdministrador);
 			break;
+			
+		case Rol.TASKMAN:			
+			permisos.add(permisUsuari);
+			permisos.add(permisAdministrador);
+			permisos.add(permisSuperAdministrador);
+			permisos.add(permisTaskman);
+			break;
+			
+		// Per si de cas per defecte donem permís d'usuari.	
 		default:
 			permisos.add(permisUsuari);
 			break;		

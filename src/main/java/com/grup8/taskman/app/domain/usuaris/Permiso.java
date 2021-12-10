@@ -26,17 +26,23 @@ public class Permiso implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	// ATRIBUTS
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
 	
 	@Column(name="authority")
-	private String authority;	
+	private String authority;
+	
+	// CONSTRUCTOR
 
 	public Permiso() {
 		
-	}	
+	}		
+	
+	// SETTERS I GETTERS
 
 	public Long getId() {
 		return id;

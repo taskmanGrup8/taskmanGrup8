@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * Classe que mapejem als camps de la taula rols. Està implementada amb JPA. Servirá per controlar el rol de cada
  * usuari que determinarà quines accions pot realitzar a l'aplicació
  * @author Sergio Estebam Gutiérrez
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 
@@ -27,6 +27,7 @@ public class Rol implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// CONSTANTS
+	
 	public static final int ADMINISTRADOR=1;
 	public static final int USUARI=2;
 	public static final int SUPERADMINISTRADOR=3;
@@ -54,8 +55,7 @@ public class Rol implements Serializable {
 	
 	public Rol() {
 		
-	}
-	
+	}	
 	
 	// SETTERS I GETTERS
 	
