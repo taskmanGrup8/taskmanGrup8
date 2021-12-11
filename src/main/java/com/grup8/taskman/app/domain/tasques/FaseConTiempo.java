@@ -44,7 +44,6 @@ public class FaseConTiempo implements Serializable{
 	private int tiempoEstimado;
 	
 	// Establim la relació amb la taula fases mitjançant l'id de fase. Es una relació many to one perquè d'una fase podem fer moltes fases amb temps.
-	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_fase")
 	private Fase fase;
