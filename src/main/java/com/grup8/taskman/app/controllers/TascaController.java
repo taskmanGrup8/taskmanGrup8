@@ -331,7 +331,7 @@ public class TascaController {
 			// Si la fase és cíclica el temps del cicle ha de ser més gran que cero
 			if(tasca.isCiclica() && tasca.getTiempoCiclo()<1) {
 				
-				flash.addAttribute("error", "Tasca.TiempoCicloNegativo");
+				flash.addAttribute("error", "El temps de cicle ha de ser més gran que zero");
 				return "tasques/cofigurar";
 			}			
 				
@@ -340,7 +340,7 @@ public class TascaController {
 				
 				if(fase.getTiempoEstimado()<1) {
 					
-					flash.addAttribute("error", "Tasca.TiempoFaseNegativo");
+					flash.addAttribute("error", "El temps d'una fase ha de ser més gran que zero");
 					return "tasques/cofigurar";
 					
 				}
