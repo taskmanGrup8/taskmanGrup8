@@ -85,6 +85,7 @@ public class Usuari implements Serializable {
 	private String password;
 		
 	// Indiquem que el camp username no pot ser null i és únic
+	@NotBlank
 	@Column(name="username", unique=true, length=30, nullable=false)
 	private String username;
 	
