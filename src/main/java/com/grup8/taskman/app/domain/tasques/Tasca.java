@@ -15,6 +15,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 /**
  * Classe que representa una plantilla de una tasca que posteriorment serà utilitzada per crear ordres d'execució.
  * Està relacionada amb la taula tasques de la base de dades. 
@@ -66,13 +67,14 @@ public class Tasca implements Serializable {
 	
 	// Indiquem que temps no pot ser null a la base de dades, mentre cíclica sigui false el valor estarà establit a -1
 	@Column(name="tiempoCiclo", nullable=false)
-	private int tiempoCiclo;
+	private int tiempoCiclo=0;
 	
 	// Establim la relació one to many amb FaseConTiempo i la mapejem a l'atribut tasca.
 	@OneToMany(mappedBy="tasca", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<FaseConTiempo> fasesConTiempo;
 	
 	// Anotem amb transient perque hibernate ignori aquest camp en crear la base de dades.
+	@NotNull
 	@Transient
 	private List<Fase> fases;
 
