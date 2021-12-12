@@ -66,7 +66,7 @@ public class Tasca implements Serializable {
 	
 	// Indiquem que temps no pot ser null a la base de dades, mentre cíclica sigui false el valor estarà establit a -1
 	@Column(name="tiempoCiclo", nullable=false)
-	private int tiempoCiclo;
+	private int tiempoCiclo=0;
 	
 	// Establim la relació one to many amb FaseConTiempo i la mapejem a l'atribut tasca.
 	@OneToMany(mappedBy="tasca", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
