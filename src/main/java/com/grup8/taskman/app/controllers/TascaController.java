@@ -273,7 +273,7 @@ public class TascaController {
 			
 			// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
 			titol="Actualitzar tasca";
-			titolBoto="Actualitzar tasca";
+			titolBoto="Enviar dades";
 			
 			// passem la fase trobada, el titol, el text del botó i l'empresa a la vista.
 			model.addAttribute("titol", titol);

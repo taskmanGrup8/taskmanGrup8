@@ -307,8 +307,8 @@ public class DepartamentController {
 		}
 		
 		// Canviem el titol i el text del bóto de la vista crear canviant els atributs corresponents		
-		titol="Actualitzar departament";
-		titolBoto="Actualitzar departament";
+		titol="Modificar departament";
+		titolBoto="Enviar dades";
 		
 		// passem el departament trobat, el titol, el text del botó i l'empresa a la vista.
 		model.addAttribute("titol", titol);

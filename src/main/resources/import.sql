@@ -1,6 +1,6 @@
 /* Populate tables */
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_ADMIN', 'Administrador');
-INSERT INTO rols (codigo, nombre) VALUES('ROLE_USER', 'Usuario');
+INSERT INTO rols (codigo, nombre) VALUES('ROLE_USER', 'Usuari');
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_SUPER', 'Super Administrador');
 INSERT INTO rols (codigo, nombre) VALUES('ROLE_TASKMAN', 'Taskman Manager');
 

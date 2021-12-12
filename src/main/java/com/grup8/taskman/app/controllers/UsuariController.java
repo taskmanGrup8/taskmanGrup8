@@ -461,7 +461,7 @@ public class UsuariController {
 		}		
 		
 		titolBoto = "Modificar Usuari";	
-		titol = "Modificar usuari";
+		titol = "Enviar dades";
 		
 		// Passem al model els atributs necessaris
 		model.addAttribute("titol", titol);

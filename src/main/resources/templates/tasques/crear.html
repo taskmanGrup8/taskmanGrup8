@@ -6,7 +6,8 @@
 
 <body>
   <!-- 
-		Vista per crear noves tasques.		
+		Vista per crear noves tasques.
+		S'han d'omplir tots els camps menys la casella de la tasca cíclica
 	-->
   <div th:replace="generic/main :: navbar-empresa"></div>
   <div class="container mt-5 pt-5" id="move-content">
@@ -21,16 +22,16 @@
         <!-- Àlies -->
         <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
           <label for="nom-alias" class="form-label">Àlies <span class="text-muted">**</span></label>
-          <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{codigo}" />
-          <!-- Alerta d'error -->
-          <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
-            class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
+          <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{codigo}" required />
         </div>
+        <!-- Alerta d'error -->
+        <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
+          class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
 
         <!-- Nom tasca -->
         <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
           <label for="nom-tasca" class="form-label">Nom de la tasca <span class="text-muted">*</span></label>
-          <input type="text" class="form-control" maxlength="40" id="nom-tasca" th:field="*{nombre}" />
+          <input type="text" class="form-control" maxlength="40" id="nom-tasca" th:field="*{nombre}" required />
           <!-- Alerta d'error -->
           <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2">
           </div>
@@ -42,29 +43,29 @@
           <textarea class="form-control" id="descripcio" maxlength="255" th:field="*{descripcion}"
             placeholder="Descripció de la tasca. Màxim 255 caràcters." style="height: 100px"></textarea>
           <!-- Alerta d'error -->
-          <div th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"
-            class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
+          <div th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="alert alert-danger mt-2">
+          </div>
         </div>
 
         <!-- Fases -->
         <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
           <label for="fases" class="form-label">Fases <span class="text-muted">*</span></label>
           <!-- Form multiselect amb select2 -->
-          <select id="fases" class="form-select departaments-multiple" style="width: 100%" name="fases[]"
-            th:field="*{fases}" multiple="multiple">
+          <select id="fases" class="form-select tasques-multiple" style="width: 100%" name="fases[]"
+            th:field="*{fases}" multiple="multiple" required>
             <option th:each="fase: ${listaFases}" th:text="${fase.nombre}" th:value="${fase.id}"></option>
           </select>
         </div>
 
         <!-- Cíclica -->
-        <div class="mt-4 col-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
-          <label for="ciclica" class="form-label" th:text="'Cíclica'"> <span class="text-muted">*</span></label>
-          <input type="checkbox" id="ciclica" th:field="*{ciclica}" />
+        <div class="mt-4 col-11 col-sm-8 col-md-6 col-lg-4 col-xl-4 warning">
+          <label for="ciclica" class="form-check-label " th:text="'Si la tasca és cíclica, marca la casella: &nbsp;'">
+            <span class="text-muted">*</span></label>
+          <input type="checkbox" class="form-check-input" id="ciclica" th:field="*{ciclica}" />
         </div>
 
-        <p class="pt-4 text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
-        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters
-        </p>
+        <p class="pt-4 text-muted">* Aquests camps són obligatoris</p>
+        <p class="text-muted">** L'àlies ha de tenir com a màxim 3 caràcters</p>
 
         <!-- Botó per crear la tasca -->
         <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"

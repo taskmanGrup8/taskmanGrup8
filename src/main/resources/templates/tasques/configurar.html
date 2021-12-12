@@ -6,8 +6,8 @@
 
 <body>
   <!-- 
-		Vista per crear noves fases.
-		
+		Vista per configurar el temps que requereix la tasca,
+    En cas que sigui cíclica, s'haurà d'indicar cada quants dies es repeteix		
 	-->
   <div th:replace="generic/main :: navbar-empresa"></div>
   <div class="container mt-5 pt-5" id="move-content">
@@ -19,24 +19,28 @@
 
     <div class="row">
       <form th:action="@{/tasques/configurar}" th:object="${tasca}" method="post">
+        <!-- Temps del cicle -->
         <div th:if="${tasca.ciclica}">
           <div class="mb-3 col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
-            <label class="form-label">Temps del cicle <span class="text-muted">*</span></label>
-            <input type="text" class="form-control" th:field="*{tiempoCiclo}" placeholder="Dies que pot durar" />
+            <label class="form-label">Dies que es repeteix la tasca <span class="text-muted">*</span></label>
+            <input type="text" class="form-control" th:field="*{tiempoCiclo}" placeholder="Dies" required />
           </div>
         </div>
+        <!-- Temps de la fase -->
         <div th:each="fase, iterador: ${tasca.fasesConTiempo}">
-          <div class="mb-3 col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
-            <label class="form-label" th:text="${fase.fase.nombre}"></label><span class="text-muted"> *</span>
-            <input type="text" class="form-control" th:field="*{fasesConTiempo[__${iterador.index}__].tiempoEstimado}"
-              placeholder="Minuts que pot durar" />
+          <div class="mb-3 col-4 col-sm-4 col-md-4 col-lg-5 col-xl-5">
+            <label class="form-label" th:text="'Minuts que pot durar la fase: ' + ${fase.fase.nombre} + ' *'"></label>
+            <div class="mb-3 col-12 col-sm-10 col-md-10 col-lg-5 col-xl-5">
+              <input type="text" class="form-control" th:field="*{fasesConTiempo[__${iterador.index}__].tiempoEstimado}"
+                placeholder="Minuts" required />
+            </div>
           </div>
         </div>
-        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
+        <p class="text-muted">* Aquests camps són obligatoris</p>
 
-        <!-- Botó per crear la tasca -->
+        <!-- Botó -->
         <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Guardar configuració" th:value="${titolBoto}" />
+          title="Guardar configuració" th:value="${titolBoto}" required />
       </form>
     </div>
   </div>

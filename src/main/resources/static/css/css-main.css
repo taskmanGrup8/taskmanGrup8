@@ -46,9 +46,11 @@ a {
   font-size: 13px;
 }
 
-/* Tipografia nom d'empresa */
-.empresa-navbar {
-  font-family: 'Ubuntu', sans-serif;
+/* Resaltar una opció */
+.warning {
+  background-color: #ffc107;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 /* Ocultar i mostrar els filtres de la vista usuaris/listar */
@@ -56,7 +58,7 @@ a {
   display: none;
 }
 
-/* Ocultar i mostrar els llistats d'usuaris i departaments */
+/* Ocultar i mostrar les taules de les vistes 'veure' */
 #mostrar-taula {
   display: none;
 }
@@ -84,14 +86,31 @@ a {
   --bs-table-striped-bg: #0146df1a;
 }
 
-/* Estil definits per a las cards del menú principal */
-.style-card {
+/* Estils emprats per a la pàgina d'error 403 */
+.border-card {
   border: none;
+  border-top-right-radius: inherit;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border-bottom-right-radius: inherit;
 }
 
-.style-card p {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.card {
+  border-radius: 10px;
+}
+
+.title-error {
+  font-size: 3.25rem;
+}
+
+.text-error {
+  font-size: 1.25rem;
+}
+
+.btn-light:hover {
+  background-color: #ced4da;
+  border-color: #ced4da;
 }
 
 /* Estil casella selecció Select 2 (select2.min.css) */
@@ -157,7 +176,7 @@ a {
     margin-left: var(--offcanvas-width);
   }
 
-  /* ocultar el backdrop */
+  /* Ocultar el backdrop */
   .offcanvas-backdrop::before {
     display: none;
   }
@@ -171,13 +190,14 @@ a {
   }
 }
 
+/* Canvi de posició del perfil d'usuari */
 @media (min-width: 200px) and (max-width: 1981px) {
   .sidebar-nav .profile-details {
     position: relative !important;
   }
 }
 
-/* profile */
+/* Profile  */
 .sidebar-nav .profile-details {
   position: fixed;
   bottom: 0;
@@ -233,14 +253,17 @@ a {
   font-size: 12px;
 }
 
+/* Color text offcanvas */
 .navbar-dark .navbar-nav .nav-link {
   color: #dedede;
 }
 
+/* Color text accentuació offcanvas */
 .text-highlight {
   color: #3d95ee;
 }
 
+/* Estils al passar el ratolí pel menú offcanvas */
 li .nav-link:hover {
   background-color: #f8f9fa;
   color: #282828 !important;
@@ -251,6 +274,7 @@ li .nav-link:hover {
   transition: 0.7s;
 }
 
+/* Estil icona de logout */
 .exit-icon {
   color: #f8f9fa;
   font-size: 25px;
@@ -258,6 +282,7 @@ li .nav-link:hover {
   cursor: pointer;
 }
 
+/* Estils al passar el ratolí per l'icona de logout */
 .exit-icon:hover {
   color: #3d95ee;
   transition: 0.7s;
@@ -267,6 +292,7 @@ li .nav-link:hover {
   color: #f8f9fa;
 }
 
+/* Estils al passar el ratolí pel perfil d'usuari d'offcanvas */
 .name-job a:hover {
   color: #3d95ee;
   transition: 0.7s;

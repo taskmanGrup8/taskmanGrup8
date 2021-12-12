@@ -7,6 +7,9 @@
 				 els títols de les diferents vistes, i les biblioteques d'estils
 	-- Footer ==> Apartat on es guarden les biblioteques de jQuery i JS
 	-- Missatges d'esdeveniments ==> Missatges d'alerta que es mostren quan succeeix algun esdeveniment
+  -- Capçalera genèrica ==> Navbar genèric que carrega en la creació de l'empresa i l'inici de sessió
+  -- Capçalera empresarial ==> Navbar empresarial per poder navegar per les diferents vistes del programa;
+      també disposa d'informació de l'usuari que ha iniciat sessió i el botó per fer logout
 -->
 
 <!-- Head -->
@@ -91,7 +94,7 @@
   </div>
 </body>
 
-<!-- cabecera genérica -->
+<!-- Capçalera genèrica -->
 <div th:fragment="navbar-generic" class="bg-dark text-white" id="navbar-generic">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container mr-5">
@@ -100,42 +103,20 @@
           class="d-inline-block align-text-top"> <!-- Nom empresa -->
         &nbsp;<strong class="empresa-navbar">TaskMan</strong>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <!-- Menú -->
       <div class="collapse navbar-collapse justify-content-end fs-5" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <!-- Home -->
           <li class="nav-item"><a class="nav-link active fst-italic" aria-current="page">Gestor de tasques</a></li>
-          <li th:if="${usuariAutenticat}" class="nav-item">
-            <p sec:authorize="isAuthenticated()">
-              <span th:text="${usuariAutenticat.nombre}"></span> |
-              <span th:text="${usuariAutenticat.rol.nombre}"></span>
-            </p>
-          </li>
-          <li class="nav-item" sec:authorize="isAuthenticated()">
-
-            <form id="logoutForm" th:action="@{/logout}" method="post">
-
-              <button onclick="document.getElementById('logoutForm').submit();" type="submit">Logout</button>
-            </form>
-          </li>
-
         </ul>
       </div>
     </div>
   </nav>
 </div>
 
-<!-- 
-		Vista del menú principal (navbar) que es mostra un cop s'ha creat l'empresa
-		Apareix el nom de l'empresa i la seva icona, en cas d'haver posat una
-		Es pot navegar pels diferents menús de la pàgina ( Departaments | Usuaris | Empresa )
-	-->
+<!-- Capçalera empresarial	-->
 <div th:fragment="navbar-empresa" class="bg-dark text-white">
-  <!-- navbar horitzontal -->
+  <!-- Navbar horitzontal -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container mr-5">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
@@ -151,12 +132,12 @@
       </a>
     </div>
   </nav>
-  <!-- navbar vertical -->
+  <!-- Navbar vertical (offcanvas) -->
   <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="sidebar">
     <div class="offcanvas-body p-0">
       <nav class="navbar-dark">
         <ul class="navbar-nav">
-          <!-- profile -->
+          <!-- Profile -->
           <li sec:authorize="isAuthenticated()" class="nav-item">
             <div class="profile-details">
               <div class="profile-content">
@@ -177,6 +158,7 @@
           </li>
 
           <hr class="dropdown-divider bg-light" />
+          <!-- Home -->
           <li>
             <a th:href="@{/perfil}" class="nav-link px-3 mb-0 ">
               <span class="me-2"><i class="fas fa-tachometer-alt"></i></span>
@@ -188,7 +170,7 @@
           <li class="my-3">
             <hr class="dropdown-divider bg-light" />
           </li>
-          <!-- tasques-->
+          <!-- Tasques-->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fab fa-buffer"></i>
               Tasques
@@ -211,7 +193,7 @@
           <li class="my-3">
             <hr class="dropdown-divider bg-light" />
           </li>
-          <!-- fases-->
+          <!-- Fases-->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-bookmark"></i>
               Fases
@@ -234,8 +216,7 @@
           <li class="my-3">
             <hr class="dropdown-divider bg-light" />
           </li>
-
-          <!-- dept-->
+          <!-- Departaments -->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-user-friends"></i>
               Departaments
@@ -258,7 +239,7 @@
           <li class="my-3">
             <hr class="dropdown-divider bg-light" />
           </li>
-          <!-- usuaris -->
+          <!-- Usuaris -->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-user"></i>
               Usuaris
@@ -281,7 +262,7 @@
           <li class="my-3">
             <hr class="dropdown-divider bg-light" />
           </li>
-          <!-- empresa -->
+          <!-- Empresa -->
           <li sec:authorize="hasRole('ROLE_SUPER')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-briefcase"></i>
               Empresa
