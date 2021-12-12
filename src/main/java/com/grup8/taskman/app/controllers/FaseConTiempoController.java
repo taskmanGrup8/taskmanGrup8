@@ -217,14 +217,18 @@ public class FaseConTiempoController {
 	@PostMapping("/result")
 	public String guardar(FaseConTiempo fase, Model model, RedirectAttributes flash,
 			SessionStatus status) {
-
+		
 		// Afegim el titol, el text del botó i l'empresa abans de gestionar res més
 		// perquè ens fa falta per qualsevol dels casos.
 		model.addAttribute("titol", titol);
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);		
-				
-
+			
+		// El temps ha de ser més gran que zero
+		if(fase.getTiempoEstimado()<1) {
+			flash.addFlashAttribute("errors", "El temps estimat ha de ser més gran que zero");
+			return "fasesConTiempo/editar";
+		}
 		// Guardem el registre
 		if (faseConTiempoService.save(fase) != null) {
 
