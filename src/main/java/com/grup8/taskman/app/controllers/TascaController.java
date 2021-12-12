@@ -341,7 +341,7 @@ public class TascaController {
 				if(fase.getTiempoEstimado()<1) {
 					
 					flash.addAttribute("error", "El temps d'una fase ha de ser més gran que zero");
-					return "tasques/cofigurar";
+					return "tasques/configurar";
 					
 				}
 			}
