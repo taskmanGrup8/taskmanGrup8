@@ -22,6 +22,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import com.grup8.taskman.app.domain.departaments.Departament;
+import com.grup8.taskman.app.domain.tasques.Notificacion;
 
 /**
  * Classe que mapejem als camps de la taula usuaris i que anotarem amb les validacions que han de tenir als 
@@ -135,6 +136,10 @@ public class Usuari implements Serializable {
 	// Camp que contindrà el path de la foto de perfil de l'usuari
 	@Column(name="foto")
 	private String foto="";
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name="id_notificacion")
+	private Notificacion notificacionActual;
 
 	// CONSTRUCTOR
 	
