@@ -1,9 +1,11 @@
 package com.grup8.taskman.app.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Classe per utilitats varies.
@@ -54,5 +56,25 @@ public class Utilidades {
 		return resultado; // Retornem la llista combinada.
 		
 	}
+	
+	public static long restarFechas(Date fecha1, Date fecha2) {
+		
+		long diferencia=fecha1.getTime()-fecha2.getTime();
+		return diferencia;
+	}
+	
+	public static long restarFechasEnMinutos(Date fecha1, Date fecha2) {
+				
+		long minutos=TimeUnit.MILLISECONDS.toMinutes(restarFechas(fecha1, fecha2));
+		return minutos;
+	}
+	
+	public static long restarFechasEnDias(Date fecha1, Date fecha2) {
+		
+		long dias=TimeUnit.MILLISECONDS.toDays(restarFechas(fecha1, fecha2));
+		return dias;
+	}
+	
+	
 
 }
