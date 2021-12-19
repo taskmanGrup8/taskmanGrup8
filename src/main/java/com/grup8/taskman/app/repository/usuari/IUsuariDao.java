@@ -170,5 +170,12 @@ public interface IUsuariDao extends PagingAndSortingRepository<Usuari, Long>{
 	
 	public Optional<Usuari> findByUsername(String username);
 	
+	// NOTIFICACIÓ ACTUAL
+	
+	@Query(value="SELECT * FROM usuaris u WHERE u.id_notificacion= :notificacion", nativeQuery=true)
+	public Optional<Usuari> findByNotificacionActual(Long notificacion);
+	
+	
+	
 
 }
