@@ -2,7 +2,6 @@ package com.grup8.taskman.app.services.usuari;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -822,6 +821,12 @@ public class UsuariService implements IUsuariService, UserDetailsService {
 	public Usuari findByUsername(String username) {
 		
 		return usuariDao.findByUsername(username).orElse(null);
+	}
+
+	@Override
+	public Usuari findByNotificacionActual(Long notificacion) {
+		
+		return usuariDao.findByNotificacionActual(notificacion).orElse(null);
 	}
 
 }

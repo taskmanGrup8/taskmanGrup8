@@ -13,6 +13,8 @@ public interface IUsuariService {
 	public Usuari findById(Long id);
 	public Usuari findByUsername(String username);
 	public void deleteAll();
+	public Usuari findByNotificacionActual(Long notificacion);
+	
 	
 	// FILTRES
 	
