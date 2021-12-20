@@ -20,19 +20,29 @@
   background: #555;
 }
 
-/* Tipografia general */
+/*** ----------------------- ***/
+
+/*** Tipografies ***/
+
+/* Genèrica */
 body {
   font-family: 'Nunito', sans-serif;
+  color: #212529;
+  /*background-color: #f5f6fa !important;*/
 }
 
-/* Tipografia nom d'empresa */
+/* Nom d'empresa */
 .empresa-navbar {
   font-family: 'Ubuntu', sans-serif;
 }
 
+/*** ----------------------- ***/
+
+/*** Vista login ***/
+
 /* icones login */
 .login-icon div span {
-  background-color: #0079f3;
+  background-color: #1270CE;
   color: #fff;
 }
 
@@ -41,14 +51,16 @@ a {
   text-decoration: none !important;
 }
 
-/* Estil aplicat a la pàgina del login. Contrasenya oblidada */
+/* Contrasenya oblidada */
 .pwd-forgotten {
   font-size: 13px;
 }
 
+/*** ----------------------- ***/
+
 /* Resaltar una opció */
 .warning {
-  background-color: #ffc107;
+  background-color: #FFB703;
   border-radius: 10px;
   padding: 5px;
 }
@@ -83,7 +95,7 @@ a {
 
 /* Estil table-striped (bootstrap.min.css) */
 .table {
-  --bs-table-striped-bg: #0146df1a;
+  --bs-table-striped-bg: #609eff2e;
 }
 
 /* Estils emprats per a la pàgina d'error 403 */
@@ -260,7 +272,7 @@ a {
 
 /* Color text accentuació offcanvas */
 .text-highlight {
-  color: #3d95ee;
+  color: #609eff;
 }
 
 /* Estils al passar el ratolí pel menú offcanvas */
@@ -284,7 +296,7 @@ li .nav-link:hover {
 
 /* Estils al passar el ratolí per l'icona de logout */
 .exit-icon:hover {
-  color: #3d95ee;
+  color: #609eff;
   transition: 0.7s;
 }
 
@@ -294,6 +306,55 @@ li .nav-link:hover {
 
 /* Estils al passar el ratolí pel perfil d'usuari d'offcanvas */
 .name-job a:hover {
-  color: #3d95ee;
+  color: #609eff;
   transition: 0.7s;
+}
+
+/* Estils botons bootstrap */
+
+.btn-primary {
+  background-color: #1270CE !important;
+  border-color: #1270CE !important;
+}
+
+.btn-primary:hover {
+  background-color: #0d5296 !important;
+  border-color: #0d5296 !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #0d5296 !important;
+  border-color: #0d5296 !important;
+}
+
+.page-item.active .page-link {
+  background-color: #1270CE !important;
+  border-color: #1270CE !important;
+}
+
+h3 {
+  color:#1270CE;
+  font-size: 33px;
+}
+
+.accent-blue {
+  color: #1E85EB;
+}
+
+/* icones de les taules */
+
+.edit-icon {
+  color: #1270CE;
+}
+
+.delete-icon {
+  color: #e53935;
+}
+
+.edit-icon:hover {
+  color: #0d5296;
+}
+
+.delete-icon:hover {
+  color: #ab000d;
 }

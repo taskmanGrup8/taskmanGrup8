@@ -2,9 +2,12 @@ package com.grup8.taskman.app;
 
 
 import java.nio.file.Paths;
+import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -47,7 +50,7 @@ public class MvcConfig implements WebMvcConfigurer{
 	
 	public void addViewControllers(ViewControllerRegistry registry) {
 		
-		registry.addViewController("/error_403").setViewName("errores/error_403");
+		registry.addViewController("/error_403").setViewName("error/error_403");
 		
 		
 	}
@@ -61,6 +64,26 @@ public class MvcConfig implements WebMvcConfigurer{
 	public BCryptPasswordEncoder passwordEncoder() {
 		
 		return new BCryptPasswordEncoder(12);
+	}
+	
+	@Bean
+	public JavaMailSender getJavaMailSender() {
+		
+		JavaMailSenderImpl mailSender=new JavaMailSenderImpl();
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+		mailSender.setUsername("ester210403@gmail.com");
+		mailSender.setPassword("Seres210403");
+		
+		Properties props= mailSender.getJavaMailProperties();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.debug", "true");
+		
+		return mailSender;
+		
+		
 	}
 
 	

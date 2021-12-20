@@ -6,68 +6,52 @@
 
 <body>
   <!-- 
-		Vista on es realitza l'inici de sessió a l'aplicació
+		Vista on es realitza l'inici de sessiÃ³ a l'aplicaciÃ³
 		Es requereix emprar tant l'usuari com la contrasenya
 	-->
   <div th:replace="generic/main :: navbar-generic"></div>
   <div th:replace="generic/main :: mensajes"></div>
-  <div class="container mt-5 pt-5 d-flex justify-content-center">
+  <div class="container mt-5 pt-5">
 
-    <div class="mb-4">
-      <h2>Inicia sessió</h2>
-      <hr>
+    <div class="d-flex justify-content-center">
+      <div class="mb-4">
+        <h2>Inicia sessiÃ³</h2>
+        <hr>
+      </div>
     </div>
+
+    <form th:action="@{/login}" method="post">
+      <!-- Username -->
+      <div class="row d-flex justify-content-center login-icon">
+        <div class="col-sm-3 mb-3">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+            <input type="text" class="form-control" placeholder="Usuari" aria-label="Username"
+              aria-describedby="basic-addon1" name="username" id="username" autofocus required>
+          </div>
+        </div>
+      </div>
+      <!-- PWD -->
+      <div class="row d-flex justify-content-center login-icon">
+        <div class="col-sm-3">
+          <div class="input-group mb-3">
+            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+            <input type="password" class="form-control" placeholder="Contrasenya" aria-label="Password"
+              aria-describedby="basic-addon1" name="password" id="password" autofocus required>
+          </div>
+          <!-- Contrasenya oblidada -->
+          <div class="text-end pwd-forgotten">
+            <a th:href="@{recuperarPassword}">Has oblidat la contrasenya?</a>
+          </div>
+        </div>
+      </div>
+      <!-- BotÃ³ -->
+      <div class="pt-3 mb-5 d-flex justify-content-center">
+        <input type="submit" class="btn btn-primary" value="Enviar dades" />
+      </div>
+    </form>
+
   </div>
-
-  <form th:action="@{/login}" method="post">
-    <!-- Username -->
-    <div class="row d-flex justify-content-center login-icon">
-      <div class="col-xs-2 col-sm-3 col-lg-2 col-xl-2 mb-3 ps-4 pe-4">
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-          <input type="text" class="form-control" placeholder="Usuari" aria-label="Username"
-            aria-describedby="basic-addon1" name="username" id="username" autofocus required>
-        </div>
-      </div>
-    </div>
-    <!-- PWD -->
-    <div class="row d-flex justify-content-center login-icon">
-      <div class="col-xs-2 col-sm-3 col-lg-2 col-xl-2 ps-4 pe-4">
-        <div class="input-group mb-3">
-          <span class="input-group-text"><i class="fas fa-lock"></i></span>
-          <input type="password" class="form-control" placeholder="Contrasenya" aria-label="Username"
-            aria-describedby="basic-addon1" name="password" id="password" autofocus required>
-        </div>
-        <!-- Contrasenya oblidada -->
-        <div class="text-end pwd-forgotten">
-          <a href="#">Has oblidat la contrasenya?</a>
-        </div>
-      </div>
-    </div>
-    <!-- Botó -->
-    <div class="pt-3 mb-5 d-flex justify-content-center">
-      <input type="submit" class="btn btn-primary" value="Entrar" />
-    </div>
-  </form>
-  
-  <div>
-
-		<form th:action="@{/recover/sendPasswordLink}" method="post">
-
-			<div>
-				<label>Introdueixi el seu username</label> <input type="text"
-					class="form-control" placeholder="Usuari" name="recover"
-					id=>
-			</div>
-			<div class="pt-3 mb-5 d-flex justify-content-center">
-				 <button class="btn btn-primary" type="submit" >Recuperar</button> 
-			</div>
-
-
-		</form>
-	</div>
-  
-  
   <footer th:replace="generic/main :: footer"></footer>
 </body>
 

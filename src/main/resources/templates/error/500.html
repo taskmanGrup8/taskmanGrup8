@@ -10,21 +10,26 @@
   -->
   <div th:replace="generic/main :: navbar-generic"></div>
   <div th:replace="generic/main :: mensajes"></div>
-  <div class="container mt-5 pt-5">
+  <div class="container">
 
 
-    <div class="card bg-danger text-white border-card mb-3">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img th:src="@{/img/access-denied.png}" class="card-img border-card" alt="Accés denegat">
+    <div class="d-flex justify-content-center">
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="card border-card mb-3 col-8">
+          <img th:src="@{/img/500-server-internal-error.png}" class="card-img-top border-card" alt="Error intern del servidor">
         </div>
-        <div class="col-md-8">
-          <div class="card-body ms-3 mt-2">
-            <h5 class="card-title title-error"><i class="fas fa-hand-paper"></i> Error 500</h5>
-            <hr>
-            <p class="card-text text-error">Actualment no es pot  accedir a la pàgina sol·licitada.</p>
-            <p class="card-text text-error">Si us plau, contacta amb l'administrador de l'aplicació.</p>
-            <a th:href="@{/}" class="btn btn-light text-error mt-5" role="button">Pàgina principal</a>
+        <div class="card-body d-flex justify-content-center">
+          <div class="row">
+            <div class="col-12">
+              <h5 class="card-title title-error accent-blue">500 - Error intern del servidor</h5>
+              <hr class="accent-blue">
+              <p class="card-text text-error text-muted text-end fst-italic" th:text="${timestamp}"></p>
+              <p class="card-text text-error">Actualment estem experimentant problemes amb la pàgina web a la qual intentes accedir.</p>
+              <p class="card-text text-error">Estem treballant per solucionar-ho al més aviat possible. Et demanem disculpes per les molèsties.</p>
+              
+              <a th:href="@{/}" class="btn btn-primary text-error mt-3" role="button">Pàgina principal</a>
+            </div>
           </div>
         </div>
       </div>

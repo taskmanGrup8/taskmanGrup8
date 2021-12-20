@@ -20,8 +20,7 @@
     <div class="pt-3 pb-3 row">
       <div class="col-md-8 col-lg-8 col-sm-12 float-start pt-3">
         <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Crear nou departament"
-          th:href="@{/departaments/crear}">Crear
-          departament</a>
+          th:href="@{/departaments/crear}">Crear departament</a>
       </div>
       <!-- Cercador per buscar un departament existent -->
       <div class="boto-cercar-departament col-md-4 col-lg-4 col-sm-12 float-end pt-3" th:if="${not filtrado}">
@@ -63,13 +62,13 @@
               <td th:text="${departament.nombre}"></td>
               <td class="text-center">
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"
-                  th:href="@{/departaments/actualizar/}+ ${departament.id}"><i class="fas fa-edit text-primary"></i>
+                  th:href="@{/departaments/actualizar/}+ ${departament.id}"><i class="fas fa-edit edit-icon"></i>
                 </a>
               </td>
               <td class="text-center">
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar"
                   th:href="@{/departaments/eliminar/}+ ${departament.id}"
-                  onclick="return confirm('Estàs segur que vols eliminar?');"><i class="fas fa-trash text-danger"></i>
+                  onclick="return confirm('Estàs segur que vols eliminar?');"><i class="fas fa-trash delete-icon"></i>
                 </a>
               </td>
             </tr>
