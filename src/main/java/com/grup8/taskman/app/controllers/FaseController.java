@@ -82,7 +82,7 @@ public class FaseController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";		
+			if(empresa==null)return "redirect:/perfil";		
 			
 			// Assignem els titols de creació als nostres atributs
 			titol="Crear nova fase";
@@ -168,7 +168,7 @@ public class FaseController {
 			
 			// Comprobem que la empresa existeixi, si no existeix a la base de dades redireccionem a home.
 			if(empresa==null)empresa=empresaService.findById(1);
-			if(empresa==null)return "redirect:/";
+			if(empresa==null)return "redirect:/perfil";
 			
 			// Variable que passarem a la vista amb el llistat de fases.
 			List<Fase> fases=new ArrayList<>();
@@ -214,7 +214,7 @@ public class FaseController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";	
+			if(empresa==null)return "redirect:/perfil";	
 			// Si ja s'ha passat per llistar i el mètode és cridat des del navegador amb un número negatiu no ha de fer res
 			// per tant ens assegurem que sigui més gran que 0.
 			if (id > 0) {
@@ -271,7 +271,7 @@ public class FaseController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";	
+			if(empresa==null)return "redirect:/perfil";	
 			
 			Fase fase = null;
 			
@@ -323,7 +323,7 @@ public class FaseController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";	
+			if(empresa==null)return "redirect:/perfil";	
 			
 			// Busquem la fase demanada per paràmetre, si no es troba a la base de dades redireccionem a llistar.
 			Fase fase=faseService.findById(id);

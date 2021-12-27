@@ -147,8 +147,8 @@ public class EmpresaController {
 		// Completem l'status de la variable empresa i informem
 		status.setComplete();
 		
-		// De moment redireccionem al perfil temporal del superadministrador
-		return "redirect:/";
+		// De moment redireccionem al perfil de l'usuari
+		return "redirect:/perfil";
 	}
 	
 	/**

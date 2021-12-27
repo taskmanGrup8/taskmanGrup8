@@ -28,21 +28,21 @@ public class LoginController {
 	 */
 	@GetMapping("/login")
 	public String login(@RequestParam(value="error", required=false) String error, 
-			@RequestParam(value="error", required=false) String logout,
+			@RequestParam(value="logout", required=false) String logout,
 			Model model, Principal principal, RedirectAttributes  flash) {
 		
 		// Mirem si ja ha fet login, en aquest cas l'avisem i el redireccionem al seu menú principal
 		if(principal!= null) {
 			
 			flash.addAttribute("info", "Ja ha iniciat sessió anteriorment!!!");			
-			return "redirect:/";
+			return "redirect:/perfil";
 		}
 		
 		// Si ha hagut cap error en fer login llavors la variable error no estarà buïda per tant indiquem l'error a l'usuari
 		
 		if(error!=null) {
 						
-			model.addAttribute("error", "Error en iniciar sessió: Nom d'usuari o contrasenya incorrectes");
+			model.addAttribute("error", "Error en el login: Nom d'usuari o contrasenya incorrectes");
 		}
 		
 		// Si la variable logout no està buïda vol dir que l'usuari ha tancat sessió. L'avisem d'aquesta dada a la vista.

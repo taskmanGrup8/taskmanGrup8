@@ -119,7 +119,7 @@ public class UsuariController {
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";	
+		if(empresa==null)return "redirect:/perfil";	
 
 		titol = "Crear nou usuari";
 		titolBoto = "Enviar dades";
@@ -302,7 +302,7 @@ public class UsuariController {
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null) {
 						
-			return "redirect:/";
+			return "redirect:/perfil";
 		}		
 		
 		// Creem el pageable i donem l'ordre com volem les pàgines.
@@ -353,7 +353,7 @@ public class UsuariController {
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";	
+		if(empresa==null)return "redirect:/perfil";	
 		
 		// Si no trobem l'usuari tornem a llistar
 		Usuari usuari=usuariService.findById(id);		
@@ -387,7 +387,7 @@ public class UsuariController {
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";	
+		if(empresa==null)return "redirect:/perfil";	
 		
 		// Id a ser més gran que 0.
 		if (id > 0) {
@@ -442,7 +442,7 @@ public class UsuariController {
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";	
+		if(empresa==null)return "redirect:/perfil";	
 
 		// Si l'id és més gran que cero busquem l'usuari
 		if (id > 0) {
@@ -487,7 +487,7 @@ public class UsuariController {
 		// Si la variable empresa encara és igual a null la cerquem
 		if(empresa==null)empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
-		if(empresa==null)return "redirect:/";	
+		if(empresa==null)return "redirect:/perfil";	
 		
 		// L'usuari correspon a l'usuari autenticat però el busquem per si tinguès qualsevol canvi pendent.
 		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());	
@@ -557,7 +557,7 @@ public class UsuariController {
 		}
 		
 		// Redireccionem a home
-		return "redirect:/";
+		return "redirect:/perfil";
 	}	
 	
 

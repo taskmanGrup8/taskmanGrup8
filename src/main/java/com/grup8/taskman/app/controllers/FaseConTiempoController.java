@@ -75,7 +75,7 @@ public class FaseConTiempoController {
 			empresa = empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if (empresa == null)
-			return "redirect:/";
+			return "redirect:/perfil";
 		// Si ja s'ha passat per llistar i el mètode és cridat des del navegador amb un
 		// número negatiu no ha de fer res per tant ens assegurem que sigui més gran que 0.
 		if (id > 0) {
@@ -130,7 +130,7 @@ public class FaseConTiempoController {
 			empresa = empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if (empresa == null)
-			return "redirect:/";
+			return "redirect:/perfil";
 
 		// Si ja s'ha passat per llistar i criden al mètode des del navegador el mètode
 		// funcionarà, per tant hem
@@ -187,7 +187,7 @@ public class FaseConTiempoController {
 			empresa = empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if (empresa == null)
-			return "redirect:/";
+			return "redirect:/perfil";
 
 		// Busquem la fase demanada per paràmetre, si no es troba a la base de dades
 		// redireccionem a llistar.

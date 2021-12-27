@@ -7,9 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.empresa.IEmpresaService;
+import com.grup8.taskman.app.services.usuari.IUsuariService;
 
 /**
  * Controlador que correspon a home. Contè el mètode perfil que crida al menú de cada usuari. 
@@ -19,6 +22,7 @@ import com.grup8.taskman.app.services.empresa.IEmpresaService;
  */
 
 @Controller
+@RequestMapping("/")
 public class HomeController {
 			
 	Empresa empresa;
@@ -26,7 +30,8 @@ public class HomeController {
 	@Autowired
 	IEmpresaService empresaService;
 	
-	
+	@Autowired
+	IUsuariService usuariService;
 	
 	/**
 	 * Mètode que crida a la vista menu de qualsevol usuari autenticat.
@@ -34,11 +39,13 @@ public class HomeController {
 	 * @return Crida a la vista "perfil/menu" si la empresa existeix, en cas contrari redirecciona a /empreses/crear.
 	 */
 	@Secured("ROLE_USER")
-	@GetMapping({"/", "/index", "/taskman","/perfil"})
+	@GetMapping({"/", "/perfil"})
 	public String perfil(Model model, Authentication authentication) {
 		
-		
-		
+		if(Usuari.USUARIAUTENTICAT==null) {
+			String username=authentication.getName();
+			Usuari.USUARIAUTENTICAT=usuariService.findByUsername(username);
+		}
 	
 		
 		empresa=empresaService.findById(1);
@@ -60,6 +67,13 @@ public class HomeController {
 		
 		return Usuari.USUARIAUTENTICAT;
 	}
+	
+	@GetMapping({"/index"})
+	public String index(Model model) {
+		
+		return "index";
+	}
+	
 	
 	
 	

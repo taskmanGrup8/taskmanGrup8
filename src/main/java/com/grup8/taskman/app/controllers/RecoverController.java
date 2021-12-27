@@ -1,12 +1,9 @@
-
 package com.grup8.taskman.app.controllers;
 
 import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +19,7 @@ import com.grup8.taskman.app.domain.empreses.Empresa;
 import com.grup8.taskman.app.domain.usuaris.PasswordRecover;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.services.empresa.IEmpresaService;
+import com.grup8.taskman.app.services.passwordRecover.CorreoAsync;
 import com.grup8.taskman.app.services.passwordRecover.IPasswordRecoverService;
 import com.grup8.taskman.app.services.usuari.IUsuariService;
 import com.grup8.taskman.app.util.Utilidades;
@@ -36,13 +34,13 @@ public class RecoverController {
 	public static final int ENVIOCORRECTO=0;
 	
 	@Autowired
+	CorreoAsync correoAsync;
+	
+	@Autowired
 	IUsuariService usuariService;
 	
 	@Autowired
-	IEmpresaService empresaService;
-	
-	@Autowired
-	private JavaMailSender emailSender;
+	IEmpresaService empresaService;	
 	
 	@Autowired
 	private IPasswordRecoverService passwordRecoverService;
@@ -68,21 +66,26 @@ public class RecoverController {
 				model.addAttribute("error", "L'username no existeix");
 			}else {
 				
-								
+				Empresa empresa= empresaService.findById(1);
+				String emailTo=usuari.getEmail();
+				String emailFrom=empresa.getEmail();
+				int result=comprobarMails(emailTo, emailFrom);
+				
+				if(result==DESTINATARIOSINMAIL) {
+					
+					model.addAttribute("error", "No es pot enviar el missatge perquè l'usuari no té mail");
+					return "login";
+				}else if(result==REMITENTESINMAIL) {
+					
+					model.addAttribute("error", "No es pot enviar el missatge perquè l'empresa no té mail");
+					return "login";
+				}
+				
 				String link;
 				try {
-					link = generarLink(usuari);
-					int result=enviarMensaje(usuari, link);
-					if(result==DESTINATARIOSINMAIL) {
-						
-						model.addAttribute("error", "No es pot enviar el missatge perquè l'usuari no té mail");
-					}else if(result==REMITENTESINMAIL) {
-						
-						model.addAttribute("error", "No es pot enviar el missatge perquè l'empresa no té mail");
-					}else {
-						
-						model.addAttribute("success", "Missatge enviat correctament");
-					}
+					link = generarLink(usuari);					
+					correoAsync.enviarCorreo(link, emailTo, emailFrom);		
+					model.addAttribute("success", "En breu rebràs el link de recuperació al teu correu");
 					
 				} catch (Exception e) {
 					
@@ -133,25 +136,11 @@ public class RecoverController {
 		return "/login";
 	}
 	
-	public int enviarMensaje(Usuari usuari, String link) {		
+	@GetMapping("/getUsername")
+	public String IntroducirUsername(Model model) {
 		
-		Empresa empresa= empresaService.findById(1);
-		String emailTo=usuari.getEmail();
-		String emailFrom=empresa.getEmail();
+		return "recuperarPassword";
 		
-		if(emailTo==null)return DESTINATARIOSINMAIL;
-		if(emailFrom==null)return REMITENTESINMAIL;
-		
-		String mensaje="Haga click en el siguiente Link: " + link;
-		SimpleMailMessage smm=new SimpleMailMessage();
-		
-		smm.setTo(emailTo);				
-		smm.setFrom(emailFrom);
-		smm.setSubject("Recuperar contrasenya");
-		smm.setText(mensaje);		
-		emailSender.send(smm);
-		
-		return ENVIOCORRECTO;
 	}
 	
 	public String generarLink(Usuari usuari) throws Exception {
@@ -163,6 +152,14 @@ public class RecoverController {
 		recover.setLink(link);
 		passwordRecoverService.save(recover);		
 		return PasswordRecover.LINKMAIL+link;
+	}
+	
+	private int comprobarMails(String emailTo, String emailFrom) {
+	
+		if(emailTo==null)return DESTINATARIOSINMAIL;
+		if(emailFrom==null)return REMITENTESINMAIL;
+		
+		return ENVIOCORRECTO;
 	}
 
 }

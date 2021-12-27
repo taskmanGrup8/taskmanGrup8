@@ -81,7 +81,7 @@ public class TascaController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";		
+			if(empresa==null)return "redirect:/perfil";		
 			
 			// Assignem els titols de creació als nostres atributs
 			titol="Crear nova tasca";
@@ -158,7 +158,7 @@ public class TascaController {
 			
 			// Comprobem que la empresa existeixi, si no existeix a la base de dades redireccionem a home.
 			if(empresa==null)empresa=empresaService.findById(1);
-			if(empresa==null)return "redirect:/";
+			if(empresa==null)return "redirect:/perfil";
 					
 			List<Tasca> tasques=new ArrayList<>();
 			// Variable que passarem a la vista perquè aquesta sapigui si hi ha filtre o no.
@@ -203,7 +203,7 @@ public class TascaController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";	
+			if(empresa==null)return "redirect:/perfil";	
 			// Si ja s'ha passat per llistar i el mètode és cridat des del navegador amb un número negatiu no ha de fer res
 			// per tant ens assegurem que sigui més gran que 0.
 			if (id > 0) {
@@ -249,7 +249,7 @@ public class TascaController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";	
+			if(empresa==null)return "redirect:/perfil";	
 			
 			Tasca tasca = null;
 			
@@ -301,7 +301,7 @@ public class TascaController {
 			// Si la variable empresa encara és igual a null la cerquem
 			if(empresa==null)empresa=empresaService.findById(1);
 			// Si desprès de cercar no tenim empresa llavors redireccionem a home
-			if(empresa==null)return "redirect:/";	
+			if(empresa==null)return "redirect:/perfil";	
 			
 			// Busquem la tasca demanada per paràmetre, si no es troba a la base de dades redireccionem a llistar.
 			Tasca tasca=tascaService.findById(id);
