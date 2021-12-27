@@ -6,7 +6,7 @@
 
 <body>
   <!-- 
-		Vista on es realitza l'inici de sessiÃ³ a l'aplicaciÃ³
+		Vista on es realitza l'inici de sessió a l'aplicació
 		Es requereix emprar tant l'usuari com la contrasenya
 	-->
   <div th:replace="generic/main :: navbar-generic"></div>
@@ -15,7 +15,7 @@
 
     <div class="d-flex justify-content-center">
       <div class="mb-4">
-        <h2>Inicia sessiÃ³</h2>
+        <h2>Inicia sessió</h2>
         <hr>
       </div>
     </div>
@@ -41,11 +41,11 @@
           </div>
           <!-- Contrasenya oblidada -->
           <div class="text-end pwd-forgotten">
-            <a th:href="@{recuperarPassword}">Has oblidat la contrasenya?</a>
+            <a th:href="@{/recover/getUsername}">Has oblidat la contrasenya?</a>
           </div>
         </div>
       </div>
-      <!-- BotÃ³ -->
+      <!-- Botó -->
       <div class="pt-3 mb-5 d-flex justify-content-center">
         <input type="submit" class="btn btn-primary" value="Enviar dades" />
       </div>
