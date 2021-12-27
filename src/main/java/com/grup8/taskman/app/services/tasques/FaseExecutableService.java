@@ -43,4 +43,11 @@ public class FaseExecutableService implements IFaseExecutableService{
 		return faseExecutableDao.findByDepartament(idDepartament); 
 	}
 
+	@Override
+	public void delete(FaseExecutable fase) {
+
+		faseExecutableDao.delete(fase);
+		
+	}
+
 }
