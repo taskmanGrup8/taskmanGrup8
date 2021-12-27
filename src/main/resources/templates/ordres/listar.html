@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="cat" xmlns:th="http://www.thymeLeaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="generic/main :: head"></head>
+
+<body>
+	<!-- 
+		Vista on es troben llistats tots els usuaris amb els seus camps assignats (ID, Nom, Cognoms, DNI, Email, Telèfon, Rol)
+		Des d'aquesta vista es podrà accedir en detall dins d'un usuari, edita-ho, i eliminar-ho
+		També es pot fer una cerca dels usuaris segons si estan actius o estan deshabilitats, segons el seu rol, nom, cognoms, i DNI
+	-->
+	<div th:replace="generic/main :: navbar-empresa"></div>
+	<div class="container mt-5 pt-5" id="move-content">
+		<div th:replace="generic/main :: mensajes"></div>
+
+		<!-- Botó filtres -->
+		<button type="button" id="btn-filtres" class="btn btn-primary mb-3"
+			data-bs-toggle="tooltip" data-bs-placement="bottom"
+			title="Filtres per cercar ordres">Filtres</button>
+
+		<!--  Filtres -->
+		<div class="card col-sm-12 col-md-8 col-lg-8 col-xl-6"
+			id="card-filtres">
+			<div class="card-body">
+				<form th:action="@{/ordenes/filtrar}" th:object="${filtreOrdres}"
+					method="post">
+					<!-- Estat d'usuari i rol -->
+					<div class="row">
+						<!-- Estat d'usuari -->
+						<div class="col-md-6">
+							<label for="tipu-usuari" class="form-label">Escull
+								l'estat de l'ordre</label>
+							<!-- Actiu -->
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="qualsevol"
+									id="notificadesindiferent" th:field="*{notificadas}" th:value=0 />
+								<label class="form-check-label" for="flexRadioDefault1">Qualsevol</label>
+							</div>
+							<!-- Inactiu -->
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="notificades"
+									id="notificades" th:field="*{notificadas}" th:value=1 /> <label
+									class="form-check-label" for="flexRadioDefault2">Notificades</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio"
+									name="nonotificades" id="nonotificades"
+									th:field="*{notificadas}" th:value=2 /> <label
+									class="form-check-label" for="flexRadioDefault2">No
+									Notificades</label>
+							</div>
+						</div>
+
+
+
+						<!-- Nom | Cognoms | DNI -->
+						<div class="row">
+							<!-- Nom -->
+							<div class="col-md-12 mt-2">
+								<label for="nomTasca" class="form-label">Nom/Codi Tasca</label>
+								<input class="form-control me-2" type="text"
+									placeholder="Cercar nom" aria-label="Search" id="nomTasca"
+									th:field="*{nomTasca}">
+							</div>
+						</div>
+						<div class="row">
+							<!-- Data Inici -->
+							<div class="col-md-12 mt-2">
+								<label for="dataInici" class="form-label">Data Inici</label> <input
+									class="form-control me-2" type="date" aria-label="Search"
+									id="dataInici" th:field="*{dataInici}" th:value="${dataInici}">
+							</div>
+						</div>
+						<div class="row">
+							<!-- Data Fi -->
+							<div class="col-md-12 mt-2">
+								<label for="dataFi" class="form-label">Data Fi</label> <input
+									class="form-control me-2" type="date" aria-label="Search"
+									id="dataFi" th:field="*{dataFi}" th:value="${dataFi}">
+							</div>
+						</div>
+
+						<!-- Botó cercar usuari -->
+						<button class="btn btn-primary mt-3" type="submit">Cercar</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		<div class="pb-4 mt-3">
+			<h3 class="float-start">Llistat d'ordres</h3>
+		</div>
+		<!-- Botó crear ordre -->
+		<div class="pt-5 pb-3">
+			<a class="btn btn-primary" data-bs-toggle="tooltip"
+				data-bs-placement="bottom" title="Crear nova ordre"
+				th:href="@{/ordenes/crear}">Crear ordre</a>
+		</div>
+		<!-- Taula del llistat d'ordres -->
+		<div class="row">
+			<div class="col-12">
+				<table class="mt-3 table table-striped">
+					<thead>
+						<tr>
+							<!-- Titols -->
+							<th class="text-center" scope="col">#</th>
+							<th scope="col">Codi</th>
+							<th scope="col">Nom</th>
+							<th scope="col">Prioritat</th>
+							<th scope="col">Quantitat</th>							
+							<th scope="col">Data Fi</th>
+							<th class="text-center" scope="col">Editar</th>
+							<th class="text-center" scope="col">Eliminar</th>
+						</tr>
+					</thead>
+					<!-- Usuaris llistats -->
+					<tbody>
+						<tr th:each="orden: ${ordres}">
+						 	<td class="text-center"><a
+								class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"
+								data-bs-placement="bottom" title="Veure ordre"
+								th:href="@{/ordenes/ver/}+ ${orden.id}" th:text="${orden.id}">
+							</a></td> 
+							<td th:text="${orden.tasca.codigo}"></td>
+							<td th:text="${orden.tasca.nombre}"></td>
+							<td th:text="${orden.prioridad}"></td>
+							<td th:text="${orden.cantidad}"></td>							
+							<td th:text="${orden.dataFin}"></td>
+							<td class="text-center"><a data-bs-toggle="tooltip"
+								data-bs-placement="bottom" title="Editar"
+								th:href="@{/ordenes/actualizar/}+ ${orden.id}"><i
+									class="fas fa-edit text-primary"></i> </a></td>
+							<td class="text-center"><a data-bs-toggle="tooltip"
+								data-bs-placement="bottom" title="Eliminar"
+								th:href="@{/ordenes/eliminar/}+ ${orden.id}"
+								onclick="return confirm('Estàs segur que vols eliminar?');"><i
+									class="fas fa-trash text-danger"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="generic/main :: footer"></footer>
+
+</body>
+
+</html>
