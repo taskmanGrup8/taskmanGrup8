@@ -1,6 +1,7 @@
 package com.grup8.taskman.app.util;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -73,6 +74,15 @@ public class Utilidades {
 		
 		long dias=TimeUnit.MILLISECONDS.toDays(restarFechas(fecha1, fecha2));
 		return dias;
+	}
+
+	public static Date calcularData(int i) {
+		
+		Calendar c = Calendar.getInstance();		
+		c.add(Calendar.DATE, i);
+		Date novaData = c.getTime();
+		
+		return novaData;
 	}
 	
 	
