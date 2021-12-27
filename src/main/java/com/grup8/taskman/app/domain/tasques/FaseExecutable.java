@@ -31,7 +31,7 @@ public class FaseExecutable implements Serializable{
 	@Column(name="id")
 	private Long id;
 		
-	@ManyToOne(cascade=CascadeType.ALL)	
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})	
 	private FaseConTiempo fase;
 	
 	@ManyToOne(cascade=CascadeType.ALL)	
@@ -54,6 +54,8 @@ public class FaseExecutable implements Serializable{
 		this.bloqueada=true;
 		this.notificaciones=new ArrayList<>();
 	}
+	
+	public FaseExecutable() {}
 
 	public Long getId() {
 		return id;

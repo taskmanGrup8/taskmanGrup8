@@ -1,9 +1,9 @@
 package com.grup8.taskman.app.domain.tasques;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="orden")
@@ -26,6 +30,8 @@ public class Orden implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
+	
 	// ATRIBUTS
 	
 	@Id
@@ -33,24 +39,35 @@ public class Orden implements Serializable {
 	@Column(name="id")
 	private Long id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)	
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.PERSIST})	
 	private Tasca tasca;
 	
+	@NotNull
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 	
 	@Column(name="notificada", nullable=false)
 	private boolean notificada;
 	
-	@OneToMany(mappedBy="orden", fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy="orden", fetch=FetchType.LAZY, cascade= {CascadeType.ALL})
 	private List<FaseExecutable> fases;
 	
+	@FutureOrPresent
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name="dataFin")
 	@Temporal(TemporalType.DATE)
 	private Date dataFin;
 	
+	@NotNull
 	@Column(name="prioridad")
 	private Prioridad prioridad;
+	
+	// CONSTRUCTOR
+	public Orden() {
+		
+		this.notificada=false;
+		fases=new ArrayList<FaseExecutable>();		
+	}
 	
 	// SETTERS I GETTERS
 	
