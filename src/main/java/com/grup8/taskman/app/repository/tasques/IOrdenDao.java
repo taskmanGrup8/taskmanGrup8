@@ -3,18 +3,21 @@ package com.grup8.taskman.app.repository.tasques;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-
 import com.grup8.taskman.app.domain.tasques.Orden;
 
-public interface IOrdenDao extends CrudRepository<Orden, Long> {
+public interface IOrdenDao extends JpaRepository<Orden, Long> {
 
 	
 	public List<Orden> findByNotificada(boolean notificada);
 	
-	@Query(value="SELECT u from Orden WHERE u.dataFin BETWEEN :data1 AND :data2 ", nativeQuery=true)
-	public List<Orden> findByEntreDates(Date data1, Date data2);
+
+	
+	public List<Orden> findAllByDataFinBetween(Date data1, Date data2);
+	
+	@Query(value="SELECT u FROM Orden u INNER JOIN u.tasca t WHERE t.nombre= ?1 OR t.codigo= ?1")
+	public List<Orden> findByNomTasca(String nomTasca); 
 	
 	
 	
