@@ -62,15 +62,12 @@
                 <label for="dataFi" class="form-label">Data Fi</label> <input class="form-control me-2" type="date"
                   aria-label="Search" id="dataFi" th:field="*{dataFi}" th:value="${dataFi}">
               </div>
+              <div>
+                <!-- Botó cercar ordre -->
+                <button class="btn btn-primary mt-3" type="submit">Cercar</button>
+              </div>
             </div>
-            <div class="row">
-              
-            </div>
-
-            <!-- Botó cercar usuari -->
-            <button class="btn btn-primary mt-3" type="submit">Cercar</button>
           </div>
-
         </form>
       </div>
     </div>
@@ -126,7 +123,7 @@
     </div>
   </div>
 
-  <footer th:replace="generic/main :: footer"></footer>
+  <footer th:replace="generic/main :: peu-pagina"></footer>
 
 </body>
 

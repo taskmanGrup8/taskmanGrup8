@@ -180,20 +180,25 @@ a {
   transform: rotate(180deg);
 }
 
+/* Desplaçar els contenidors que comparteixen espai amb el navbar empresarial */
+@media (min-width: 993px) and (max-width: 1860px) {
+  #move-content {
+    margin: 0px 0px 0px 282px;
+  }
+}
+
 @media (min-width: 992px) {
   body {
     overflow: auto !important;
   }
 
-  /* Desplaçar els contenidors que comparteixen espai amb el navbar empresarial */
-  @media (min-width: 993px) and (max-width: 1860px) {
-    #move-content {
-      margin: 0px 0px 0px 282px;
-    }
-  }
-
   #move-content-footer {
-    margin: 0px 0px 0px 269px;
+    margin: 0px 0px 0px 160px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
   }
 
   /* estil offcanvas del navbar */
