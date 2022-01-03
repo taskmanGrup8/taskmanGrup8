@@ -25,7 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.grup8.taskman.app.util.Utilidades;
 
 @Entity
-@Table(name = "orden")
+@Table(name = "ordres")
 public class Orden implements Serializable, Comparable<Orden> {
 
 	/**
