@@ -1,9 +1,8 @@
 package com.grup8.taskman.app.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.grup8.taskman.app.domain.empreses.Empresa;
+import com.grup8.taskman.app.domain.tasques.FaseExecutable;
 import com.grup8.taskman.app.domain.tasques.FiltreOrdres;
+import com.grup8.taskman.app.domain.tasques.Notificacion;
 import com.grup8.taskman.app.domain.tasques.Orden;
 
 import com.grup8.taskman.app.domain.tasques.Tasca;
@@ -50,6 +51,8 @@ public class OrdenController {
 	private String titolBoto;
 	private String titol;
 	private Empresa empresa;
+	private boolean ciclica;
+	
 
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/crear")
@@ -63,8 +66,11 @@ public class OrdenController {
 			return "redirect:/perfil";
 
 		// Assignem els titols de creació als nostres atributs
-		titol = "Crear nova ordre";
+		titol = "Crear nou departament";
 		titolBoto = "Enviar dades";
+		ciclica=false;
+		
+		List<Tasca> tasques=tascaService.findByCiclica(false);
 
 		// Afegim al model el titol i el text del botó acceptar del formulari, un nou
 		// departament buït i l'atribut empresa.
@@ -72,6 +78,35 @@ public class OrdenController {
 		model.addAttribute("ordre", new Orden());
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);
+		model.addAttribute("tasques", tasques);
+
+		return "ordres/crear";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/crearCiclica")
+	public String crearCiclica(Model model) {
+
+		// Si la variable empresa encara és igual a null la cerquem
+		if (empresa == null)
+			empresa = empresaService.findById(1);
+		// Si desprès de cercar no tenim empresa llavors redireccionem a home
+		if (empresa == null)
+			return "redirect:/perfil";
+
+		// Assignem els titols de creació als nostres atributs
+		titol = "Crear nou departament";
+		titolBoto = "Enviar dades";
+		ciclica=true;
+		List<Tasca> tasques=tascaService.findByCiclica(true);
+		
+		// Afegim al model el titol i el text del botó acceptar del formulari, un nou
+		// departament buït i l'atribut empresa.
+		model.addAttribute("titol", titol);
+		model.addAttribute("ordre", new Orden());
+		model.addAttribute("titolBoto", titolBoto);
+		model.addAttribute("empresa", empresa);
+		model.addAttribute("tasques", tasques);
 
 		return "ordres/crear";
 	}
@@ -93,6 +128,7 @@ public class OrdenController {
 			return "ordres/crear";
 		}
 
+		ordre.setCiclica(ciclica);
 		ordre.generarFasesExecutables();
 		Orden orden = ordenService.save(ordre);
 		// Guardem el registre
@@ -244,6 +280,17 @@ public class OrdenController {
 		// corresponents
 		titol = "Modificar ordre";
 		titolBoto = "Enviar dades";
+		
+		List<Tasca> tasques=new ArrayList<>();
+		
+		if(orden.isCiclica()) {
+			
+			tasques=tascaService.findByCiclica(true);
+			
+		}else {
+			
+			tasques=tascaService.findByCiclica(false);
+		}
 
 		// passem el departament trobat, el titol, el text del botó i l'empresa a la
 		// vista.
@@ -251,10 +298,60 @@ public class OrdenController {
 		model.addAttribute("ordre", orden);
 		model.addAttribute("titolBoto", titolBoto);
 		model.addAttribute("empresa", empresa);
+		model.addAttribute("tasques", tasques);
 
 		// Cridem a la vista crear
 		return "ordres/crear";
 	}
+	
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/ver/{id}")
+	public String ver(@PathVariable Long id, Model model) {
+		
+		// Si la variable empresa encara és igual a null la cerquem
+		if(empresa==null)empresa=empresaService.findById(1);
+		// Si desprès de cercar no tenim empresa llavors redireccionem a home
+		if(empresa==null)return "redirect:/perfil";	
+		
+		// Busquem el departament demannat per paràmetre, si no es troba a la base de dades redireccionem a llistar.
+		Orden orden=ordenService.findById(id);
+		if(orden==null)return "redirect:listar";		
+		
+		List<FaseExecutable> fases=orden.getFases();
+		calcularTiemposNotificacion(fases);
+		
+		// Afegim a la vista el departament trobat, els usuaris que conté, un títol per la vista i el text del bóto,
+		// a més passem l'atribut empresa per que la vista pugui crear la capçalera.
+		model.addAttribute("orden", orden);
+		model.addAttribute("fases", fases);
+		model.addAttribute("titol", "Detall ordre " + orden.getTasca().getNombre());
+		model.addAttribute("boton","Mostrar notificacions");
+		model.addAttribute("boto2","Detenir cicle");
+		model.addAttribute("empresa",empresa);
+		
+		// Cridem a la vista ver.
+		return "ordres/ver";
+	}
+	
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/detenerCiclo/{id}")
+	public String deternerCiclo(@PathVariable Long id, Model model) {
+		
+		Orden orden=ordenService.findById(id);
+		orden.setCiclica(false);
+		ordenService.save(orden);
+		return "redirect:ver/"+id;
+	}
+	private void calcularTiemposNotificacion(List<FaseExecutable> fases) {
+		
+		for(FaseExecutable fase: fases) {
+			
+			for(Notificacion notificacion: fase.getNotificaciones())notificacion.calculaTiempo();
+		}
+	}	
+	
 
 	@ModelAttribute("usuariAutenticat")
 	public Usuari getUsuariAuthenticat() {
@@ -262,9 +359,15 @@ public class OrdenController {
 		return Usuari.USUARIAUTENTICAT;
 	}
 
-	@ModelAttribute("tasques")
+	/*@ModelAttribute("tasques")
 	public List<Tasca> getTasques() {
 
-		return tascaService.findAll();
+		return tascaService.findByCiclica(false);
 	}
+	
+	@ModelAttribute("tasquesCicliques")
+	public List<Tasca> getCicliques(){
+		
+		return tascaService.findByCiclica(true);
+	}*/
 }
