@@ -50,4 +50,10 @@ public class FaseExecutableService implements IFaseExecutableService{
 		
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<FaseExecutable> findByNotificada(boolean notificada) {
+		return faseExecutableDao.findByNotificada(notificada);
+	}
+
 }
