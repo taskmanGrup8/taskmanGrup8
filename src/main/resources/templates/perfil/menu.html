@@ -3,7 +3,7 @@
 
 <head th:replace="generic/main :: head"></head>
 
-<body class="d-flex flex-column h-100">
+<body>
   <!--
 		Vista de la pàgina inicial (home) que carrega en accedir a l'aplicació
     Es podrà visualitzar el nom de TaskMan, el logotip, i la descripció
@@ -14,7 +14,7 @@
     <div th:replace="generic/main :: mensajes"></div>
     <div class="text-center mt-5 pt-5">
       <div class="row">
-        <div class="col-12">
+     <!--    <div class="col-12">
           <h1 class="style-index empresa-navbar" id="name">TaskMan</h1>
         </div>
       </div>
@@ -26,7 +26,48 @@
       <div class="row mt-5 mb-3">
         <div class="col-12">
           <h3 class="style-index" id="description"><i>Gestor de tasques</i></h3>
+        </div>-->
+        
+        <div th:if="${notificacioActual!=null}">
+        	<p>Notificació actual: <a th:href="@{/notificaciones/progreso/} + ${notificacioActual.id}" th:text="${notificacioActual.fase.orden.tasca.nombre}"></a></p>
+        	
         </div>
+        
+        <div class="col-12">
+			<table class="mt-3 table table-striped">
+				<thead>
+					<tr>
+						<!-- Titols -->
+						<th class="text-center" scope="col">#</th>
+						<th scope="col">Codi</th>
+						<th scope="col">Nom</th>
+						<th scope="col">Prioritat</th>
+						<th scope="col">Quantitat</th>
+						<th scope="col">Data Fi</th>
+						
+					</tr>
+				</thead>
+				<!-- Usuaris llistats -->
+				<tbody>
+					<tr th:each="orden: ${ordres}">
+						<td class="text-center"><a
+							class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"
+							data-bs-placement="bottom" title="Veure ordre"
+							th:href="@{/fasesExecutables/ver/}+ ${orden.id}" th:text="${orden.id}">
+						</a></td>
+						<td th:text="${orden.tasca.codigo}"></td>
+						<td th:text="${orden.tasca.nombre}"></td>
+						<td th:text="${orden.prioridad}"></td>
+						<td th:text="${orden.cantidad}"></td>
+						<td th:text="${orden.dataFin}"></td>
+						
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+        
+        
       </div>
     </div>
   </div>
