@@ -3,7 +3,7 @@
 
 <head th:replace="generic/main :: head"></head>
 
-<body>
+<body class="d-flex flex-column h-100">
   <!-- 
 		Vista per crear nous usuaris.
 		S'han d'omplir tots els camps menys el de departaments, ja que un usuari pot no tenir cap departament assignat
@@ -15,7 +15,7 @@
       <h3 th:text="${titol}"></h3>
     </div>
 
-    <div>
+    <div class="container">
       <form th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post">
         <!-- Nom -->
         <div class="row">

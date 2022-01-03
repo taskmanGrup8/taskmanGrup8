@@ -4,7 +4,7 @@
 <head th:replace="generic/main :: head">
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
   <!-- 
 		Vista on es troben llistades totes les fases amb els seus camps assignats
 		Des d'aquesta vista es podrà accedir en detall dins d'una fase, editar-la, eliminar-la, i 
@@ -62,13 +62,13 @@
               <td th:text="${fase.departament.nombre}"></td>
               <td class="text-center">
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"
-                  th:href="@{/fases/actualizar/}+ ${fase.id}"><i class="fas fa-edit text-primary"></i>
+                  th:href="@{/fases/actualizar/}+ ${fase.id}"><i class="fas fa-edit edit-icon"></i>
                 </a>
               </td>
               <td class="text-center">
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar"
                   th:href="@{/fases/eliminar/}+ ${fase.id}"
-                  onclick="return confirm('Estàs segur que vols eliminar?');"><i class="fas fa-trash text-danger"></i>
+                  onclick="return confirm('Estàs segur que vols eliminar?');"><i class="fas fa-trash delete-icon"></i>
                 </a>
               </td>
             </tr>

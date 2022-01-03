@@ -29,11 +29,20 @@ body {
   font-family: 'Nunito', sans-serif;
   color: #212529;
   /*background-color: #f5f6fa !important;*/
+  margin: 0px;
+  min-height: 100%;
+  width: 100%;
 }
 
 /* Nom d'empresa */
 .empresa-navbar {
   font-family: 'Ubuntu', sans-serif;
+}
+
+html {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
 }
 
 /*** ----------------------- ***/
@@ -181,6 +190,10 @@ a {
     #move-content {
       margin: 0px 0px 0px 282px;
     }
+  }
+
+  #move-content-footer {
+    margin: 0px 0px 0px 269px;
   }
 
   /* estil offcanvas del navbar */
@@ -333,7 +346,7 @@ li .nav-link:hover {
 }
 
 h3 {
-  color:#1270CE;
+  color: #1270CE;
   font-size: 33px;
 }
 

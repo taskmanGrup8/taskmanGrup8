@@ -63,7 +63,7 @@ public class OrdenController {
 			return "redirect:/perfil";
 
 		// Assignem els titols de creació als nostres atributs
-		titol = "Crear nou departament";
+		titol = "Crear nova ordre";
 		titolBoto = "Enviar dades";
 
 		// Afegim al model el titol i el text del botó acceptar del formulari, un nou

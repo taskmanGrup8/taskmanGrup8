@@ -3,7 +3,7 @@
 
 <head th:replace="generic/main :: head"></head>
 
-<body>
+<body class="d-flex flex-column h-100">
   <!-- 
 		Vista on es troben llistats tots els usuaris amb els seus camps assignats (ID, Nom, Cognoms, DNI, Email, Telèfon, Rol)
 		Des d'aquesta vista es podrà accedir en detall dins d'un usuari, edita-ho, i eliminar-ho
@@ -142,14 +142,14 @@
               <td th:text="${usuari.rol.nombre}"></td>
               <td class="text-center">
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar"
-                  th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i class="fas fa-edit text-primary"></i>
+                  th:href="@{/usuaris/actualizar/}+ ${usuari.id}"><i class="fas fa-edit edit-icon"></i>
                 </a>
               </td>
               <td class="text-center">
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar"
                   th:href="@{/usuaris/eliminar/}+ ${usuari.id}"
                   onclick="return confirm('Estàs segur que vols eliminar?');"><i
-                    class="fas fa-trash text-danger"></i></a>
+                    class="fas fa-trash delete-icon"></i></a>
               </td>
             </tr>
           </tbody>

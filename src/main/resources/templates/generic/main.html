@@ -38,7 +38,32 @@
 </head>
 
 <!-- Footer -->
-<footer th:fragment="footer">
+<footer class="footer mt-auto py-3 bg-light" id="move-content-footer" th:fragment="footer">
+  <div class="container mt-3">
+    <div class="d-flex justify-content-between">
+      <span>©2021 Taskman SL. Gestió de tasques</span>
+      <ul class="list-unlysted list-inline">
+        <li class="list-inline-item">
+          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Twitter"><i class="fab fa-twitter"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Instagram"><i class="fab fa-instagram"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Pàgina web"><i class="fas fa-globe"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Contacte"><i class="fas fa-envelope"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
   <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -173,7 +198,7 @@
           <!-- Tasques-->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fab fa-buffer"></i>
-              Tasques
+              &nbsp;Tasques
             </div>
           </li>
           <li sec:authorize="hasRole('ROLE_ADMIN')">
@@ -196,7 +221,7 @@
           <!-- Fases-->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-bookmark"></i>
-              Fases
+              &nbsp;Fases
             </div>
           </li>
           <li sec:authorize="hasRole('ROLE_ADMIN')">
@@ -216,10 +241,39 @@
           <li class="my-3">
             <hr class="dropdown-divider bg-light" />
           </li>
+          <!-- Ordres -->
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-bullhorn"></i>
+              &nbsp;Ordres
+            </div>
+          </li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
+            <a class="nav-link px-3 sidebar-link" th:href="@{/ordenes/crear}">
+              <span class="me-2"><i class="far fa-plus-square"></i></span>
+              <span>Crear ordre</span>
+            </a>
+          </li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
+            <a class="nav-link px-3 sidebar-link" th:href="@{/ordenes/crearCiclica}">
+              <span class="me-2"><i class="fas fa-sync-alt"></i></span>
+              <span>Crear ordre cíclica</span>
+            </a>
+          </li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
+            <a class="nav-link px-3 sidebar-link" th:href="@{/ordenes/listar}">
+              <span class="me-2"><i class="fas fa-list"></i></span>
+              <span>Llistar ordres</span>
+            </a>
+          </li>
+
+          <!-- hr -->
+          <li class="my-3">
+            <hr class="dropdown-divider bg-light" />
+          </li>
           <!-- Departaments -->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-user-friends"></i>
-              Departaments
+              &nbsp;Departaments
             </div>
           </li>
           <li sec:authorize="hasRole('ROLE_ADMIN')">
@@ -242,7 +296,7 @@
           <!-- Usuaris -->
           <li sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-user"></i>
-              Usuaris
+              &nbsp;Usuaris
             </div>
           </li>
           <li sec:authorize="hasRole('ROLE_ADMIN')">
@@ -265,7 +319,7 @@
           <!-- Empresa -->
           <li sec:authorize="hasRole('ROLE_SUPER')">
             <div class="text-highlight small fw-bold text-uppercase px-3 mb-2"><i class="fas fa-briefcase"></i>
-              Empresa
+              &nbsp;Empresa
             </div>
           </li>
           <li sec:authorize="hasRole('ROLE_SUPER')">
