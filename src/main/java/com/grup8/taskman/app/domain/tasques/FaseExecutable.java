@@ -43,7 +43,7 @@ public class FaseExecutable implements Serializable{
 	@Column(name="bloqueada" , nullable=false)
 	private boolean bloqueada;
 	
-	@OneToMany(mappedBy="fase",  cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy="fase",  cascade=CascadeType.ALL)
 	private List<Notificacion> notificaciones;
 	
 	public FaseExecutable(FaseConTiempo fase, Orden orden) {
@@ -105,8 +105,83 @@ public class FaseExecutable implements Serializable{
 		this.bloqueada = bloqueada;
 	}
 	
+	public static int calcularCantidadPendiente(FaseExecutable fase) {
+		
+		int totalOrden=fase.getOrden().getCantidad();
+		int totalNotificado=0;
+		for(Notificacion notificacion: fase.getNotificaciones()) {
+			
+			totalNotificado+=notificacion.getCantidad();
+		}
+		
+		
+		return totalOrden-totalNotificado;
+		
+	}
 	
+	public static boolean comprobarNotificacion(FaseExecutable fase) {
+		
+		boolean result=false;
+		int pendiente=calcularCantidadPendiente(fase);
+		
+		if(pendiente==0) {
+			
+			if(!fase.isNotificada())result=true;
+			
+		}else {
+			
+			if(fase.isNotificada())result=true;
+			
+		}
+		
+		return result;
+	}
 	
+	public static FaseExecutable desbloquearSiguienteFase(FaseExecutable fase){
+		
+		
+		if(fase!=null) {
+			
+			Orden orden=fase.getOrden();
+			for(int i=0; i<orden.getFases().size(); i++) {
+				
+				if(orden.getFases().get(i).getId()==fase.getId()) {
+					
+					if(i+1>=orden.getFases().size()) {
+						return null;
+					}else {
+						
+						orden.getFases().get(i+1).setBloqueada(false);
+						return orden.getFases().get(i+1);
+					}
+					
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	public static List<FaseExecutable> generarFasesOrdenCiclica(List<FaseExecutable> fases, Orden orden) {
+		
+		List<FaseExecutable> fasesExecutables=new ArrayList<FaseExecutable>();
+		
+		for(FaseExecutable fase: fases)fasesExecutables.add(generarFaseExecutable(fase, orden));
+		
+		return fasesExecutables;
+		
+		
+	}
 	
+	private static FaseExecutable generarFaseExecutable(FaseExecutable fase, Orden orden) {
+		
+		FaseExecutable faseExecutable=new FaseExecutable();
+		faseExecutable.setBloqueada(true);
+		faseExecutable.setFase(fase.getFase());
+		faseExecutable.setNotificada(false);
+		faseExecutable.setOrden(orden);
+		
+		return faseExecutable;
+	}
 
 }
