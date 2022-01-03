@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
 
+<head th:replace="generic/main :: head">
+</head>
+
+<body>
+  <!-- 
+		Vista per poder editar el temps de les fases creades.
+	-->
+  <div th:replace="generic/main :: navbar-empresa"></div>
+  <div class="container mt-5 pt-5">
+    <div th:replace="generic/main :: mensajes"></div>
+    <!-- Títol -->
+    <div class="pb-4">
+      <h3 th:text="${titol}"></h3>
+    </div>
+
+    <div class="row">
+      <form th:action="@{/notificaciones/result}" th:object="${notificacio}" method="post">
+
+        <input type="hidden" th:field="*{id}" />  
+        <input type="hidden" th:field="*{usuari}" />
+        <input type="hidden" th:field="*{fase}" />
+			
+        <!-- Quantitat -->
+        <div class="mb-4 col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
+          <label for="quantitat" class="form-label">Quantitat <span class="text-muted">*</span></label>
+          <input type="text" class="form-control" id="quantitat" th:field="*{cantidad}"/>
+          <!-- Alerta d'error -->
+          <div th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"
+            class="alert alert-danger col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4"></div>
+        </div>
+
+        <p class="text-muted">* Aquests camps són obligatoris</p>
+        <!-- Botó -->
+        <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Guardar notificació" th:value="${titolBoto}" />
+      </form>
+    </div>
+  </div>
+  <footer th:replace="generic/main :: footer"></footer>
+</body>
+
+</html>
