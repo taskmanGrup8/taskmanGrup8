@@ -560,6 +560,22 @@ public class UsuariController {
 		return "redirect:/perfil";
 	}	
 	
+	@Secured("ROLE_USER")
+	@GetMapping("/aceptarPrivacidad")
+	public String aceptarPrivacidad() {
+		
+		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());
+		
+		if(usuari!=null) {
+			
+			usuari.setPrivacidadFirmada(true);
+			usuariService.save(usuari);
+			Usuari.USUARIAUTENTICAT=usuari;
+		}
+		
+		return "redirect:/perfil";
+	}
+	
 
 	/**
 	 * Mètode que comproba que el dni que s'està introduint no existeixi a la base de dades.
