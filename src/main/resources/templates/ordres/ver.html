@@ -1,57 +1,137 @@
 <!DOCTYPE html>
-<html lang="cat" xmlns:th="http://www.thymeLeaf.org">
+<html xmlns:th="http://www.thymeLeaf.org">
 
-<head th:replace="generic/main :: head"></head>
+<head th:replace="generic/main :: head">
+</head>
 
-<body class="d-flex flex-column h-100">
-  <!-- 
-		Vista per crear nous usuaris.
-		S'han d'omplir tots els camps menys el de departaments, ja que un usuari pot no tenir cap departament assignat
+<body>
+	<!-- 
+		Vista on es pot veure el detall del departament seleccionat (ID, Àlies, i Nom)
+		A sota d'aquests camps d'informació, es poden mostrar u ocultar els usuaris
+		assignats a aquest departamentn
 	-->
-  <div th:replace="generic/main :: navbar-empresa"></div>
-  <div class="container mt-5 pt-5" id="move-content">
-    <div th:replace="generic/main :: mensajes"></div>
-    <div class="pb-4">
-      <h3 th:text="${titol}"></h3>
-    </div>
+	<div th:replace="generic/main :: navbar-empresa"></div>
+	<div class="container mt-5 pt-5" id="move-content">
 
-    <div>
-      <form th:action="@{/ordenes/result}" th:object="${ordre}" method="post">
-        <fieldset disabled>
-          <div class="row">
-            <!-- Tasca seleccionada -->
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-              <label for="quantitat" class="form-label">Tasca seleccionada</label>
-              <input type="text" class="form-control" id="id" th:field="*{task.nombre}" />
-            </div>
-            <!-- Quantitat -->
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-              <label for="quantitat" class="form-label">Quantitat</label>
-              <input type="text" class="form-control" id="quantitat" th:field="*{cantidad}" />
-            </div>
-          </div>
+		<div th:replace="generic/main :: mensajes"></div>
+		<div class="pb-4">
+			<h3 th:text="${titol}"></h3>
+		</div>
+		<!-- Camps del departament seleccionat ( ID | Àlies | Nom )-->
+		<div class="row">
+			<form th:action="@{/ordenes/result}" th:object="${orden}"
+				method="post">
+				<fieldset disabled>
+					<!-- ID -->
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+						<label for="id" class="form-label">ID</label> <input type="text"
+							class="form-control" id="id" th:field="*{id}" />
+					</div>
+					<!-- Àlies -->
+					<div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+						<label for="nom-alias" class="form-label">Àlies</label> <input
+							type="text" class="form-control" id="nom-alias"
+							th:field="*{tasca.codigo}" />
+					</div>
+					<!-- Nom del departament -->
+					<div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+						<label for="nom-departament" class="form-label">Nom</label> <input
+							type="text" class="form-control" id="nom-departament"
+							th:field="*{tasca.nombre}" />
+					</div>
 
-          <div class="row pt-3">
-            <!-- Prioritat -->
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-              <label for="quantitat" class="form-label">Prioritat</label>
-              <input type="text" class="form-control" id="priority" th:field="*{priority}" />
-            </div>
-            <!-- Data final -->
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-              <label for="dataFi" class="form-label">Data fi</label>
-              <input type="text" class="form-control" id="dataFi" th:field="*{dataFin}">
-            </div>
-          </div>
+					<div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+						<label for="quantitat" class="form-label">Quantitat</label> <input
+							type="text" class="form-control" id="quantitat"
+							th:field="*{cantidad}" />
+					</div>
+					<div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+						<label for="dataFin" class="form-label">Data Fi</label> <input
+							type="date" class="form-control" id="dataFin"
+							th:field="*{dataFin}" />
+					</div>
 
-          <p class="pt-4 text-muted">* Aquests camps són obligatoris</p>
 
-        </fieldset>
-      </form>
-    </div>
-  </div>
+				</fieldset>
+			</form>
+		</div>
+		
+		<div th:if="${orden.ciclica==true}">
+		
+			<a th:href="@{/ordenes/detenerCiclo/}+ ${ordre.id}" class="button" th:text="${boton2}"></a>
+		</div>
+		<!-- Botó per ocultar / mostrar la llista -->
+		<input type="submit" class="btn btn-primary mt-3" id="btn-filtres"
+			data-bs-toggle="tooltip" data-bs-placement="bottom"
+			title="Mostrar les fases d'aquesta ordre" th:value="${boton}" />
+		<!-- Llistat d'usuaris assignats a aquest departament -->
+		<div class="row mt-5" id="mostrar-taula">
+			<div class="pb-4 mt-3">
+				<h3 class="float-start">Llistat de Notificacions</h3>
+			</div>
+			<div class="col-12 mt-4 pt-1">
+				<div th:each="fase: ${fases}">
+					<div class="card"></div>
+					<div class="card-header" th:text="${fase.fase.fase.nombre}"></div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12">
+								<table class="mt-3 table table-striped">
+									<thead class="thead-dark">
+										<tr>
+											<!-- Titols -->
+											<th class="text-center" scope="col">Nom Usuari</th>
+											<th class="text-center" scope="col">Cognoms Usuari</th>
+											<th class="text-center" scope="col">Data Inici</th>
+											<th class="text-center" scope="col">Data Fi</th>
+											<th class="text-center" scope="col">Temps</th>
+											<th class="text-center" scope="col">Quantitat</th>
+											<th class="text-center" scope="col">Editar</th>
+											<th class="text-center" scope="col">Eliminar</th>
+										</tr>
+									</thead>
+									<!-- Departaments llistats -->
+									<tbody>
+										<tr th:each="notificacion: ${fase.notificaciones}">
+											
+											<td class="text-center" th:text="${notificacion.usuari.nombre}"></td>
+											<td class="text-center" th:text="${notificacion.usuari.apellidos}"></td>
+											<td class="text-center" th:text="${notificacion.dataInici}"></td>
+											<td class="text-center" th:text="${notificacion.dataFin}"></td>
+											<td class="text-center" th:text="${notificacion.tiempo}"></td>
+											<td class="text-center" th:text="${notificacion.cantidad}"></td>											
+											<td class="text-center"><a data-bs-toggle="tooltip"
+												data-bs-placement="bottom" title="Editar"
+												th:href="@{/notificaciones/actualizar/}+ ${notificacion.id}"><i
+													class="fas fa-edit edit-icon"></i> </a></td>
+											<td class="text-center"><a data-bs-toggle="tooltip"
+												data-bs-placement="bottom" title="Eliminar"
+												th:href="@{/notificaciones/eliminar/}+ ${notificacion.id}"
+												onclick="return confirm('Est�s segur que vols eliminar?');"><i
+													class="fas fa-trash delete-icon"></i> </a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 
-  <footer th:replace="generic/main :: peu-pagina"></footer>
+
+					</div>
+
+
+				</div>
+				<div class="card-footer"></div>
+
+
+
+
+			</div>
+
+
+		</div>
+	</div>	
+
+	<footer th:replace="generic/main :: footer"></footer>
 
 </body>
 

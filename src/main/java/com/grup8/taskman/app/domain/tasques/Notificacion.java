@@ -13,8 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.grup8.taskman.app.domain.usuaris.Usuari;
+import com.grup8.taskman.app.util.Utilidades;
 
 @Entity
 @Table(name="notificacion")
@@ -46,8 +48,11 @@ public class Notificacion implements Serializable {
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 	
-	@ManyToOne(cascade=CascadeType.ALL)	
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.PERSIST})	
 	private FaseExecutable fase;
+	
+	@Transient
+	private long tiempo;
 	
 	// CONSTRUCTOR
 	
@@ -92,6 +97,29 @@ public class Notificacion implements Serializable {
 	public void setFase(FaseExecutable fase) {
 		this.fase = fase;
 	}	
+	
+	public long getTiempo() {
+		return tiempo;
+	}
+
+	public void setTiempo(long tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	public void calculaTiempo() {
+		
+		tiempo=Utilidades.restarFechasEnMinutos(dataFin, dataInici);
+	}
+	
+	public static Notificacion crear(Usuari usuari, FaseExecutable fase) {
+		
+		Notificacion notificacion=new Notificacion();
+		notificacion.setUsuari(usuari);
+		notificacion.setFase(fase);
+		notificacion.setCantidad(0);
+		
+		return notificacion;
+	}
 	
 
 }

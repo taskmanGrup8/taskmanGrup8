@@ -11,7 +11,7 @@ INSERT INTO departaments (codigo, nombre) VALUES('PRD', 'Producció');
 
 
 
-INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Vázquel Iglesias', '72345678A', 'Paula', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554411', 3, 'sergio@correo.com', 'Paula', 'img-profile-default.png');
+INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Vázquel Iglesias', '72345678A', 'Paula', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', false, '666554411', 3, 'seres210403@hotmail.com', 'Paula', 'img-profile-default.png');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Esteban Gutiérrez', '12345678A', 'Sergio', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554411', 1, 'sergio@correo.com', 'Sergio', 'img-profile-default.png');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Gómez Casas', '12345679A', 'Pablo', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554422', 2, 'pablo@correo.com', 'Pablo', 'img-profile-default.png');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'López Carrasco', '22345678A', 'Aitor', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554411', 1, 'aitor@correo.com', 'Aitor', 'img-profile-default.png');
@@ -38,6 +38,8 @@ INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmad
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Díaz Martos', '12945679A', 'Dolores', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554422', 2, 'lola@correo.com', 'Dolors', 'img-profile-default.png');
 INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmada, telefono, id_rol, email, username, foto) VALUES(true, 'Taskman', '55555555A', 'Taskman', '$2a$12$cWBnxzLRHjrW8yDvUSBKDu5h909HU6kmBrZKt9P/WzuBhOwp5v.8a', true, '666554422', 4, 'taskman@correo.com', 'Taskman', 'img-profile-default.png');
 
+
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(3, 3);
 
 INSERT INTO authorities(user_id, authority) VALUES(1, 'ROLE_USER');
 INSERT INTO authorities(user_id, authority) VALUES(1, 'ROLE_ADMIN');
@@ -87,9 +89,37 @@ INSERT INTO authorities(user_id, authority) VALUES(26, 'ROLE_TASKMAN');
 
 INSERT INTO fases(codigo, nombre, descripcion, id_departament) VALUES('RMA', 'Reunió de materials', 'Es reuniran materials', 3);
 INSERT INTO fases(codigo, nombre, descripcion, id_departament) VALUES('MIM', 'Montatje i mecanitzat', 'Es montarà el que faci falta', 3);
+INSERT INTO fases(codigo, nombre, descripcion, id_departament) VALUES('MVL', 'Montar Volant', 'Es montarà un volant qualsevol', 3);
+INSERT INTO fases(codigo, nombre, descripcion, id_departament) VALUES('MOR', 'Montar ordinador', 'Es montarà un ordinador qualsevol', 1);
 
 
-INSERT INTO empreses(nombre, cif, direccion, localidad, provincia, cpostal, telefono, email, logo) VALUES('NIKE', 'A12345678', 'Carrer Aragon, 13', 'Barcelona', 'Barcelona', '08080', '543781204', 'nike@gmail.com', '');
+INSERT INTO tasques(ciclica, codigo, descripcion, nombre, tiempo_ciclo, tiempo) VALUES(false, 'RLJ', 'Hacer relojes de muñeca', 'hacer relojes', 0, 3);
+INSERT INTO tasques(ciclica, codigo, descripcion, nombre, tiempo_ciclo, tiempo) VALUES(false, 'MV1', 'Montar volant tipus 1', 'Montar volant del tipus asf', 0, 63);
+INSERT INTO tasques(ciclica, codigo, descripcion, nombre, tiempo_ciclo, tiempo) VALUES(false, 'OB3', 'Montar ordinador B00', 'Montar un ordinador de tipus B300', 0, 127);
+
+INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(1, 1, 1);
+INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(2, 2, 1);
+INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(3, 1, 2);
+INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(60, 3, 2);
+INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(7, 1, 3);
+INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(120, 4, 3);
+
+
+INSERT INTO orden(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(2, false, '2022-01-23', false, 1, 1);
+INSERT INTO orden(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(50, false, '2022-01-03', false, 1, 2);
+INSERT INTO orden(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(3, false, '2021-12-29', false, 2, 3);
+
+INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 1, 1);
+INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 1, 1);
+INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 3, 2);
+INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 4, 2);
+INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 5, 3);
+INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 6, 3);
+
+
+INSERT INTO notificacion(cantidad, data_fin, data_inici, fase_id, usuari_id) VALUES(13, '2021/12/28 11:33:21.500 am', '2021/12/28 10:30:20.500 am', 3, 3);
+
+INSERT INTO empreses(nombre, cif, direccion, localidad, provincia, cpostal, telefono, email, logo) VALUES('NIKE', 'A12345678', 'Carrer Aragon, 13', 'Barcelona', 'Barcelona', '08080', '543781204', 'ester210403@gmail.com', '');
 
 
 

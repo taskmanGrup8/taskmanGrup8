@@ -266,7 +266,17 @@ public class Usuari implements Serializable {
 		this.username = username;
 	}
 	
+	public Notificacion getNotificacionActual() {
+		return notificacionActual;
+	}
+
+	public void setNotificacionActual(Notificacion notificacionActual) {
+		this.notificacionActual = notificacionActual;
+	}
+	
 	// MÊTODES
+
+	
 
 	// Modifiquem equals perquè ho faci amb el dni que és unic per cada usuari
 	@Override

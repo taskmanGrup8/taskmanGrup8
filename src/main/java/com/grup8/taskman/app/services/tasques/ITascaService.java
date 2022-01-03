@@ -19,7 +19,8 @@ public interface ITascaService {
 	public Tasca findByNombre(String nombre); // Mètode per buscar una tasca pel camp nombre
 	public void delete(Tasca tasca); // Mètode per eliminar una tasca
 	public List<Tasca> findByCodigoStartsWith(String cadena); // Mètode per buscar la llista de tasques que tinguin el camp codigo que comenci pel paràmetre indicat
-	public List<Tasca> findByNombreStartsWith(String cadena); // Mètode per buscar la llista de tasques que tinguin el camp nombre que comenci pel paràmetre indicat	
+	public List<Tasca> findByNombreStartsWith(String cadena); // Mètode per buscar la llista de tasques que tinguin el camp nombre que comenci pel paràmetre indicat
+	public List<Tasca> findByCiclica(boolean ciclica); // Mètode per buscar la llista de tasques que el seu camp ciclica correspongui amb el paràmetre indicat.
 
 
 }

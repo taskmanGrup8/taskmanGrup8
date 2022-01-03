@@ -85,6 +85,15 @@ public class Utilidades {
 		return novaData;
 	}
 	
+	public static Date sumarDiasAFecha(Date fecha, int dias) {
+		
+		Calendar c=Calendar.getInstance();
+		c.setTime(fecha);
+		c.add(Calendar.DATE, dias);
+		Date novaData=c.getTime();
+		return novaData;
+	}
+	
 	
 
 }

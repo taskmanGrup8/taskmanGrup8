@@ -11,5 +11,6 @@ public interface IFaseExecutableService {
 	public List<FaseExecutable> findAll();
 	public List<FaseExecutable> findByDepartament(Long idDepartament);
 	public void delete(FaseExecutable fase);
+	public List<FaseExecutable> findByNotificada(boolean notificada);
 
 }

@@ -112,4 +112,11 @@ public class TascaService implements ITascaService{
 		return tascaDao.findByNombreStartsWith(cadena);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<Tasca> findByCiclica(boolean ciclica) {
+		
+		return tascaDao.findByCiclica(ciclica);
+	}
+
 }
