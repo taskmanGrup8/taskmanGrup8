@@ -338,8 +338,9 @@ public class OrdenController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/detenerCiclo/{id}")
 	public String deternerCiclo(@PathVariable Long id, Model model) {
-		
+				
 		Orden orden=ordenService.findById(id);
+		if(orden==null)return "redirect:listar";
 		orden.setCiclica(false);
 		ordenService.save(orden);
 		return "redirect:ver/"+id;

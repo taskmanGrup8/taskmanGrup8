@@ -225,10 +225,6 @@ public class FaseExecutableController {
 		return Usuari.USUARIAUTENTICAT;
 	}
 
-	@GetMapping({ "/index" })
-	public String index(Model model) {
-
-		return "index";
-	}
+	
 
 }
