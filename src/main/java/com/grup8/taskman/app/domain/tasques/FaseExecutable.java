@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="fase_executable")
+@Table(name="fases_executables")
 public class FaseExecutable implements Serializable{
 	
 	

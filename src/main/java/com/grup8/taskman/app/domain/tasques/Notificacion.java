@@ -19,7 +19,7 @@ import com.grup8.taskman.app.domain.usuaris.Usuari;
 import com.grup8.taskman.app.util.Utilidades;
 
 @Entity
-@Table(name="notificacion")
+@Table(name="notificacions")
 public class Notificacion implements Serializable {
 	
 	/**
