@@ -13,5 +13,6 @@ public interface ITascaDao extends CrudRepository<Tasca, Long> {
 	public Optional<Tasca> findByNombre(String nombre);
 	public List<Tasca> findByCodigoStartsWith(String cadena);
 	public List<Tasca> findByNombreStartsWith(String cadena);	
+	public List<Tasca> findByCiclica(boolean ciclica);
 
 }
