@@ -17,55 +17,53 @@
     </div>
     <!-- Camps de la fase seleccionada-->
     <div class="row">
-      <form th:action="@{/notificaciones/result}" th:object="${notificacio}" method="post">
+      <form th:action="@{/fasesExecutables/result}" th:object="${fase}" method="post">
         <fieldset disabled>
           <!-- ID -->
           <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-            <label for="dataInici" class="form-label">Data Inici</label>
-            <input type="datetime" class="form-control" id="id" th:field="*{dataInici}" />
+            <label for="id" class="form-label">ID</label>
+            <input type="text" class="form-control" id="id" th:field="*{id}" />
           </div>
           <!-- Àlies -->
           <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
             <label for="nom-alias" class="form-label">Àlies</label>
-            <input type="text" class="form-control" id="nom-alias" th:field="*{fase.fase.fase.codigo}" />
+            <input type="text" class="form-control" id="nom-alias" th:field="*{fase.fase.codigo}" />
           </div>
           <!-- Nom de la fase -->
           <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
             <label for="nom-fase" class="form-label">Nom de la fase</label>
-            <input type="text" class="form-control" id="nom-fase" th:field="*{fase.fase.fase.nombre}" />
+            <input type="text" class="form-control" id="nom-fase" th:field="*{fase.fase.nombre}" />
           </div>
           <!-- Descripció -->
           <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-6 col-xl-6">
             <label for="descripcio" class="form-label">Descripció</label>
-            <textarea class="form-control" id="descripcio" th:field="*{fase.fase.fase.descripcion}" style="height: 100px"></textarea>
+            <textarea class="form-control" id="descripcio" th:field="*{fase.fase.descripcion}" style="height: 100px"></textarea>
           </div>
-                 
+          <!-- Cantidad -->
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="text" class="form-control" id="cantidad" th:field="*{orden.cantidad}" />
+          </div>
+          <!-- Cantidad -->
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <label for="dataFin" class="form-label">Data Fi</label>
+            <input type="date" class="form-control" id="dataFin" th:field="*{orden.dataFin}" />
+          </div>
+          
           <!-- Prioridad -->
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="prioridad" class="form-label">Prioritat</label>
-            <input type="text" class="form-control" id="prioridad" th:field="*{fase.orden.prioridad}" />
+            <input type="text" class="form-control" id="prioridad" th:field="*{orden.prioridad}" />
           </div>
           
         </fieldset>
       </form>
       <div>
-      
-      	<form th:action="@{/fasesExecutables/notificar}" method="post">
-      	
-      	<div>
-      			 <label for="cantidad" class="form-label">Quantitat</label>
-      			  <input type="text" class="form-control" id="cantidad" name="cantidad" />
-      	
-      	</div>
-      	
-      	<div>
-      	
-      		 <button class="btn btn-primary" type="submit">Notificar</button>
-      	</div>
-      	</form>
-      
+      	<a th:href="@{/fasesExecutables/iniciar/}+ ${fase.id}" class="button" th:text="${boton}"></a>
       </div>
-      
+       <div>
+      	<a th:href="@{/perfil}" class="button" th:text="${boton2}"></a>
+      </div>
     
     </div>
   </div>
