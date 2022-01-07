@@ -194,7 +194,7 @@ a {
 
   #move-content-footer {
     margin: 0px 0px 0px 160px;
-    position: fixed;
+    position: unset;
     bottom: 0;
     right: 0;
     left: 0;
@@ -220,16 +220,9 @@ a {
   }
 }
 
-/* Canvi de posició del perfil d'usuari */
-@media (min-width: 200px) and (max-width: 1981px) {
-  .sidebar-nav .profile-details {
-    position: relative !important;
-  }
-}
-
 /* Profile  */
 .sidebar-nav .profile-details {
-  position: fixed;
+  position: relative;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -375,4 +368,14 @@ h3 {
 
 .delete-icon:hover {
   color: #ab000d;
+}
+
+.lock-icon {
+  color: #555;
+}
+
+.bg-notification {
+  background-color: #f8f9fa;
+  padding: 1%;
+  margin-bottom: 1%;
 }

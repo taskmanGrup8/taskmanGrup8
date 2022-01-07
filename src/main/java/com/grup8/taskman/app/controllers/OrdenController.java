@@ -66,7 +66,7 @@ public class OrdenController {
 			return "redirect:/perfil";
 
 		// Assignem els titols de creació als nostres atributs
-		titol = "Crear nou departament";
+		titol = "Crear nova ordre";
 		titolBoto = "Enviar dades";
 		ciclica=false;
 		
@@ -95,7 +95,7 @@ public class OrdenController {
 			return "redirect:/perfil";
 
 		// Assignem els titols de creació als nostres atributs
-		titol = "Crear nou departament";
+		titol = "Crear nova ordre cíclica";
 		titolBoto = "Enviar dades";
 		ciclica=true;
 		List<Tasca> tasques=tascaService.findByCiclica(true);

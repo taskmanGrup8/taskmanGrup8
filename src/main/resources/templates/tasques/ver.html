@@ -16,33 +16,37 @@
       <h3 th:text="${titol}"></h3>
     </div>
     <!-- Camps de la tasca seleccionada-->
-    <div class="row">
-      <form th:action="@{/tasques/result}" th:object="${tasca}" method="post">
-        <fieldset disabled>
+
+    <form th:action="@{/tasques/result}" th:object="${tasca}" method="post">
+      <fieldset disabled>
+        <div class="row">
           <!-- ID -->
-          <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+          <div class="mb-3 col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
             <label for="id" class="form-label">ID</label> <input type="text" class="form-control" id="id"
               th:field="*{id}" />
           </div>
           <!-- Àlies -->
-          <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+          <div class="mb-3 col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
             <label for="nom-alias" class="form-label">Àlies</label> <input type="text" class="form-control"
               id="nom-alias" th:field="*{codigo}" />
           </div>
-          <!-- Descripció -->
-          <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-6 col-xl-6">
-            <label for="descripcio" class="form-label">Descripció</label>
-            <textarea class="form-control" id="descripcio" th:field="*{descripcion}"
-              placeholder="Descripció de la tasca. Màxim 255 caràcters." style="height: 100px"></textarea>
-          </div>
           <!-- Temps -->
-          <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-            <label for="tiempoEstimado" class="form-label">Temps estimat</label> <input type="text" class="form-control"
+          <div class="mb-3 col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
+            <label for="tiempoEstimado" class="form-label">Temps</label> <input type="text" class="form-control"
               id="tiempoEstimado" th:field="*{tiempoEstimado}" />
           </div>
-        </fieldset>
-      </form>
-    </div>
+          <div class="row">
+            <!-- Descripció -->
+            <div class="mb-3 col-10 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+              <label for="descripcio" class="form-label">Descripció</label>
+              <textarea class="form-control" id="descripcio" th:field="*{descripcion}"
+                placeholder="Descripció de la tasca. Màxim 255 caràcters." style="height: 100px"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+    </form>
 
     <!-- Botó per ocultar / mostrar la llista -->
     <input type="submit" class="btn btn-primary mt-3" id="btn-filtres" data-bs-toggle="tooltip"

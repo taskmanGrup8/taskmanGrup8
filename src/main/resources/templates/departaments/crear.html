@@ -22,7 +22,7 @@
         <!-- Àlies -->
         <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
           <label for="nom-alias" class="form-label">Àlies <span class="text-muted">**</span></label>
-          <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{codigo}" />
+          <input type="text" class="form-control" maxlength="3" id="nom-alias" th:field="*{codigo}" required />
         </div>
         <!-- Alerta d'error -->
         <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
@@ -30,13 +30,13 @@
         <!-- Nom-->
         <div class="mb-3 col-10 col-sm-6 col-md-6 col-lg-4 col-xl-4">
           <label for="nom-departament" class="form-label">Nom del departament <span class="text-muted">*</span></label>
-          <input type="text" class="form-control" maxlength="20" id="nom-departament" th:field="*{nombre}" />
+          <input type="text" class="form-control" maxlength="20" id="nom-departament" th:field="*{nombre}" required />
           <!-- Alerta d'error -->
           <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger mt-2">
           </div>
         </div>
-        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">* Aquests camps són obligatoris</p>
-        <p class="text-muted col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">** L'àlies ha de tenir com a màxim 3 caràcters
+        <p class="text-muted">* Aquests camps són obligatoris</p>
+        <p class="text-muted">** L'àlies ha de tenir com a màxim 3 caràcters
         </p>
         <!-- Botó per crear el departament -->
         <input type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"

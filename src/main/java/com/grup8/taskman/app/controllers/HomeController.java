@@ -76,7 +76,7 @@ public class HomeController {
 		model.addAttribute("empresa", empresa);
 		if(!Usuari.USUARIAUTENTICAT.isPrivacidadFirmada()) {
 			
-			model.addAttribute("titol", "Politica de privacitat");
+			model.addAttribute("titol", "Política de privacitat");
 			return "empresas/politica";
 		}
 		

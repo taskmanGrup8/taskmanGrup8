@@ -105,19 +105,19 @@ INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(7, 1, 3);
 INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(120, 4, 3);
 
 
-INSERT INTO orden(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(2, false, '2022-01-23', false, 1, 1);
-INSERT INTO orden(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(50, false, '2022-01-03', false, 1, 2);
-INSERT INTO orden(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(3, false, '2021-12-29', false, 2, 3);
+INSERT INTO ordres(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(2, false, '2022-01-23', false, 1, 1);
+INSERT INTO ordres(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(50, false, '2022-01-03', false, 1, 2);
+INSERT INTO ordres(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(3, false, '2021-12-29', false, 2, 3);
 
-INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 1, 1);
-INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 1, 1);
-INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 3, 2);
-INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 4, 2);
-INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 5, 3);
-INSERT INTO fase_executable(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 6, 3);
+INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 1, 1);
+INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 1, 1);
+INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 3, 2);
+INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 4, 2);
+INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 5, 3);
+INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 6, 3);
 
 
-INSERT INTO notificacion(cantidad, data_fin, data_inici, fase_id, usuari_id) VALUES(13, '2021/12/28 11:33:21.500 am', '2021/12/28 10:30:20.500 am', 3, 3);
+INSERT INTO notificacions(cantidad, data_fin, data_inici, fase_id, usuari_id) VALUES(13, '2021/12/28 11:33:21.500 am', '2021/12/28 10:30:20.500 am', 3, 3);
 
 INSERT INTO empreses(nombre, cif, direccion, localidad, provincia, cpostal, telefono, email, logo) VALUES('NIKE', 'A12345678', 'Carrer Aragon, 13', 'Barcelona', 'Barcelona', '08080', '543781204', 'ester210403@gmail.com', '');
 

@@ -41,27 +41,27 @@
 <footer class="footer mt-auto py-3 bg-light" id="move-content-footer" th:fragment="peu-pagina">
   <div class="container mt-3">
     <div class="d-flex justify-content-around">
-      <span>©2021 Taskman SL. Gestió de tasques</span>
+      <span>©2022 Taskman SL.</span>
       <ul class="list-unlysted list-inline">
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://twitter.com/ioc" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Twitter"><i class="fab fa-twitter edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
           <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Instagram"><i class="fab fa-instagram"></i></a>
+            title="Instagram"><i class="fab fa-instagram edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Pàgina web"><i class="fas fa-globe"></i></a>
+          <a href="https://ioc.xtec.cat/educacio/" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Pàgina web"><i class="fas fa-globe edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Contacte"><i class="fas fa-envelope"></i></a>
+          <a href="mailto:taskman@contact.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Contacte"><i class="fas fa-envelope edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Privacitat"><i class="fas fa-user-shield"></i></a>
+          <a th:href="@{/empresas/politica}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Privacitat"><i class="fas fa-user-shield edit-icon"></i></a>
         </li>
       </ul>
     </div>
@@ -79,27 +79,27 @@
 <footer class="footer mt-auto py-3 bg-light" th:fragment="peu-pagina-generic">
   <div class="container mt-3">
     <div class="d-flex justify-content-around">
-      <span>©2021 Taskman SL. Gestió de tasques</span>
+      <span>©2022 Taskman SL.</span>
       <ul class="list-unlysted list-inline">
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://twitter.com/ioc" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Twitter"><i class="fab fa-twitter edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
           <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Instagram"><i class="fab fa-instagram"></i></a>
+            title="Instagram"><i class="fab fa-instagram edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Pàgina web"><i class="fas fa-globe"></i></a>
+          <a href="https://ioc.xtec.cat/educacio/" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Pàgina web"><i class="fas fa-globe edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Contacte"><i class="fas fa-envelope"></i></a>
+          <a href="mailto:taskman@contact.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Contacte"><i class="fas fa-envelope edit-icon"></i></a>
         </li>
         <li class="list-inline-item">
-          <a href="https://google.com" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
-          title="Privacitat"><i class="fas fa-user-shield"></i></a>
+          <a th:href="@{/empresas/politica}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Privacitat"><i class="fas fa-user-shield edit-icon"></i></a>
         </li>
       </ul>
     </div>
@@ -233,7 +233,7 @@
           </li>
 
           <!-- hr -->
-          <li class="my-3">
+          <li class="my-3" sec:authorize="hasRole('ROLE_ADMIN')">
             <hr class="dropdown-divider bg-light" />
           </li>
           <!-- Tasques-->
@@ -256,7 +256,7 @@
           </li>
 
           <!-- hr -->
-          <li class="my-3">
+          <li class="my-3" sec:authorize="hasRole('ROLE_ADMIN')">
             <hr class="dropdown-divider bg-light" />
           </li>
           <!-- Fases-->
@@ -279,7 +279,7 @@
           </li>
 
           <!-- hr -->
-          <li class="my-3">
+          <li class="my-3" sec:authorize="hasRole('ROLE_ADMIN')">
             <hr class="dropdown-divider bg-light" />
           </li>
           <!-- Ordres -->
@@ -308,7 +308,7 @@
           </li>
 
           <!-- hr -->
-          <li class="my-3">
+          <li class="my-3" sec:authorize="hasRole('ROLE_ADMIN')">
             <hr class="dropdown-divider bg-light" />
           </li>
           <!-- Departaments -->
@@ -331,7 +331,7 @@
           </li>
 
           <!-- hr -->
-          <li class="my-3">
+          <li class="my-3" sec:authorize="hasRole('ROLE_ADMIN')">
             <hr class="dropdown-divider bg-light" />
           </li>
           <!-- Usuaris -->
@@ -354,7 +354,7 @@
           </li>
 
           <!-- hr -->
-          <li class="my-3">
+          <li class="my-3" sec:authorize="hasRole('ROLE_ADMIN')">
             <hr class="dropdown-divider bg-light" />
           </li>
           <!-- Empresa -->

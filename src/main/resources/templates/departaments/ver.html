@@ -18,27 +18,31 @@
       <h3 th:text="${titol}"></h3>
     </div>
     <!-- Camps del departament seleccionat ( ID | Àlies | Nom )-->
-    <div class="row">
-      <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
-        <fieldset disabled>
+
+    <form th:action="@{/departaments/result}" th:object="${departament}" method="post">
+      <fieldset disabled>
+        <div class="row">
           <!-- ID -->
-          <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+          <div class="mb-3 col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
             <label for="id" class="form-label">ID</label> <input type="text" class="form-control" id="id"
               th:field="*{id}" />
           </div>
           <!-- Àlies -->
-          <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+          <div class="mb-3 col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
             <label for="nom-alias" class="form-label">Àlies</label> <input type="text" class="form-control"
               id="nom-alias" th:field="*{codigo}" />
           </div>
-          <!-- Nom del departament -->
-          <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-            <label for="nom-departament" class="form-label">Nom del departament</label>
-            <input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
+          <div class="row">
+            <!-- Nom del departament -->
+            <div class="mb-3 col-10 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+              <label for="nom-departament" class="form-label">Nom del departament</label>
+              <input type="text" class="form-control" id="nom-departament" th:field="*{nombre}" />
+            </div>
           </div>
-        </fieldset>
-      </form>
-    </div>
+        </div>
+      </fieldset>
+    </form>
+
     <!-- Botó per ocultar / mostrar la llista -->
     <input type="submit" class="btn btn-primary mt-3" id="btn-filtres" data-bs-toggle="tooltip"
       data-bs-placement="bottom" title="Mostrar els usuaris que pertanyen a aquest departament" th:value="${boton}" />
