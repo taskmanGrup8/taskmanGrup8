@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -65,6 +66,9 @@ public class Orden implements Serializable, Comparable<Orden> {
 	
 	@Column(name="ciclica")
 	private boolean ciclica;
+	
+	@Transient
+	private boolean bloqueada;
 
 	// CONSTRUCTOR
 	public Orden() {
@@ -138,6 +142,16 @@ public class Orden implements Serializable, Comparable<Orden> {
 
 	public void setCiclica(boolean ciclica) {
 		this.ciclica = ciclica;
+	}
+	
+	
+
+	public boolean isBloqueada() {
+		return bloqueada;
+	}
+
+	public void setBloqueada(boolean bloqueada) {
+		this.bloqueada = bloqueada;
 	}
 
 	public void generarFasesExecutables() {
