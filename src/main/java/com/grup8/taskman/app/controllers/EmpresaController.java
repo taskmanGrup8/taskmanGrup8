@@ -181,6 +181,16 @@ public class EmpresaController {
 		
 	}
 	
+	@GetMapping("/leerPrivacidad")
+	public String leerPrivacidad(Model model) {
+		
+		model.addAttribute("aceptar", false);
+		
+		return "empresas/politica";
+		
+	}
+	
+	
 	@ModelAttribute("usuariAutenticat")
 	public Usuari getUsuariAuthenticat() {
 		
