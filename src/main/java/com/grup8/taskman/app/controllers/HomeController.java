@@ -76,16 +76,19 @@ public class HomeController {
 		model.addAttribute("empresa", empresa);
 		if(!Usuari.USUARIAUTENTICAT.isPrivacidadFirmada()) {
 			
-			model.addAttribute("titol", "Política de privacitat");
+			model.addAttribute("titol", "Politica de privacitat");
+			model.addAttribute("aceptar", true);
 			return "empresas/politica";
 		}
 		
 		List<Orden> ordenes=getOrdenes();
 		ordenes=filtrarPorDepartamento(ordenes);
+		activarBloqueos(ordenes);
 		Collections.sort(ordenes, Collections.reverseOrder());
 		
 		model.addAttribute("ordres", ordenes);
 		model.addAttribute("notificacioActual", notificacioActual);
+		
 		
 		return "perfil/menu";
 		
@@ -146,6 +149,34 @@ private List<Orden> getOrdenes(){
 	
 		return false;
 	}	
+	
+	private void activarBloqueos(List<Orden> ordenes) {
+		Usuari usuari=usuariService.findById(Usuari.USUARIAUTENTICAT.getId());
+		List<Departament> departaments=usuari.getDepartaments();
+		for(Orden orden: ordenes) {
+			
+			if(algunaFaseDesbloqueada(orden, departaments)) {
+				orden.setBloqueada(false);
+			}else {
+				
+				orden.setBloqueada(true);
+			}
+		}
+		
+	}
+	
+	private boolean algunaFaseDesbloqueada(Orden orden, List<Departament> departaments) {
+		
+		for(FaseExecutable fase: orden.getFases()) {
+			
+			for(Departament departament: departaments) {
+				
+				if(fase.getFase().getFase().getDepartament().equals(departament) && !fase.isBloqueada())return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	
 
