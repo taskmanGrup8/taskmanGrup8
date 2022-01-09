@@ -30,7 +30,7 @@
           </div>
           <!-- Escollir quantitat -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-            <label for="quantitat" class="form-label">Quantitat <span class="text-muted">*</span></label>
+            <label for="quantitat" class="form-label">Unitats <span class="text-muted">*</span></label>
             <input type="text" class="form-control" id="quantitat" maxlength="5" th:field="*{cantidad}">
             <div th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" class="my-2 alert alert-danger"></div>
           </div>

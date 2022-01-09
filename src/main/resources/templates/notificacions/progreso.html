@@ -4,7 +4,7 @@
 <head th:replace="generic/main :: head">
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
   <!-- 
 		Vista on es pot veure el detall de la fase seleccionada: ID, àlies, nom de la fase, descripció, i departament
   -->
@@ -16,58 +16,63 @@
       <h3 th:text="${titol}"></h3>
     </div>
     <!-- Camps de la fase seleccionada-->
-    <div class="row">
-      <form th:action="@{/notificaciones/result}" th:object="${notificacio}" method="post">
-        <fieldset disabled>
-          <!-- ID -->
-          <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
-            <label for="dataInici" class="form-label">Data Inici</label>
-            <input type="datetime" class="form-control" id="id" th:field="*{dataInici}" />
-          </div>
+
+    <form th:action="@{/notificaciones/result}" th:object="${notificacio}" method="post">
+      <fieldset disabled>
+        <div class="row">
           <!-- Àlies -->
-          <div class="mb-3 col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+          <div class="mb-3 col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
             <label for="nom-alias" class="form-label">Àlies</label>
             <input type="text" class="form-control" id="nom-alias" th:field="*{fase.fase.fase.codigo}" />
           </div>
+          <!-- ID -->
+          <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
+            <label for="dataInici" class="form-label">Data Inici</label>
+            <input type="datetime" class="form-control" id="id" th:field="*{dataInici}" />
+          </div>
+          <!-- Prioridad -->
+          <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
+            <label for="prioridad" class="form-label">Prioritat</label>
+            <input type="text" class="form-control" id="prioridad" th:field="*{fase.orden.prioridad}" />
+          </div>
+        </div>
+        <div class="row">
           <!-- Nom de la fase -->
           <div class="mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
             <label for="nom-fase" class="form-label">Nom de la fase</label>
             <input type="text" class="form-control" id="nom-fase" th:field="*{fase.fase.fase.nombre}" />
           </div>
+        </div>
+        <div class="row">
           <!-- Descripció -->
           <div class="mb-3 col-8 col-sm-8 col-md-8 col-lg-6 col-xl-6">
             <label for="descripcio" class="form-label">Descripció</label>
-            <textarea class="form-control" id="descripcio" th:field="*{fase.fase.fase.descripcion}" style="height: 100px"></textarea>
+            <textarea class="form-control" id="descripcio" th:field="*{fase.fase.fase.descripcion}"
+              style="height: 100px"></textarea>
           </div>
-                 
-          <!-- Prioridad -->
-          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-            <label for="prioridad" class="form-label">Prioritat</label>
-            <input type="text" class="form-control" id="prioridad" th:field="*{fase.orden.prioridad}" />
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="row">
+      <form th:action="@{/fasesExecutables/notificar}" method="post">
+        <div class="col-sm-4 mb-3">
+          <div class="input-group mb-3">
+            <label class="col-form-label" for="cantidad">Indica les unitats que realitzaràs: </label>
           </div>
-          
-        </fieldset>
+        </div>
+        <div class="col-sm-2 mb-3">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control col-sm-3" placeholder="Unitats" aria-label="Username"
+              aria-describedby="basic-addon1" name="cantidad" id="cantidad" autofocus required>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-primary" type="submit">Enviar dades</button>
+        </div>
       </form>
-      <div>
-      
-      	<form th:action="@{/fasesExecutables/notificar}" method="post">
-      	
-      	<div>
-      			 <label for="cantidad" class="form-label">Quantitat</label>
-      			  <input type="text" class="form-control" id="cantidad" name="cantidad" />
-      	
-      	</div>
-      	
-      	<div>
-      	
-      		 <button class="btn btn-primary" type="submit">Notificar</button>
-      	</div>
-      	</form>
-      
-      </div>
-      
-    
     </div>
+
   </div>
 
   <footer th:replace="generic/main :: peu-pagina"></footer>

@@ -370,12 +370,12 @@ h3 {
   color: #ab000d;
 }
 
-.lock-icon {
-  color: #555;
-}
-
 .bg-notification {
   background-color: #f8f9fa;
   padding: 1%;
   margin-bottom: 1%;
+}
+
+#taula tr:hover {
+  background-color:#609eff5c;
 }

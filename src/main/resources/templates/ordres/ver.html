@@ -33,7 +33,7 @@
               id="nom-alias" th:field="*{tasca.codigo}" />
           </div>
           <div class="mb-3 col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
-            <label for="quantitat" class="form-label">Quantitat</label> <input type="text" class="form-control"
+            <label for="quantitat" class="form-label">Unitats</label> <input type="text" class="form-control"
               id="quantitat" th:field="*{cantidad}" />
           </div>
         </div>
@@ -80,7 +80,7 @@
                       <th scope="col">Data Inici</th>
                       <th scope="col">Data Fi</th>
                       <th class="text-center" scope="col">Temps</th>
-                      <th class="text-center" scope="col">Quantitat</th>
+                      <th class="text-center" scope="col">Unitats</th>
                       <th class="text-center" scope="col">Editar</th>
                       <th class="text-center" scope="col">Eliminar</th>
                     </tr>
@@ -100,7 +100,7 @@
                             class="fas fa-edit edit-icon"></i> </a></td>
                       <td class="text-center"><a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar"
                           th:href="@{/notificaciones/eliminar/}+ ${notificacion.id}"
-                          onclick="return confirm('Est�s segur que vols eliminar?');"><i
+                          onclick="return confirm('Estàs segur que vols eliminar?');"><i
                             class="fas fa-trash delete-icon"></i> </a></td>
                     </tr>
                   </tbody>
