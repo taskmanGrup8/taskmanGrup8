@@ -53,8 +53,8 @@
       </fieldset>
     </form>
 
-    <div th:if="${orden.ciclica==true}">
-      <a th:href="@{/ordenes/detenerCiclo/}+ ${ordre.id}" class="button" th:text="${boton2}"></a>
+    <div th:if="${orden.ciclica}">
+      <a th:href="@{/ordenes/detenerCiclo/}+ ${orden.id}" class="btn btn-primary mt-3" th:text="${boton2}"></a>
     </div>
     <!-- Botó per ocultar / mostrar la llista -->
     <input type="submit" class="btn btn-primary mt-3" id="btn-filtres" data-bs-toggle="tooltip"
