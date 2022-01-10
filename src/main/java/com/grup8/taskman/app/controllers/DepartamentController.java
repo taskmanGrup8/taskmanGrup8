@@ -30,7 +30,7 @@ import com.grup8.taskman.app.util.Utilidades;
  *   
  *  L'empresa ha de estar creada abans de fer servir aquesta funcionalitat.
  *  
- *  passarem la variable anomenada departament a SessionAttributes perquè guardi el valor de la mateixa 
+ *  Passarem la variable anomenada departament a SessionAttributes perquè guardi el valor de la mateixa 
  *  d'un a altre mètode. 
  *  
  * @author Sergio Esteban Gutiérrez
