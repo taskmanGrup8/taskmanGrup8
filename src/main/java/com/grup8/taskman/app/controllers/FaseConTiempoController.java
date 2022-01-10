@@ -49,9 +49,11 @@ public class FaseConTiempoController {
 	@Autowired
 	IEmpresaService empresaService;
 
+	// Injectem el servei de fases amb temps per tenir accés a la taula fases_con_tiempo
 	@Autowired
 	IFaseConTiempoService faseConTiempoService;
 
+	// Injectem el servei de tasques per tenir accés a la taula tasques
 	@Autowired
 	ITascaService tascaService;
 
