@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 /**
@@ -44,13 +46,16 @@ public class FaseConTiempo implements Serializable{
 	private int tiempoEstimado;
 	
 	// Establim la relació amb la taula fases mitjançant l'id de fase. Es una relació many to one perquè d'una fase podem fer moltes fases amb temps.
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="id_fase")
 	private Fase fase;
 	
 	// Establim una relació many to one amb tasca. Una tasca pot tenir multiples fases amb temps
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Tasca tasca;
+	
+	@OneToMany(mappedBy="fase",  cascade=CascadeType.ALL)
+	private List<FaseExecutable> fasesExecutables;
 	
 	
 	// SETTERS I GETTERS	
@@ -89,7 +94,17 @@ public class FaseConTiempo implements Serializable{
 	}
 	
 	
+	
+	
 	// MÈTODES
+
+	public List<FaseExecutable> getFasesExecutables() {
+		return fasesExecutables;
+	}
+
+	public void setFasesExecutables(List<FaseExecutable> fasesExecutables) {
+		this.fasesExecutables = fasesExecutables;
+	}
 
 	/**
 	 * Mètode que a partir de la llista de fases rebuda per paràmetre genera una llista de fases amb temps

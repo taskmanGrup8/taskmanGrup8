@@ -77,6 +77,9 @@ public class Tasca implements Serializable {
 	@NotNull
 	@Transient
 	private List<Fase> fases;
+	
+	@OneToMany(mappedBy="tasca",  cascade=CascadeType.ALL)
+	private List<Orden> ordenes;
 
 	// CONSTRUCTOR
 	
@@ -158,9 +161,19 @@ public class Tasca implements Serializable {
 	public void setTiempoCiclo(int tiempoCiclo) {
 		this.tiempoCiclo = tiempoCiclo;
 	}
+	
+	
 
 	// MÈTODES
 	
+	public List<Orden> getOrdenes() {
+		return ordenes;
+	}
+
+	public void setOrdenes(List<Orden> ordenes) {
+		this.ordenes = ordenes;
+	}
+
 	/**
 	 * Mètode que calcula el temps estimat de la tasca a partir de les fases amb temps.
 	 */

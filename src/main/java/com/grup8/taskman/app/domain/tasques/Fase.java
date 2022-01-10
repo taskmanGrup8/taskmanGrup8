@@ -1,6 +1,9 @@
 package com.grup8.taskman.app.domain.tasques;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -63,6 +67,9 @@ public class Fase implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_departament")
 	private Departament departament;
+	
+	@OneToMany(mappedBy="fase",  cascade=CascadeType.ALL)
+	private List<FaseConTiempo> fasesContiempo;
 
 	// CONSTRUCTOR
 	
@@ -113,8 +120,18 @@ public class Fase implements Serializable{
 		this.departament = departament;
 	}
 	
+	
+	
 	// MÈTODES
 	
+	public List<FaseConTiempo> getFasesContiempo() {
+		return fasesContiempo;
+	}
+
+	public void setFasesContiempo(List<FaseConTiempo> fasesContiempo) {
+		this.fasesContiempo = fasesContiempo;
+	}
+
 	// Abans de de guardar a la base de dades convertim el contingut de codigo a majúscules.
 	@PrePersist
 	public void prePersist() {
