@@ -2,7 +2,6 @@ package com.grup8.taskman.app.domain.tasques;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 /**
  * Classe que representa una plantilla de una tasca que posteriorment serà utilitzada per crear ordres d'execució.
  * Està relacionada amb la taula tasques de la base de dades. 
@@ -73,8 +71,7 @@ public class Tasca implements Serializable {
 	@OneToMany(mappedBy="tasca", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<FaseConTiempo> fasesConTiempo;
 	
-	// Anotem amb transient perque hibernate ignori aquest camp en crear la base de dades.
-	@NotNull
+	// Anotem amb transient perque hibernate ignori aquest camp en crear la base de dades.	
 	@Transient
 	private List<Fase> fases;
 	
