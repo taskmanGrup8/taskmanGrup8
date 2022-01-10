@@ -140,7 +140,9 @@ public class TascaController {
 			tasca.setTiempoEstimado(0);
 			// Generem les fases amb temps a partir de les fases i les afegim a la tasca
 			List<FaseConTiempo> fasesConTiempo=FaseConTiempo.generarLista(tasca.getFases());
-			tasca.setFasesConTiempo(fasesConTiempo);			
+			tasca.setFasesConTiempo(fasesConTiempo);
+			titol="Configurar Tasca";
+			model.addAttribute("titol", titol);
 			
 			// Redireccionem a configurar les tasques
 			return "tasques/configurar";
