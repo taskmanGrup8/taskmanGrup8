@@ -69,6 +69,7 @@ public class UsuariController {
 	public static final int MODIFICAR=2;
 	public static final int MODIFICAR_PERFIL=3;
 	public static final int CAMBIAR_CONTRASEÑA=4;
+	
 
 	// ATRIBUTS
 	
@@ -101,7 +102,7 @@ public class UsuariController {
 	private String titolBoto;
 	private String titol;
 	private int funcion;
-	Empresa empresa;
+	private Empresa empresa;
 
 	// MÈTODES
 	
@@ -116,8 +117,9 @@ public class UsuariController {
 	@GetMapping("/crear")
 	public String crear(Model model) {
 		
-		// Si la variable empresa encara és igual a null la cerquem
-		if(empresa==null)empresa=empresaService.findById(1);
+		
+		empresa=empresaService.findById(1);
+		
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null)return "redirect:/perfil";	
 
@@ -297,8 +299,8 @@ public class UsuariController {
 	@GetMapping("/listar")
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page,	Model model) {
 
-		// Si la variable empresa encara és igual a null la cerquem
-		if(empresa==null)empresa=empresaService.findById(1);
+		
+		empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null) {
 						
@@ -350,8 +352,8 @@ public class UsuariController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/ver/{id}")
 	public String ver(@PathVariable Long id, Model model) {
-		// Si la variable empresa encara és igual a null la cerquem
-		if(empresa==null)empresa=empresaService.findById(1);
+		
+		empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null)return "redirect:/perfil";	
 		
@@ -384,8 +386,7 @@ public class UsuariController {
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
 
-		// Si la variable empresa encara és igual a null la cerquem
-		if(empresa==null)empresa=empresaService.findById(1);
+		empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null)return "redirect:/perfil";	
 		
@@ -439,8 +440,7 @@ public class UsuariController {
 		Usuari usuari = null;
 		funcion=MODIFICAR;
 		
-		// Si la variable empresa encara és igual a null la cerquem
-		if(empresa==null)empresa=empresaService.findById(1);
+		empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null)return "redirect:/perfil";	
 
@@ -460,8 +460,8 @@ public class UsuariController {
 			return "redirect:/usuaris/listar";
 		}		
 		
-		titolBoto = "Enviar dades";	
-		titol = "Modificar usuari";
+		titolBoto = "Modificar Usuari";	
+		titol = "Enviar dades";
 		
 		// Passem al model els atributs necessaris
 		model.addAttribute("titol", titol);
@@ -484,8 +484,7 @@ public class UsuariController {
 	public String modificarPerfil(Model model) {
 		
 		funcion=MODIFICAR_PERFIL;
-		// Si la variable empresa encara és igual a null la cerquem
-		if(empresa==null)empresa=empresaService.findById(1);
+		empresa=empresaService.findById(1);
 		// Si desprès de cercar no tenim empresa llavors redireccionem a home
 		if(empresa==null)return "redirect:/perfil";	
 		
@@ -576,6 +575,7 @@ public class UsuariController {
 		return "redirect:/perfil";
 	}
 	
+
 
 	/**
 	 * Mètode que comproba que el dni que s'està introduint no existeixi a la base de dades.

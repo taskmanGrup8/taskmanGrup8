@@ -42,7 +42,7 @@ public class LoginController {
 		
 		if(error!=null) {
 						
-			model.addAttribute("error", "Error en iniciar sessió: nom d'usuari o contrasenya incorrectes");
+			model.addAttribute("error", "Error en el login: Nom d'usuari o contrasenya incorrectes");
 		}
 		
 		// Si la variable logout no està buïda vol dir que l'usuari ha tancat sessió. L'avisem d'aquesta dada a la vista.

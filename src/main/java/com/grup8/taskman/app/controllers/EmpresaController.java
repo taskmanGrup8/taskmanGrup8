@@ -181,6 +181,11 @@ public class EmpresaController {
 		
 	}
 	
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/leerPrivacidad")
 	public String leerPrivacidad(Model model) {
 		
