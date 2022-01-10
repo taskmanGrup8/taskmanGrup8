@@ -339,6 +339,12 @@ public class FaseController {
 			return "fases/ver";
 		}
 		
+
+		/**
+		 * Mètode que comproba que el codi que s'està introduint no existeixi a la base de dades.
+		 * @param fase Fase de la qual mirem el codi.
+		 * @return Retorna true si no existeix i false en cas contrari
+		 */	
 		private boolean comprobacionCodigo(Fase fase) {
 
 			// Inicialitzem result a true. Nomès el canviarem si existeix a la base de dades
@@ -364,6 +370,12 @@ public class FaseController {
 			return result;
 		}
 		
+
+		/**
+		 * Mètode que comproba que el nom que s'està introduint no existeixi a la base de dades.
+		 * @param fase Fase de la qual mirem el nom.
+		 * @return Retorna true si no existeix i false en cas contrari
+		 */	
 		private boolean comprobacionNombre(Fase fase) {
 			
 			// Mateix criteri que a comprobacionCodigo.
@@ -381,6 +393,7 @@ public class FaseController {
 			
 			return result;
 		}
+		
 		
 		@ModelAttribute("usuariAutenticat")
 		public Usuari getUsuariAuthenticat() {
