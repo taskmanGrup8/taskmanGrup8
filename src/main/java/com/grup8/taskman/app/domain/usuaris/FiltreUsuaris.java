@@ -187,8 +187,7 @@ public class FiltreUsuaris {
 	 * Metode que mira els atributs i a partir d'aquest determina quina es la
 	 * combinació que es vol realitzar
 	 * 
-	 * @return Retorna el valor de la constant que representa la combinació de
-	 *         filtres que vol realitzar.
+	 * @return Retorna el valor de la constant que representa la combinació de filtres que vol realitzar.
 	 */
 	public int getFiltreUsuaris() {
 

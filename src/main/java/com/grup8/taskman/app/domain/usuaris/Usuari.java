@@ -27,8 +27,8 @@ import com.grup8.taskman.app.domain.tasques.Notificacion;
 /**
  * Classe que mapejem als camps de la taula usuaris i que anotarem amb les validacions que han de tenir als 
  * formularis. Està implementada amb JPA i anotada amb javax.Validation
- * @author Sergio Estebam Gutiérrez
- * @version 1.0.1
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.2
  *
  */
 
@@ -137,6 +137,9 @@ public class Usuari implements Serializable {
 	@Column(name="foto")
 	private String foto="";
 	
+	/* Indiquem la relació que té usuari amb notificacion. Aquesta notificació serà la que estigui executant a cada moment, si
+	 * no està treballant a cap serà null.	 
+	 */
 	@ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="id_notificacion")
 	private Notificacion notificacionActual;
