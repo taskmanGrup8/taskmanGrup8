@@ -46,7 +46,7 @@ public class FaseExecutable implements Serializable{
 	private FaseConTiempo fase;
 	
 	// Establim una relació many to one amb Orden. Els tipus de cascade responen a que no volem eliminar l'ordre si eliminem la fase executable.
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})	
+	@ManyToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE})	
 	private Orden orden;
 	
 	// Camp que indica si la fase ja ha estat realitzada

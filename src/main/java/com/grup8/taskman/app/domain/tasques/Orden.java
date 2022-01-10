@@ -52,7 +52,6 @@ public class Orden implements Serializable, Comparable<Orden> {
 	// Creem una associació many to one amb tasca indicant un tipus de cascade pel qual si eliminem l'ordre no eliminem la tasca.
 	@NotNull
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-//	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Tasca tasca;
 
 	// Atribut que indica la quantitat ha realitzar a aquesta ordre, no pot ser null
@@ -179,6 +178,7 @@ public class Orden implements Serializable, Comparable<Orden> {
 	 */
 	public void generarFasesExecutables() {
 
+		
 		for (FaseConTiempo fase : tasca.getFasesConTiempo()) {
 
 			FaseExecutable faseExecutable = new FaseExecutable(fase, this);
