@@ -9,15 +9,24 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.grup8.taskman.app.services.tasques.IOrdenService;
 import com.grup8.taskman.app.util.Utilidades;
 
+/**
+ * Classe creada per controlar els filtres demanats al llistat d'ordres
+ * @author Sergio Esteban Gutiérrez
+ * @version 1.0.0
+ *
+ */
 public class FiltreOrdres {
+
 	
 	// CONSTANTS
 	
-	// CONSTANTS
-	
+	// Constants que farem servir per calcular el rang de dates per defecte
 	public static Date fechaInicioDefecto=Utilidades.calcularData(-15);
 	public static Date fechaFinDefecto=Utilidades.calcularData(15);
+	
 	public static FiltreOrdres filtreOrdre;
+	
+	// Constants que representen els diferents filtres possibles
 	private static final int SENSEFILTRE=0;
 	private static final int FILTRATPERTASCA=1;
 	private static final int FILTRATPERDATES=2;	
@@ -26,8 +35,6 @@ public class FiltreOrdres {
 	private static final int FILTRATPERTASCAINOTIFICADES=5;	
 	private static final int FILTRATPERDATESINOTIFICADES=6;	
 	private static final int FILTRATPERTASCADATESINOTIFICADES=7;
-	
-	
 	
 	
 	// ATRIBUTS
@@ -42,17 +49,16 @@ public class FiltreOrdres {
 	private int notificadas = 0;
 	private boolean notificadesFiltrades = false;
 	
+	
+	// CONSTRUCTOR
+	
+	public FiltreOrdres() {		
+		
+	}	
+	
 	// SETTERS I GETTERS
 	
-	
-	
-	// MÈTODES
-	
-	public FiltreOrdres() {
 		
-		
-	}
-	
 	public String getNomTasca() {
 		return nomTasca;
 	}
@@ -137,30 +143,40 @@ public class FiltreOrdres {
 	public void setNotificadesFiltrades(boolean notificadesFiltrades) {
 		this.notificadesFiltrades = notificadesFiltrades;
 	}
+	
+	// MÈTODES
 
+	/**
+	 * Metode que mira els atributs i a partir d'aquest determina quina es la
+	 * combinació que es vol realitzar
+	 * 
+	 * @return Retorna el valor de la constant que representa la combinació de filtres que vol realitzar.
+	 */
 	private int getFiltreOrdre() {
 		
 				
-		if(!this.isNomFiltrat() && !this.isDatesFiltrades() && !this.isNotificadesFiltrades())return SENSEFILTRE;
-		
+		if(!this.isNomFiltrat() && !this.isDatesFiltrades() && !this.isNotificadesFiltrades())return SENSEFILTRE;		
 		if(this.isNomFiltrat() && !this.isDatesFiltrades() && !this.isNotificadesFiltrades())return FILTRATPERTASCA;
 		if(!this.isNomFiltrat() && this.isDatesFiltrades() && !this.isNotificadesFiltrades())return FILTRATPERDATES;		
-		if(!this.isNomFiltrat() && !this.isDatesFiltrades() && this.isNotificadesFiltrades())return FILTRATPERNOTIFICADES;
-		
+		if(!this.isNomFiltrat() && !this.isDatesFiltrades() && this.isNotificadesFiltrades())return FILTRATPERNOTIFICADES;		
 		if(this.isNomFiltrat() && this.isDatesFiltrades() && !this.isNotificadesFiltrades())return FILTRATPERTASCAIDATES;		
 		if(this.isNomFiltrat() && !this.isDatesFiltrades() && this.isNotificadesFiltrades())return FILTRATPERTASCAINOTIFICADES;		
-		if(!this.isNomFiltrat() && this.isDatesFiltrades() && this.isNotificadesFiltrades())return FILTRATPERDATESINOTIFICADES;		
-	
+		if(!this.isNomFiltrat() && this.isDatesFiltrades() && this.isNotificadesFiltrades())return FILTRATPERDATESINOTIFICADES;	
 		if(this.isNomFiltrat() && this.isDatesFiltrades() && this.isNotificadesFiltrades())return FILTRATPERTASCADATESINOTIFICADES;		
 		
 		return SENSEFILTRE;
 	}
 	
+	
+	/**
+	 * /**
+	 * Mètode que retorna la llista d'ordres amb el filtre indicat	 
+	 * @param ordenService Service d'ordres amb accés a la base de dades
+	 * @return Retorna la llista amb el filtre cercat
+	 */
 	public List<Orden> getOrdres(IOrdenService ordenService){
 		
-		List<Orden>ordenes=new ArrayList<>();
-			
-		
+		List<Orden>ordenes=new ArrayList<>();		
 		int opcion=this.getFiltreOrdre();
 		Date dataAnterior=Utilidades.calcularData(-15);
 		Date dataPosterior=Utilidades.calcularData(+15);

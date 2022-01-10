@@ -186,7 +186,7 @@ public class Tasca implements Serializable {
 	
 	
 	/**
-	 * Fem override del mètode equals perque volem que les comparacions siguin personalitzades pel nom de la fase
+	 * Fem override del mètode equals perque volem que les comparacions siguin personalitzades pel nom de la tasca
 	 * que és únic a la base de dades.
 	 */
 	@Override
