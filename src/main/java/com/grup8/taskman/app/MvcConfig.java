@@ -66,6 +66,10 @@ public class MvcConfig implements WebMvcConfigurer{
 		return new BCryptPasswordEncoder(12);
 	}
 	
+	/**
+	 * Funció que genera un nou Bean de tipus JavaMailSender amb la configuració del proveidor de correu electrònic
+	 * @return Retorna una nova instància de JavaMailSender
+	 */
 	@Bean
 	public JavaMailSender getJavaMailSender() {
 		

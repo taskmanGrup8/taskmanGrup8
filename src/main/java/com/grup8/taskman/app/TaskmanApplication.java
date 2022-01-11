@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-@EnableAsync
+@EnableAsync // Habilitem els mètodes asíncrons
 public class TaskmanApplication {
 
 	public static void main(String[] args) {
