@@ -28,6 +28,7 @@ public class TascaService implements ITascaService{
 	
 	/**
 	 * Mètode que guarda/actualitza els elements a la base de dades.
+	 * @param tasca Tasca que volem guardar
 	 * @return Retorna l'element guardat o null si no ho ha pogut realitzar.
 	 */
 	@Override
@@ -49,6 +50,7 @@ public class TascaService implements ITascaService{
 
 	/**
 	 * Mètode que busca la tasca amb l'id indicat
+	 * @param id Id de la tasca que volem cercar
 	 * @return Retorna la tasca trobada o null si no ha trobat cap
 	 */
 	@Override
@@ -60,6 +62,7 @@ public class TascaService implements ITascaService{
 
 	/**
 	 * Mètode que busca la tasca amb el codi indicat
+	 * @param codigo Codi de la tasca que volem cercar
 	 * @return Retorna la tasca trobada o null si no ha trobat cap
 	 */
 	@Override
@@ -71,6 +74,7 @@ public class TascaService implements ITascaService{
 
 	/**
 	 * Mètode que busca la tasca amb el nom indicat
+	 * @param nombre Nom de la tasca que volem cercar
 	 * @return Retorna la tasca trobada o null si no ha trobat cap
 	 */
 	@Override
@@ -81,6 +85,7 @@ public class TascaService implements ITascaService{
 
 	/**
 	 * Mètode que elimina la tasca passada per paràmetre
+	 * @param tasca Tasca que volem eliminar
 	 */
 	@Override
 	@Transactional
@@ -92,6 +97,7 @@ public class TascaService implements ITascaService{
 
 	/**
 	 * Mètode que busca una llista de les tasques que el seu camp codi comenci pel paràmetre passat.
+	 * @param cadena Cadena per la qual ha de començar el codi de la tasca.
 	 * @return Retorna la llista trobada
 	 */
 	@Override
@@ -103,6 +109,7 @@ public class TascaService implements ITascaService{
 
 	/**
 	 * Mètode que busca una llista de les tasques que el seu camp nom comenci pel paràmetre passat.
+	 * @param cadena Cadena per la qual ha de començar el nom de la tasca.
 	 * @return Retorna la llista trobada
 	 */
 	@Override
@@ -112,6 +119,11 @@ public class TascaService implements ITascaService{
 		return tascaDao.findByNombreStartsWith(cadena);
 	}
 
+	/**
+	 * Mètode que cerca la llista de tasques que el seu camp cíclica correspon amb el rebut per paràmetre
+	 * @param ciclica Estat en que té que estar el camp cíclica de la tasca
+	 * @return Retorna la llista trobada
+	 */
 	@Override
 	@Transactional(readOnly=true)
 	public List<Tasca> findByCiclica(boolean ciclica) {

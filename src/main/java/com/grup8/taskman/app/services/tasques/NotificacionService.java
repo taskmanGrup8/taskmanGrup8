@@ -51,6 +51,10 @@ public class NotificacionService implements INotificacionService{
 		return notificacionDao.findById(id).orElse(null);
 	}
 
+	/**
+	 * Mètode que busca la llista completa d'elements de la taula notificacions
+	 * @return Retorna la llista trobada
+	 */
 	@Override
 	@Transactional(readOnly=true)
 	public List<Notificacion> findAll() {
@@ -58,6 +62,10 @@ public class NotificacionService implements INotificacionService{
 		return (List<Notificacion>) notificacionDao.findAll();
 	}
 
+	/**
+	 * Mètode que elimina la notificació passada per paràmetre
+	 * @param notificacion Notificacio que volem eliminar
+	 */
 	@Override
 	@Transactional
 	public void delete(Notificacion notificacion) {
