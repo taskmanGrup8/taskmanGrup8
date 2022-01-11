@@ -21,13 +21,13 @@
         <div class="row">
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="nom" class="form-label">Nom <span class="text-muted">*</span></label>
-            <input type="text" class="form-control" id="nom" maxlength="255" th:field="*{nombre}">
+            <input type="text" class="form-control" id="nom" maxlength="255" th:field="*{nombre}" required />
             <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="my-2 alert alert-danger"></div>
           </div>
           <!-- Cognoms -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="cognoms" class="form-label">Cognoms <span class="text-muted">*</span></label>
-            <input type="text" class="form-control" id="cognoms" maxlength="255" th:field="*{apellidos}">
+            <input type="text" class="form-control" id="cognoms" maxlength="255" th:field="*{apellidos}" required />
             <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="my-2 alert alert-danger">
             </div>
           </div>
@@ -37,14 +37,14 @@
           <!-- DNI -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="dni" class="form-label">DNI <span class="text-muted">*</span></label>
-            <input type="text" class="form-control" id="dni" maxlength="9" th:field="*{dni}">
+            <input type="text" class="form-control" id="dni" maxlength="9" th:field="*{dni}" required />
             <div th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="my-2 alert alert-danger">
             </div>
           </div>
           <!-- Telèfon -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="telefon" class="form-label">Telèfon <span class="text-muted">*</span></label>
-            <input type="text" class="form-control" id="telefon" maxlength="9" th:field="*{telefono}">
+            <input type="text" class="form-control" id="telefon" maxlength="9" th:field="*{telefono}" required />
             <div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="my-2 alert alert-danger"></div>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <!-- Correu electrònic -->
           <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <label for="correu" class="form-label">Correu eletrònic <span class="text-muted">*</span></label>
-            <input type="text" class="form-control" id="correu" maxlength="255" th:field="*{email}">
+            <input type="text" class="form-control" id="correu" maxlength="255" th:field="*{email}" required />
             <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="my-2 alert alert-danger">
             </div>
           </div>
@@ -75,7 +75,7 @@
             <label for="departaments" class="form-label">Departaments <span class="text-muted">**</span></label>
             <!-- Form multiselect amb select2 -->
             <select id="departaments" class="form-select departaments-multiple" style="width: 100%"
-              name="departaments[]" th:field="*{departaments}" multiple="multiple">
+              name="departaments[]" th:field="*{departaments}" multiple="multiple" required>
               <option th:each="departament: ${listaDepartamentos}" th:text="${departament.nombre}"
                 th:value="${departament.id}"></option>
             </select>

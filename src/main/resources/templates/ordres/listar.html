@@ -5,9 +5,9 @@
 
 <body class="d-flex flex-column h-100">
   <!-- 
-		Vista on es troben llistats tots els usuaris amb els seus camps assignats (ID, Nom, Cognoms, DNI, Email, Telèfon, Rol)
-		Des d'aquesta vista es podrà accedir en detall dins d'un usuari, edita-ho, i eliminar-ho
-		També es pot fer una cerca dels usuaris segons si estan actius o estan deshabilitats, segons el seu rol, nom, cognoms, i DNI
+		Vista on es troben llistats totes les ordres amb els seus camps assignats.
+		Des d'aquesta vista es podrà accedir en detall dins d'una ordre, editar-la, i eliminar-la.
+		També es pot fer una cerca de les ordres.
 	-->
   <div th:replace="generic/main :: navbar-empresa"></div>
   <div class="container mt-5 pt-5" id="move-content">
@@ -97,7 +97,7 @@
               <th class="text-center" scope="col">Eliminar</th>
             </tr>
           </thead>
-          <!-- Tasques llistades -->
+          <!-- Ordres llistades -->
           <tbody>
             <tr th:each="orden: ${ordres}">
               <td class="text-center"><a class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"

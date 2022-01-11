@@ -6,7 +6,7 @@
 
 <body class="d-flex flex-column h-100">
   <!-- 
-		Vista per poder editar el temps de les fases creades.
+		Vista per poder editar les notificacions.
 	-->
   <div th:replace="generic/main :: navbar-empresa"></div>
   <div class="container mt-5 pt-5">
@@ -23,7 +23,7 @@
         <input type="hidden" th:field="*{usuari}" />
         <input type="hidden" th:field="*{fase}" />
 			
-        <!-- Quantitat -->
+        <!-- Unitats -->
         <div class="mb-4 col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
           <label for="quantitat" class="form-label">Unitats <span class="text-muted">*</span></label>
           <input type="text" class="form-control" id="quantitat" th:field="*{cantidad}"/>
