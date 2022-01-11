@@ -68,6 +68,7 @@ public class Fase implements Serializable{
 	@JoinColumn(name="id_departament")
 	private Departament departament;
 	
+	// Associem a la base de dades la taula fases amb fases amb temps. Si s'esborra una fase, també ho faran totes les fases amb temps de la llista.
 	@OneToMany(mappedBy="fase",  cascade=CascadeType.ALL)
 	private List<FaseConTiempo> fasesContiempo;
 

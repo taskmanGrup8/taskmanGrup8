@@ -54,6 +54,7 @@ public class FaseConTiempo implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Tasca tasca;
 	
+	// Establim una relació one to many amb la taula fases_executables. Si esborrem una fase amb temps totes les fases executables de la llista s'eliminaran
 	@OneToMany(mappedBy="fase",  cascade=CascadeType.ALL)
 	private List<FaseExecutable> fasesExecutables;
 	

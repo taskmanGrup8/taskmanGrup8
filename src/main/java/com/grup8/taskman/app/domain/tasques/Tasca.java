@@ -75,6 +75,7 @@ public class Tasca implements Serializable {
 	@Transient
 	private List<Fase> fases;
 	
+	// Establim la relació one to many amb Orden i la mapejem a l'atribut tasca. Si s'esborra una tasca s'esborren les ordres que en derivin.
 	@OneToMany(mappedBy="tasca",  cascade=CascadeType.ALL)
 	private List<Orden> ordenes;
 
