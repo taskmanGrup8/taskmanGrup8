@@ -460,8 +460,8 @@ public class UsuariController {
 			return "redirect:/usuaris/listar";
 		}		
 		
-		titolBoto = "Enviar dades";	
-		titol = "Modificar usuari";
+		titolBoto = "Modificar Usuari";	
+		titol = "Enviar dades";
 		
 		// Passem al model els atributs necessaris
 		model.addAttribute("titol", titol);
