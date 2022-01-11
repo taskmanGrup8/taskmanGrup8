@@ -58,24 +58,47 @@ public class Utilidades {
 		
 	}
 	
+	/**
+	 * Mètode que resta dues dates en milisegons.
+	 * @param fecha1 Data a la qual restem l'altre
+	 * @param fecha2 Data que restem a la primera
+	 * @return Retorna la diferència en milisegons
+	 */
 	public static long restarFechas(Date fecha1, Date fecha2) {
 		
 		long diferencia=fecha1.getTime()-fecha2.getTime();
 		return diferencia;
 	}
 	
+	/**
+	 * Mètode que resta dues dates en minuts
+	 * @param fecha1 Data a la qual restem l'altre
+	 * @param fecha2 Data que restem a la primera
+	 * @return Retorna la diferència en minuts
+	 */
 	public static long restarFechasEnMinutos(Date fecha1, Date fecha2) {
 				
 		long minutos=TimeUnit.MILLISECONDS.toMinutes(restarFechas(fecha1, fecha2));
 		return minutos;
 	}
 	
+	/**
+	 * Mètode que resta dues dates en dies
+	 * @param fecha1 Data a la qual restem l'altre
+	 * @param fecha2 Data que restem a la primera
+	 * @return Retorna la diferència en dies
+	 */
 	public static long restarFechasEnDias(Date fecha1, Date fecha2) {
 		
 		long dias=TimeUnit.MILLISECONDS.toDays(restarFechas(fecha1, fecha2));
 		return dias;
 	}
 
+	/**
+	 * Mètode que agafa la data d'avui i agrega el sencer rebut per paràmetre
+	 * @param i Sencer que volem afegir
+	 * @return Retorna la nova data obtinguda
+	 */
 	public static Date calcularData(int i) {
 		
 		Calendar c = Calendar.getInstance();		
@@ -85,6 +108,12 @@ public class Utilidades {
 		return novaData;
 	}
 	
+	/**
+	 * Mètode que afegeix el número de dies rebuts a la data rebuda.
+	 * @param fecha Data a la que volem afegir els dies
+	 * @param dias Dies que volem afegir
+	 * @return Retorna la nova data
+	 */
 	public static Date sumarDiasAFecha(Date fecha, int dias) {
 		
 		Calendar c=Calendar.getInstance();
@@ -92,8 +121,6 @@ public class Utilidades {
 		c.add(Calendar.DATE, dias);
 		Date novaData=c.getTime();
 		return novaData;
-	}
-	
-	
+	}	
 
 }
