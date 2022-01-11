@@ -27,6 +27,7 @@ public class FaseConTiempoService implements IFaseConTiempoService{
 	
 	/**
 	 * Mètode que guarda/actualitza els elements a la base de dades.
+	 * @param fase Fase que volem guardar
 	 * @return Retorna l'element guardat o null si no ho ha pogut realitzar.
 	 */
 	@Override
@@ -48,6 +49,7 @@ public class FaseConTiempoService implements IFaseConTiempoService{
 
 	/**
 	 * Mètode que busca la fase amb temps  amb l'id indicat
+	 * @param id Id de la fase amb temps que volem trobar
 	 * @return Retorna la fase trobada o null si no ha trobat cap
 	 */
 	@Override
@@ -59,6 +61,7 @@ public class FaseConTiempoService implements IFaseConTiempoService{
 
 	/**
 	 * Mètode que elimina la fase amb temps passada per paràmetre
+	 * @param fase Fase amb temps que volem eliminar
 	 */
 	@Override
 	@Transactional
@@ -70,6 +73,7 @@ public class FaseConTiempoService implements IFaseConTiempoService{
 
 	/**
 	 * Mètode que busca la llista de fases amb temps que l'id de la fase associada coincideixi amb l'indicat
+	 * @param id Id que ha de tenir la fase associada amb la fase amb temps
 	 * @return Retorna la llista de fases amb temps trobades.
 	 */
 	@Override

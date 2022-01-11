@@ -30,6 +30,7 @@ public class FaseService implements IFaseService{
 	
 	/**
 	 * Mètode que guarda/actualitza els elements a la base de dades.
+	 * @param fase Fase que volem guardar
 	 * @return Retorna l'element guardat o null si no ho ha pogut realitzar.
 	 */
 	@Override
@@ -51,6 +52,7 @@ public class FaseService implements IFaseService{
 
 	/**
 	 * Mètode que busca la fase amb l'id indicat
+	 * @param id Id de la fase que volem trobar
 	 * @return Retorna la fase trobada o null si no ha trobat cap
 	 */
 	@Override
@@ -62,6 +64,7 @@ public class FaseService implements IFaseService{
 
 	/**
 	 * Mètode que busca la fase amb el codi indicat
+	 * @param codigo Codi de la fase que volem trobar
 	 * @return Retorna la fase trobada o null si no ha trobat cap
 	 */
 	@Override
@@ -73,6 +76,7 @@ public class FaseService implements IFaseService{
 
 	/**
 	 * Mètode que busca la fase amb el nom indicat
+	 * @param nombre Nom de la fase que volem trobar
 	 * @return Retorna la fase trobada o null si no ha trobat cap
 	 */
 	@Override
@@ -83,6 +87,7 @@ public class FaseService implements IFaseService{
 
 	/**
 	 * Mètode que elimina la fase passada per paràmetre
+	 * @param fase Fase que volem eliminar.
 	 */
 	@Override
 	@Transactional
@@ -94,6 +99,7 @@ public class FaseService implements IFaseService{
 
 	/**
 	 * Mètode que busca una llista de les fases que el seu camp codi comenci pel paràmetre passat.
+	 * @param cadena Cadena per la qual ha de començar el codi de la fase.
 	 * @return Retorna la llista trobada
 	 */
 	@Override
@@ -105,6 +111,7 @@ public class FaseService implements IFaseService{
 
 	/**
 	 * Mètode que busca una llista de les fases que el seu camp nom comenci pel paràmetre passat.
+	 * @param cadena Cadena per la qual ha de començar el nom de la fase.
 	 * @return Retorna la llista trobada
 	 */
 	@Override
