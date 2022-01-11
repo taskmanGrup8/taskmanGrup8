@@ -4,6 +4,8 @@ package com.grup8.taskman.app.domain.departaments;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,9 +13,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
+import com.grup8.taskman.app.domain.tasques.Fase;
 import com.grup8.taskman.app.domain.usuaris.Usuari;
 
 /**
@@ -60,6 +65,10 @@ public class Departament implements Serializable {
 	@ManyToMany(mappedBy="departaments", fetch=FetchType.LAZY)
 	private List<Usuari> usuaris;
 	
+	// Establim la relació one to many amb Departament i la mapejem a l'atribut departament. Si s'esborra un departament s'esborren le fases que en derivin.
+	@OneToMany(mappedBy="departament",  cascade=CascadeType.ALL)
+	private List<Fase> fases;
+	
 	// CONSTRUCTOR
 	
 	public Departament() {		
@@ -94,8 +103,18 @@ public class Departament implements Serializable {
 		this.usuaris = usuaris;
 	}
 	
+	
+	
 	//MÈTODES
 	
+	public List<Fase> getFases() {
+		return fases;
+	}
+
+	public void setFases(List<Fase> fases) {
+		this.fases = fases;
+	}
+
 	/**
 	 * Mètode que afegeix un usuari a la llista d'usuaris
 	 * @param usuari Usuari que afegim a la llista
