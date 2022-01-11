@@ -40,6 +40,14 @@ INSERT INTO usuaris (activo, apellidos, dni, nombre, password, privacidad_firmad
 
 
 INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(3, 3);
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(1, 1);
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(1, 2);
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(1, 3);
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(2, 1);
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(26, 1);
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(26, 2);
+INSERT INTO usuari_departament(id_usuario, id_departament) VALUES(26, 3);
+
 
 INSERT INTO authorities(user_id, authority) VALUES(1, 'ROLE_USER');
 INSERT INTO authorities(user_id, authority) VALUES(1, 'ROLE_ADMIN');
@@ -107,7 +115,7 @@ INSERT INTO fases_con_tiempo(tiempo, id_fase, tasca_id) VALUES(120, 4, 3);
 
 INSERT INTO ordres(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(2, false, '2022-01-23', false, 1, 1);
 INSERT INTO ordres(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(50, false, '2022-01-03', false, 1, 2);
-INSERT INTO ordres(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(3, false, '2021-12-29', false, 2, 3);
+INSERT INTO ordres(cantidad, ciclica, data_fin, notificada, prioridad, tasca_id) VALUES(2, false, '2022-01-14', false, 2, 3);
 
 INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(false, false, 1, 1);
 INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(true, false, 1, 1);
@@ -120,6 +128,8 @@ INSERT INTO fases_executables(bloqueada, notificada, fase_id, orden_id) VALUES(t
 INSERT INTO notificacions(cantidad, data_fin, data_inici, fase_id, usuari_id) VALUES(13, '2021/12/28 11:33:21.500 am', '2021/12/28 10:30:20.500 am', 3, 3);
 
 INSERT INTO empreses(nombre, cif, direccion, localidad, provincia, cpostal, telefono, email, logo) VALUES('NIKE', 'A12345678', 'Carrer Aragon, 13', 'Barcelona', 'Barcelona', '08080', '543781204', 'ester210403@gmail.com', '');
+
+INSERT INTO password_recover(data, link, id_user) VALUES('2021-12-29', 'linkviejo', 1);
 
 
 
